@@ -4,7 +4,7 @@ Přednáška v češtině, cca 30 minut, AI Monday 5. 10. 2026.
 
 ## HTML deck (aktuální)
 
-24 slidů, 75 stavů odkrývání, 29 minut obsahu + minuta rezervy. Příběh: autocomplete → pretraining → base model → asistent → preference → limity → nástroje → přesná pravidla a model.
+26 slidů, 85 stavů odkrývání, 29 minut obsahu + minuta rezervy. Příběh: autocomplete → Shannon a n-gramy → neuronové LM (Bengio, Mikolov) a Transformer → pretraining → base model → asistent → preference → limity → nástroje → přesná pravidla a model.
 
 Otevři `html/index.html` v prohlížeči — funguje offline ze souboru, bez serveru a CDN.
 
@@ -28,7 +28,9 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 | `html/app.js` | navigace, notes, přehled, tisk, škálování 1600×900 |
 | `html/qr.js` | vygenerovaný SVG QR na Transformer Explainer |
 | `html/assets/` | Skullpix pixel-art (prez-astra), PNG + editovatelný JSON |
-| `html/stoparuv-pruvodce-po-llms.pdf` | PDF (24 stran, finální stav buildů) |
+| `html/stoparuv-pruvodce-po-llms.pdf` | PDF (26 stran, finální stav buildů) |
+
+Historická rampa z issue #1 má tři slidy a 3:30. Ukazuje postupné řešení problémů s kontextem, generalizací a výpočetní náročností. Word2vec je samostatná související linie; výklad zachovává rozdíl mezi paralelním tréninkem a postupným generováním.
 
 ### Úpravy a regenerace
 
@@ -40,9 +42,9 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 
 ### Ověření
 
-Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing a přetékání.
+Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states --output html/review/issue-1` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing a přetékání.
 
-Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/narrative/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
+Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/issue-1/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
 
 Vizuální reference: Andrej Karpathy, *Deep Dive into LLMs like ChatGPT* (sources.md S13) — světlá technická tabule; video je i v Resources a v notes.
 
@@ -57,7 +59,7 @@ PPTX níže je starší artefakt, dál se negeneruje.
 | `deck/render/*.pdf`, `sheet-*.jpg` | render pro vizuální kontrolu | prez-opus |
 | `outline.md` | osnova s timingem | prez-opus |
 | `tech-review.md` | technická oponentura po slidech | prez-astra |
-| `sources.md` | zdroje S1–S16 a původ historických ukázek | prez-astra |
+| `sources.md` | zdroje S1–S24 a původ historických ukázek | prez-astra |
 | `coordination.md` | log spolupráce (append-only) | oba |
 | `zadani.md`, `prompt-*.md` | původní zadání, beze změn | — |
 

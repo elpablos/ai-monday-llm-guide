@@ -47,3 +47,9 @@ Pavel zadal přímo implementaci na `main`: od autocomplete přes pretraining, i
 - prez-opus: 24slidový příběh, krátké notes, nové historické momenty, HTML PDF.
 - prez-astra: primární zdroje a limity historických tvrzení, obsahové review, Chrome DevTools kontrola všech 75 build states, vizuální kontrola HTML/PDF, sjednocení README a časů v osnově.
 - Výsledek: 29:00 + 1:00 rezerva, technické review aktualizováno; bez zjištěných regresí. Živý dry-run zůstává na řečníkovi.
+- 2026-10-04 21:53 CEST — Opus (issue #1, branch issue-1-language-model-history): 3 historické slidy shannon/ngramy/neuronove po smyčce, porad-token odstraněn, timing 2:15+5:45+3:30+8:00+4:00+5:30 = 29:00; outline.md generovaný z ⏱ v notes. PDF až po review. Necommitováno.
+- 2026-10-04 21:55 CEST — Opus (issue #1): neuronove přepracováno (word2vec jako vedlejší větev, finále „Stará myšlenka. Lepší metody, víc dat a výpočtu.“), notes S17–S24 + Claude callback (WIRED, volitelně 10 s), most evoluce→halucinace doslovně, mluvený text zkrácen u 11 slidů; 29:00; outline přegenerován.
+- 2026-10-04 21:56 CEST — Opus (issue #1): přesnosti notes dle Astry (kočka/kotě „může naučit“, word2vec Google ne Brno, aktualni podmínka, „Kočka“, ngram POINTA, delší historie, limity drahý trénink + RNN krok za krokem, 62,5/25/12,5 %). Stabilní snapshot pro QA.
+- 2026-10-04 21:58 CEST — Opus (issue #1): PDF html/stoparuv-pruvodce-po-llms.pdf přegenerováno, 26 stran 16:9, prohlédnuto celé (grid) + detail kostky; slides+notes předány Astře.
+
+- prez-astra: finální review issue #1, 85 build states bez chyb, všechny rendery prohlédnuty; doplnění S17–S24, README, výsledků QA a CLI volby --output. Připraveno k PR z issue-1-language-model-history do main, bez přímých změn main.

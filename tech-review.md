@@ -161,3 +161,28 @@ Primární zdroje S6 a S14–S16 ověřeny 4. 10. 2026. HTML je hlavní verze, s
 - `node --check` pro slides.js, notes.js a app.js; `git diff --check` bez chyb.
 
 Zbývá živý dry-run a projekce v místnosti. Při přetažení nejdřív vynechat live Explainer, zrychlit temperature a závěrečný architektonický diagram; chránit kontrast base model → asistent a preference.
+
+## Issue #1 — historická rampa před pretrainingem
+
+Zdroje S17–S24 ověřeny 4. 10. 2026. Rozšířené zadání issue požaduje 3–4 minuty; původní limit 60–90 s platil pouze pro Mikolovovu odbočku.
+
+- Markov 1913: závislosti písmen v Oněginovi, nikoli „vynález LLM“. Shannon 1948: statistické aproximace jazyka; Shannon 1951: člověk predikuje další znak. Česká demonstrace se musí přiznat jako vlastní ilustrace.
+- N-gram je N-prvková posloupnost; při odhadu dalšího slova má model historii N−1 slov. Zobrazené počty jsou syntetické, nikoli autentický korpus. Backoff a smoothing umožňují pracovat s neviděnými kombinacemi; n-gramy byly prakticky úspěšné v rozpoznávání řeči.
+- Podobnost kočka/kotě se v základní tabulce slovních n-gramů automaticky nesdílí. Není to tvrzení o všech rozšířeních statistických LM. 10¹⁰/10¹⁵ jsou počty možných kombinací, ne velikost skutečně uložené tabulky.
+- Bengio 2003: společné učení vektorů a predikce umožňuje generalizaci; kontext zůstává pevný. Trénink byl výpočetně náročný.
+- Mikolov et al. 2010: kontext přenášený rekurentním stavem, ne nekonečná spolehlivá paměť. Brněnský callback je podložen afiliací VUT + Johns Hopkins. Netvrdit, že Mikolov vynalezl RNN nebo LLM.
+- Word2vec 2013: související linie efektivního učení slovních reprezentací, ne řetězec RNN → word2vec → Transformer. CBOW/Skip-gram a negative sampling zůstanou technickou poznámkou. První paper již zkoumá sémantické a syntaktické vztahy.
+- LSTM 1997 je starší než Mikolovova práce; neprezentovat ho jako následný milník roku 2010. Transformer zvyšuje paralelizaci tréninku, nikoli generování celé autoregresivní odpovědi najednou. Attention existovala i před rokem 2017.
+- Historie je pokračující vývoj metod, dat a výpočetních možností, nikoli 70 let odložená myšlenka či pouhé zvětšení starého modelu.
+- Claude/Shannon: pouze volitelný callback připsaný reportáži WIRED; žádné tvrzení o výhradním nebo jednoznačně potvrzeném původu názvu.
+
+### Ověření změny
+
+- `scripts/review-html.py --page 2 --all-states --output html/review/issue-1`: 26 slidů, všech 85 stavů odkrývání, 0 nalezených problémů; konzole bez zpráv. Aktivní slide, viditelnost buildů, hranice obsahu a povinné oddíly notes kontrolovány programově.
+- Prohlédnuty screenshoty všech stavů; nové slidy 8–10 navíc v plné velikosti. Bez zjištěných ořezů a kolizí. Word2vec má oddělený box, ne šipku v přímé posloupnosti modelů.
+- Nezávisle načteno 26 notes pro 26 slidů; součet 1740 sekund. Osnova: 2:15 + 5:45 + 3:30 + 8:00 + 4:00 + 5:30 = 29:00, minuta rezervy do 30:00. Odstraněn duplicitní slide `porad-token`; pointa zůstává v přechodu evoluce → halucinace. Zkrácen také mluvený text, nejen časové štítky.
+- Po finální změně notes znovu ověřen reload, klávesový přechod smyčka → Shannon, aktuální text v panelu N a overview všech 26 slidů s návratem Escape.
+- Export HTML PDF má 26 stran. Prez-opus zkontroloval celkový grid a temperature; prez-astra nové historické strany 8–10 v detailu. Původní PPTX se nemění.
+- `node --check` (slides.js, notes.js), `python3 -m py_compile scripts/review-html.py` a `git diff --check` bez chyb.
+
+Odhad času není měřený živý přednes. Pokud historie při dry-runu přeteče přes čtyři minuty, nejdřív vypustit volitelný Claude callback a detail backoff; zachovat oba Mikolovovy příspěvky a rozlišení kontextu / reprezentací / paralelizace tréninku.

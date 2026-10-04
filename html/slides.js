@@ -30,10 +30,6 @@
   const S = [];
 
   // ===== I. Otevíráme krabičku ==============================================
-
-  // ===== I. Otevíráme krabičku ==============================================
-
-  // ===== I. Otevíráme krabičku ==============================================
   S.push({ id: "dont-panic", act: "I", html: `
     <div class="swap" data-until="1">
       <p class="fine" style="font-size:28px">Stopařův průvodce po LLMs</p>
@@ -142,6 +138,68 @@
         <p class="fine gap-s">Tokeny podle o200k_base, konkrétní volby ilustrativní.</p>
       </div>
     </div>` });
+
+  // ===== Historie: rampa k pretrainingu =====================================
+  // Shannon 1951 guessed letters; Czech row + guess counts are an illustration.
+  const GUESS = [["K", 5], ["O", 2], ["Č", 3], ["K", 1], ["A", 1], ["␣", 1], ["S", 4], ["E", 2], ["D", 1], ["Í", 1], ["␣", 1], ["N", 2], ["A", 1]];
+  S.push({ id: "shannon", act: "II", html: `
+    <h2>Tuhle hru hrajeme od roku 1951</h2>
+    <p class="say">Claude Shannon nechával lidi hádat další písmeno textu.</p>
+    <div class="row gap-l" ${st(1)} style="gap:10px; align-items:flex-start">
+      ${GUESS.map(([c, n]) => `<div class="col" style="gap:10px; align-items:center; width:84px">
+        <span class="box" style="width:76px; height:84px; font-size:44px; padding:0">${c}</span>
+        <span class="mono ${n === 1 ? "accent" : "muted"}" style="font-size:26px">${n}</span></div>`).join("")}
+    </div>
+    <p class="fine gap-s" ${st(1)}>Číslo = kolikátým pokusem člověk uhodl. Často hned napoprvé.</p>
+    <p class="lead push" ${st(2)}>Stejná hra jako s kočkou. Jen po písmenech.</p>
+    <p class="fine gap-s"><span class="tag">ilustrace principu; Shannon 1951 testoval angličtinu</span></p>` });
+
+  const NGRAM = [["střeše", 50], ["gauči", 20], ["zemi", 10]];
+  S.push({ id: "ngramy", act: "II", html: `
+    <h2>N-gramy: spočítej, co chodí po čem</h2>
+    <div class="row" style="gap:90px; align-items:flex-start">
+      <div class="col" style="gap:18px; width:640px">
+        <p class="mono muted" style="font-size:30px">„sedí na …“ v korpusu</p>
+        <div class="bars" style="--max:300px">${NGRAM.map(([w, n], i) =>
+          `<span class="lbl">${w}</span><span class="track ${i === 0 ? "lead-bar" : ""}"><span class="fill" style="--p:${n / 50}"></span><span class="pct">${n}×</span></span>`).join("")}</div>
+        <p class="fine">Desítky let fungovaly. Třeba v rozpoznávání řeči.</p>
+      </div>
+      <div class="col" style="gap:22px">
+        <div ${st(1)}>
+          <p class="mono" style="font-size:28px">viděl: kočka sedí na střeše</p>
+          <p class="mono accent" style="font-size:28px; margin-top:8px">neviděl: kotě sedí na střeše → 0×</p>
+        </div>
+        <div class="col mono" ${st(2)} style="gap:10px; font-size:28px; margin-top:16px">
+          <span><span class="muted">✗</span> černé kotě sedí na</span>
+          <span><span class="muted">✗</span> kotě sedí na</span>
+          <span class="accent" style="font-weight:700">✓ sedí na</span>
+        </div>
+      </div>
+    </div>
+    <p class="lead push" ${st(3)}>Chytré a praktické. Ale pořád jen tabulky četností.</p>
+    <p class="fine gap-s"><span class="tag">ilustrativní četnosti</span></p>` });
+
+  const GEN = [["tabulka nezná podobná slova", "2003", "Bengio et al.", "naučené vektory slov: kočka ≈ kotě"],
+               ["pevné okno kontextu", "2010", "Mikolov et al.", "RNN language model: stav nese historii"],
+               ["trénink krok za krokem", "2017", "Vaswani et al.", "Transformer: attention, paralelní trénink"]];
+  S.push({ id: "neuronove", act: "II", html: `
+    <h2>Každá generace řešila limit té předchozí</h2>
+    <div class="row" style="gap:50px; align-items:flex-start">
+      <div class="col" style="gap:40px; flex:1">
+        ${GEN.map(([lim, y, who, sol], i) => `
+          <div class="row" ${i ? st(i === 2 ? 3 : i) : ""} style="gap:22px">
+            <span class="say muted" style="width:400px; font-size:28px; flex:none">${lim}</span>${arr}
+            <span class="mono accent" style="font-size:30px; font-weight:700; width:84px; flex:none">${y}</span>
+            <span class="say" style="font-size:30px"><b style="font-weight:600">${who}</b><br>${sol}</span>
+          </div>`).join("")}
+      </div>
+      <div class="col" ${st(2)} style="gap:10px; width:300px; flex:none; border:2.5px dashed var(--line); border-radius:8px; padding:22px 24px; margin-top:70px">
+        <span class="mono muted" style="font-size:22px">vedlejší větev</span>
+        <span class="mono accent" style="font-size:30px; font-weight:700">2013</span>
+        <span class="say" style="font-size:28px"><b style="font-weight:600">word2vec</b>, Mikolov et al.: vektory slov levně a ve velkém</span>
+      </div>
+    </div>
+    <p class="lead push" ${st(4)}>Stará myšlenka. Lepší metody, víc dat a výpočtu.</p>` });
 
   const KNOBS = [20, 110, 200, 300, 45, 160, 250, 330, 80, 190, 280, 15];
   S.push({ id: "pretraining", act: "II", html: `
@@ -253,13 +311,6 @@ Asistent: Klient posouvá schůzku na čtvrtek.</pre>
         </div>`).join("")}
     </div>
     <p class="lead push" ${st(3)}>Nejdřív jsme model naučili pokračovat v textu. Pak jsme ho naučili, jak má pokračovat, když po něm něco chceme.</p>` });
-
-  S.push({ id: "porad-token", act: "II", html: `
-    <p class="big" style="margin-top:90px; font-size:96px">Uvnitř asistenta pořád běží tentýž motor.</p>
-    <div class="row gap-l mono" style="gap:22px; font-size:30px">
-      ${box("kontext")}${arr}${box("síť")}${arr}${box("rozdělení")}${arr}${box("další token", "ai")}<span class="accent" style="font-size:44px">↺</span>
-    </div>
-    <p class="lead push" ${st(1)}>Výsledek je odhad dalšího tokenu. Ne vyhledaný fakt.</p>` });
 
   // ===== III. Kde to skřípe ================================================
   S.push({ id: "halucinace", act: "III", html: `

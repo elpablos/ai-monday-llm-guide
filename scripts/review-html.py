@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Offline browser QA using chrome-devtools CLI; saves screenshots and a JSON report.
-Run: python3 scripts/review-html.py --page 2 [--all-states]
+Run: python3 scripts/review-html.py --page 2 [--all-states] [--output html/review/narrative]
 Chrome DevTools page must already contain html/index.html.
 """
 import argparse,json,pathlib,re,subprocess
-p=argparse.ArgumentParser();p.add_argument('--page',default='2');p.add_argument('--all-states',action='store_true');a=p.parse_args()
-root=pathlib.Path(__file__).resolve().parents[1];out=root/'html/review/narrative';out.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--page',default='2');p.add_argument('--all-states',action='store_true');p.add_argument('--output',default='html/review/narrative');a=p.parse_args()
+root=pathlib.Path(__file__).resolve().parents[1];out=root/a.output;out.mkdir(parents=True,exist_ok=True)
 cli=['npx','--yes','--package','chrome-devtools-mcp','chrome-devtools']
 def run(*args):
  r=subprocess.run(cli+list(args),capture_output=True,text=True,check=True)
@@ -26,6 +26,7 @@ for s in meta:
  for step in range(s['max']+1):
   result=js('''async () => {location.hash='#/%d/%d';await new Promise(r=>setTimeout(r,25));let el=document.querySelector('.slide.is-active'),b=el.getBoundingClientRect();let issues=[];for(let n of el.querySelectorAll('[data-step],[data-until]')){let hide=(n.dataset.step && %d<+n.dataset.step)||(n.dataset.until && %d>=+n.dataset.until);if(n.classList.contains('is-hidden')!==!!hide)issues.push('build:'+n.textContent.slice(0,50));}for(let n of el.querySelectorAll('h1,h2,p,pre,text,.box,.tok,figure,img')){let r=n.getBoundingClientRect();if(getComputedStyle(n).visibility!=='hidden'&&r.width&&(r.left<b.left-2||r.top<b.top-2||r.right>b.right+2||r.bottom>b.bottom+2))issues.push('overflow:'+n.textContent.slice(0,80));}return {id:el.dataset.id,issues};}'''%(s['index'],step,step,step))
   report['states']+=1
+  if result['id']!=s['id']:result['issues'].append('wrong active slide')
   if result['issues']:report['issues'].append({'slide':s['id'],'step':step,**result})
   if a.all_states or step==s['max']:
    run('take_screenshot',a.page,'--filePath',str(out/f"{s['index']:02d}-{s['id']}-{step}.png"))
@@ -33,3 +34,5 @@ for s in meta:
 report['console']=run('list_console_messages',a.page)
 (out/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
 print(json.dumps(report,indent=2,ensure_ascii=False))
+
+raise SystemExit(1 if report['issues'] else 0)
