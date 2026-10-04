@@ -35,3 +35,15 @@ Handles: prez-opus `term_320c32c8-293e-455f-9223-ec9716a5ca38`, prez-astra `term
 - 2026-10-04 17:53 CEST — Opus: html opravy dle Astry: stage centrování absolute+translate(-50%,-50%) (BLOCKER 1280×720), overview/print aplikují finální build stav všem slidům a návrat obnoví aktuální, print reset overview gridu/zoomu, SVG šipky bez url(#) markerů (file:// console), viewBox transformer/smyčka rozšířen. Ověřeno headless: 1280×720 OK, print-to-pdf 22 stran 16:9 s finálními stavy (6, 16, 21).
 - 2026-10-04 17:54 CEST — Opus: slide 22 + notes doplněny o Karpathy video (S13).
 - 2026-10-04 17:55 CEST — Opus: README HTML uzavřen (regenerace, QR, assets, PDF, ověření, S13); PDF proof html/stoparuv-pruvodce-po-llms.pdf (22 stran, sha256 6d6f66e6…).
+
+## Narativní refactor — 4. 10. večer
+
+Pavel zadal přímo implementaci na `main`: od autocomplete přes pretraining, instruction tuning a preference k asistentovi; zachovat limity a engineering pointu. Opus vlastní HTML obsah, notes, outline, README; Astra zdroje, faktické review a Chrome DevTools QA. Bez změn starého PPTX. Vybrané primární historické ukázky: GPT-2 (2019), tabulka 13, a GPT-3/InstructGPT (2022), obr. 42. Krátká česká shrnutí, žádné smyšlené historické výstupy. A/B preference zůstává explicitně vlastní ilustrace. Cílový čas 29 minut + minuta rezervy.
+- 2026-10-04 21:29 CEST — Opus: narativní refactor HTML hotový k QA: 24 slidů / 29:00 (notes ⏱ i outline sečteno). Nové: motor, gpt2, base-model, instruction, preference, zaba-po, evoluce, porad-token, aktualni, agent; věk a sarkasmus zvlášť (původní příklady). Pryč: tokeny, embeddings, attention, transformer, JPEG, proc-chytre, nastroje, dva-svety. Zapracovány všechny Astřiny opravy (žába obr42, GPT-2 tab13, S15/S16, notes tech pass). Headless screenshoty všech 24 prohlédnuty. Necommitováno.
+- 2026-10-04 21:30 CEST — Opus: finální formulace dle Astry (gpt2, halucinace, aktualni na slidech; instruction/preference/aktualni/halucinace/zdroje v notes, bez římského fóra); outline sladěn; PDF html/stoparuv-pruvodce-po-llms.pdf přegenerováno (24 stran). Necommitováno.
+- 2026-10-04 21:33 CEST — Opus: Resources = Explainer, GPT-2 (S14), InstructGPT, Karpathy; PDF přegenerováno (24 stran). slides+notes předány Astře; README/outline vlastní Astra. Necommitováno.
+
+### Narativní refactor — integrace a QA
+- prez-opus: 24slidový příběh, krátké notes, nové historické momenty, HTML PDF.
+- prez-astra: primární zdroje a limity historických tvrzení, obsahové review, Chrome DevTools kontrola všech 75 build states, vizuální kontrola HTML/PDF, sjednocení README a časů v osnově.
+- Výsledek: 29:00 + 1:00 rezerva, technické review aktualizováno; bez zjištěných regresí. Živý dry-run zůstává na řečníkovi.

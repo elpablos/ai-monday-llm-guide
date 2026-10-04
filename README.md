@@ -4,6 +4,8 @@ Přednáška v češtině, cca 30 minut, AI Monday 5. 10. 2026.
 
 ## HTML deck (aktuální)
 
+24 slidů, 75 stavů odkrývání, 29 minut obsahu + minuta rezervy. Příběh: autocomplete → pretraining → base model → asistent → preference → limity → nástroje → přesná pravidla a model.
+
 Otevři `html/index.html` v prohlížeči — funguje offline ze souboru, bez serveru a CDN.
 
 | Klávesa | Akce |
@@ -21,13 +23,12 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 | Soubor | Co |
 |---|---|
 | `html/slides.js` | obsah slidů (HTML/SVG), builds přes `data-step` / `data-until` / `data-on` |
-| `html/notes.js` | speaker notes podle id slidu (převzaté z ověřeného PPTX v2) |
+| `html/notes.js` | nové speaker notes podle id slidu; mluvený tahák + technické nuance |
 | `html/style.css` | vizuální systém: #FAFBFC / #17212B / #2458B3, Avenir Next → Segoe UI → Helvetica |
 | `html/app.js` | navigace, notes, přehled, tisk, škálování 1600×900 |
 | `html/qr.js` | vygenerovaný SVG QR na Transformer Explainer |
 | `html/assets/` | Skullpix pixel-art (prez-astra), PNG + editovatelný JSON |
-
-| `html/stoparuv-pruvodce-po-llms.pdf` | PDF (22 stran, finální stav buildů) |
+| `html/stoparuv-pruvodce-po-llms.pdf` | PDF (24 stran, finální stav buildů) |
 
 ### Úpravy a regenerace
 
@@ -39,7 +40,9 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 
 ### Ověření
 
-Chrome DevTools (prez-astra): 63 build stavů bez chyb v konzoli, 22/22 notes, stage 1280×720 a mobilní emulace 390×844, přehled, Escape, notes a časovač. Headless screenshoty všech 22 slidů (prez-opus). Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
+Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing a přetékání.
+
+Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/narrative/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
 
 Vizuální reference: Andrej Karpathy, *Deep Dive into LLMs like ChatGPT* (sources.md S13) — světlá technická tabule; video je i v Resources a v notes.
 
@@ -49,16 +52,16 @@ PPTX níže je starší artefakt, dál se negeneruje.
 
 | Soubor | Co to je | Vlastník |
 |---|---|---|
-| `deck/stoparuv-pruvodce-po-llms.pptx` | **finální** deck v2 (schválen technickou a vizuální oponenturou, viz tech-review.md) se speaker notes ke každému snímku | prez-opus |
+| `deck/stoparuv-pruvodce-po-llms.pptx` | starší fallback deck v2 (schválen technickou a vizuální oponenturou, viz tech-review.md) se speaker notes ke každému snímku | prez-opus |
 | `deck/build.js` | editovatelný zdroj — všechny texty, diagramy, notes, data | prez-opus |
 | `deck/render/*.pdf`, `sheet-*.jpg` | render pro vizuální kontrolu | prez-opus |
 | `outline.md` | osnova s timingem | prez-opus |
 | `tech-review.md` | technická oponentura po slidech | prez-astra |
-| `sources.md` | primární zdroje S1–S12 | prez-astra |
+| `sources.md` | zdroje S1–S16 a původ historických ukázek | prez-astra |
 | `coordination.md` | log spolupráce (append-only) | oba |
 | `zadani.md`, `prompt-*.md` | původní zadání, beze změn | — |
 
-## Regenerace
+## Starší PPTX: regenerace
 
 ```bash
 cd deck
@@ -71,7 +74,7 @@ pdftoppm -jpeg -r 110 render/stoparuv-pruvodce-po-llms.pdf render/slide
 
 Žádné externí assety: diagramy jsou nativní PowerPoint tvary (editovatelné), QR kód se generuje při buildu.
 
-## Vizuální systém
+## Starší PPTX: vizuální systém
 
 - Pozadí `0A0B0D`, text `ECE9E2`, tlumená `8A8F98`, linky `2E333B`, jeden akcent amber `FF9F1C`.
 - Amber = pravděpodobnostní část / to, na co se právě díváme. Bílá = deterministická část.
@@ -79,14 +82,14 @@ pdftoppm -jpeg -r 110 render/stoparuv-pruvodce-po-llms.pdf render/slide
 - Všechny texty, diagramy (nativní tvary) i speaker notes jsou v PPTX editovatelné; pro větší změny ale upravovat `build.js` a přegenerovat.
 - Motiv: ořezové značky v rozích (technický blueprint), mono štítek sekce vlevo nahoře.
 
-## Struktura a builds
+## Starší PPTX: struktura a builds
 
 Animace nejsou použité; postupné odkrývání je řešené navazujícími slidy (28 snímků, 22 „logických“ slidů):
 `Kočka sedí na …` (2), `2837 × 491` (2), `Tak mu dejme nástroje` (3). Timing je v `outline.md` a v hlavičce notes každého slidu.
 
 ## Živá ukázka
 
-Po slidu **08 · SAMPLING**: [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) — posunout temperature slider. Max 1 min (bere z rezervy). Stránku otevřít a načíst předem; když nepojede Wi-Fi, stačí statické bary na slidu.
+Po HTML slidu **6 · A teď hodíme kostkou**: [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) — posunout temperature slider. Max 1 min (bere z rezervy). Stránku otevřít a načíst předem; když nepojede Wi-Fi, stačí statické bary na slidu.
 
 ## Pravidla obsahu
 

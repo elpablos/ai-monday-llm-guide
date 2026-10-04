@@ -20,7 +20,6 @@
 
   // o200k_base (tiktoken), verified in tech-review.md.
   const CZ = [["Ko", 33185], ["čka", 51851], [" sed", 10412], ["í", 556], [" na", 898], [" st", 420], ["ře", 38132], ["še", 13136], [".", 13]];
-  const EN = [["The", 976], [" cat", 9059], [" sits", 38174], [" on", 402], [" the", 290], [" roof", 16367], [".", 13]];
   // Synthetic logits for the temperature slide: softmax(logits / T).
   const LOGITS = [["A", 3], ["B", 2], ["C", 1], ["D", 0]];
   const temper = (T) => {
@@ -29,6 +28,10 @@
   };
 
   const S = [];
+
+  // ===== I. Otevíráme krabičku ==============================================
+
+  // ===== I. Otevíráme krabičku ==============================================
 
   // ===== I. Otevíráme krabičku ==============================================
   S.push({ id: "dont-panic", act: "I", html: `
@@ -70,88 +73,42 @@
       <p class="say">Ale vždycky jsem se něco naučil.</p>
     </div>` });
 
-  // ===== II. Rozebíráme ===================================================
+  // ===== II. Motor a jak se z něj stal asistent ===========================
   S.push({ id: "kocka", act: "II", html: `
     <p class="big" style="margin-top:120px">Kočka sedí na …</p>
     <div class="row gap-l" ${st(1)} style="gap:64px; font-size:56px; font-weight:600">
       <span class="accent">střeše</span><span>gauči</span><span>zemi</span><span>stole</span><span class="muted">…</span>
     </div>
-    <p class="lead push" ${st(2)}>Gratuluju. Právě jste si zahráli na language model.</p>` });
-
-  S.push({ id: "tokeny", act: "II", html: `
-    <h2>LLM nevidí text. Dostává tokeny.</h2>
-    <div class="tokens">${CZ.map(([t, id]) => tok(t, id)).join("")}<span class="count">9 tokenů</span></div>
-    <div class="tokens gap-m" ${st(1)}>${EN.map(([t, id]) => tok(t, id)).join("")}<span class="count">7 tokenů</span></div>
-    <p class="fine push">Tokenizer o200k_base. Tečka · je mezera. Čísla pod tokeny jsou jejich ID ve slovníku.</p>` });
-
-  S.push({ id: "embeddings", act: "II", html: `
-    <h2>Tokeny se změní na čísla</h2>
-    <div class="row" style="align-items:flex-start; gap:60px">
-      <div class="col" style="gap:28px">
-        ${[["·sed", 10412, "[ 0.12, −0.83, 0.40, … ]"], ["·na", 898, "[−0.51, 0.07, 0.93, … ]"], ["·st", 420, "[ 0.66, 0.21, −0.18, … ]"]].map(([t, id, v]) =>
-          `<div class="row" style="gap:22px">${box(t)}${arr}<span class="mono muted" style="font-size:28px;width:110px">${id}</span>${arr}<span class="mono accent" style="font-size:30px; white-space:nowrap">${v}</span></div>`).join("")}
-        <p class="mono" style="font-size:28px; margin-top:12px">+ pozice v textu</p>
-        <p class="fine">Schematické hodnoty. Reálně stovky až tisíce čísel na token.</p>
-      </div>
-      <figure ${st(1)} style="margin:0">
-        <svg class="diagram" viewBox="0 0 360 360" width="360" height="360">
-          <rect x="1" y="1" width="358" height="358" class="faint" stroke-dasharray="6 6"/>
-          ${[["kočka", 50, 60], ["kotě", 80, 120], ["pes", 140, 85], ["střecha", 220, 250], ["okap", 255, 305]].map(([w, x, y]) =>
-            `<circle cx="${x}" cy="${y}" r="8" fill="#2458B3"/><text x="${x + 16}" y="${y + 8}" font-size="22">${w}</text>`).join("")}
-        </svg>
-        <figcaption class="fine" style="margin-top:12px">Schéma, ne měření: co se používá podobně, skončí blízko.</figcaption>
-      </figure>
+    <div class="push" ${st(2)}>
+      <p class="lead">Gratuluju. Právě jste si zahráli na language model.</p>
+      <p class="say muted gap-s">Našeptávač z mobilu. Jen hodně, hodně velký.</p>
     </div>` });
 
-  const ATT = [["Kočka", 1], [" honila", .45], [" myš", .55], [",", .1], [" protože", .25], [" měla", .4]];
-  S.push({ id: "attention", act: "II", html: `
-    <h2>Na co se mám dívat?</h2>
-    <div class="tokens" style="gap:16px">
-      ${ATT.map(([t, w], i) => `<div class="tok ${i === 5 ? "cur" : ""}"><b class="att" style="--w:${w}">${t.replace(/ /g, "·")}</b>${i === 5 ? '<i style="color:var(--ink); font-size:22px; margin-top:12px">▲ zpracovávám</i>' : ""}</div>`).join("")}
-      <div class="tok future"><b>·hlad</b><i style="font-size:22px; margin-top:12px">nevidí</i></div><div class="tok future"><b>.</b></div>
+  const MOTOR = [
+    ["text", `<span class="mono" style="font-size:44px">Kočka sedí na</span>`],
+    ["tokeny", `<div class="tokens">${CZ.slice(0, 5).map(([t]) => tok(t)).join("")}</div>`],
+    ["čísla", `<div class="row mono" style="gap:30px; font-size:34px">${CZ.slice(0, 5).map(([, id]) => `<span>${id}</span>`).join("")}<span class="muted">→ vektory čísel</span></div>`],
+    ["síť", `<span class="box solid" style="font-size:30px; padding:18px 40px">neuronová síť: miliardy naučených čísel</span>`],
+    ["výstup", `<span class="mono accent" style="font-size:34px">skóre pro každý možný další token</span>`],
+  ];
+
+  S.push({ id: "motor", act: "II", html: `
+    <h2 style="margin-bottom:36px">Co je uvnitř? Jen minimum.</h2>
+    <div class="col" style="gap:18px">
+      ${MOTOR.map(([lbl, html], i) => `
+        <div class="row" ${i ? st(i) : ""} style="gap:36px; min-height:92px">
+          <span class="mono muted" style="font-size:26px; width:130px; text-align:right">${lbl}</span>${html}
+        </div>`).join("")}
     </div>
-    <p class="say gap-l">Když zpracovávám tento token, které části kontextu jsou pro něj důležité?</p>
-    <p class="fine push" ${st(1)}>Sytost modré = váha attention. Schéma, ne změřené váhy; slova místo tokenů.</p>
-    <style>
-      [data-id="attention"] .att { transition: background-color .4s var(--ease); }
-      [data-id="attention"].s1 .att { background: color-mix(in srgb, var(--accent) calc(var(--w) * 70%), #fff); }
-    </style>` });
-
-  S.push({ id: "transformer", act: "II", html: `
-    <h2>Opakuj. Hodněkrát.</h2>
-    <div class="row" style="align-items:flex-start; gap:90px">
-      <svg class="diagram" viewBox="0 0 700 560" width="700" height="560">
-        
-        <rect x="0" y="0" width="600" height="58" rx="6" class="ink" fill="#fff"/>
-        <text x="300" y="38" font-size="24" text-anchor="middle">tokeny + pozice → vektory</text>
-        ${[0, 1, 2].map((i) => {
-          const y = 100 + i * 110;
-          return `<line x1="300" y1="${y - 40}" x2="300" y2="${y - 4}" class="ink" stroke="#5F6B78"/>${ah(300, (y - 40), 300, (y - 4), "#5F6B78")}
-          <rect x="0" y="${y}" width="600" height="80" rx="8" class="ink" fill="#fff"/>
-          <rect x="22" y="${y + 14}" width="250" height="52" rx="5" class="acc" fill="#fff"/><text x="147" y="${y + 48}" font-size="24" text-anchor="middle" style="fill:#2458B3">attention</text>
-          <line x1="276" y1="${y + 40}" x2="322" y2="${y + 40}" class="ink"/>${ah(276, (y + 40), 322, (y + 40), "#5F6B78")}
-          <rect x="328" y="${y + 14}" width="250" height="52" rx="5" class="ink" fill="#fff"/><text x="453" y="${y + 48}" font-size="24" text-anchor="middle">MLP</text>`;
-        }).join("")}
-        <text x="618" y="270" font-size="30" font-weight="700" style="fill:#2458B3">× N</text>
-        <line x1="300" y1="420" x2="300" y2="466" class="ink"/>${ah(300, 420, 300, 466, "#5F6B78")}
-        <rect x="0" y="470" width="600" height="58" rx="6" class="ink" fill="#fff"/>
-        <text x="300" y="508" font-size="24" text-anchor="middle">logits</text>
-      </svg>
-      <div class="col" style="margin-top:60px; gap:36px; width:560px">
-        <p class="lead">Žádná ručně napsaná tabulka odpovědí.</p>
-        <p class="say muted" ${st(1)}>Architektura + miliardy naučených čísel. Parametrů.</p>
-      </div>
-    </div>` });
+    <p class="fine push" ${st(3)}>Uvnitř sítě se každý token může „podívat“ na předchozí text. Tomu se říká attention.</p>` });
 
   const DIST = [["střeše", .31], ["gauči", .18], ["zemi", .11], ["stole", .07], ["okně", .05]];
   S.push({ id: "rozdeleni", act: "II", html: `
     <h2>Nevypadne odpověď. Vypadne rozdělení.</h2>
-    <div class="row mono" style="font-size:28px; gap:20px; color:var(--muted)">
-      <span>Kočka sedí na …</span>${arr}<span>logits</span>${arr}<span class="accent" style="font-weight:700">softmax</span>${arr}<span>pravděpodobnosti</span>
-    </div>
+    <p class="mono muted" style="font-size:30px">Kočka sedí na …</p>
     <div class="gap-m" ${st(1)}>${bars(DIST, { scale: .31, max: "760px" })}</div>
     <p class="fine gap-s" ${st(1)}>Ostatní: 28 % dohromady, rozprostřeno mezi desítky tisíc tokenů.</p>
-    <p class="push"><span class="tag">Ilustrativní čísla, slova místo tokenů</span></p>` });
+    <p class="push"><span class="tag">ilustrativní čísla, slova místo tokenů</span></p>` });
 
   S.push({ id: "kostka", act: "II", html: `
     <h2>A teď hodíme kostkou</h2>
@@ -164,81 +121,152 @@
     </div>
     <p class="say gap-l" ${st(3)}>Kostka, která před každým hodem změní pravděpodobnosti svých stěn podle všeho, co zatím viděla.</p>
     <p class="lead accent gap-s" ${st(3)}>Stochastický ≠ náhodný chaos.</p>
-    <p class="fine push">Syntetické logits [3, 2, 1, 0], softmax(logits / T). Pořadí se nemění, mění se poměry.</p>` });
+    <p class="push"><span class="tag">ilustrativní čísla</span></p>` });
 
-  const PIPE = ["text", "tokenizer", "tokeny", "embeddings", "transformer × N", "logits", "softmax → pravděpodobnosti", "sampling", "další token"];
+  const LOOP = ["kontext (tokeny)", "síť", "rozdělení", "sampling", "další token"];
   S.push({ id: "smycka", act: "II", html: `
     <h2>A znovu. A znovu. A znovu.</h2>
     <div class="row" style="align-items:flex-start; gap:70px">
-      <svg class="diagram" viewBox="0 0 600 600" width="560" height="560">
-        
-        ${PIPE.map((p, i) => {
-          const y = i * 66, last = i === 8;
-          return `<rect x="0" y="${y}" width="420" height="48" rx="5" class="${last ? "acc" : "ink"}" fill="#fff"/>
-          <text x="210" y="${y + 32}" font-size="21" text-anchor="middle" ${last ? 'style="fill:#2458B3;font-weight:700"' : ""}>${p}</text>
-          ${i < 8 ? `<line x1="210" y1="${y + 49}" x2="210" y2="${y + 64}" stroke="#5F6B78" stroke-width="2"/>${ah(210, (y + 49), 210, (y + 64), "#5F6B78")}` : ""}`;
+      <svg class="diagram" viewBox="0 0 520 460" width="480" height="430">
+        ${LOOP.map((p, i) => {
+          const y = i * 92, last = i === 4;
+          return `<rect x="0" y="${y}" width="380" height="60" rx="5" class="${last ? "acc" : "ink"}" fill="#fff"/>
+          <text x="190" y="${y + 39}" font-size="24" text-anchor="middle" ${last ? 'style="fill:#2458B3;font-weight:700"' : ""}>${p}</text>
+          ${i < 4 ? `<line x1="190" y1="${y + 61}" x2="190" y2="${y + 90}" stroke="#5F6B78" stroke-width="2.5"/>${ah(190, y + 61, 190, y + 90)}` : ""}`;
         }).join("")}
-        <path d="M420,${8 * 66 + 24} H480 V${2 * 66 + 24} H426" class="acc"/>${ah(480, 2 * 66 + 24, 426, 2 * 66 + 24, "#2458B3")}
-        <text x="492" y="300" font-size="22" style="fill:#2458B3">kontext</text>
-        <text x="492" y="328" font-size="22" style="fill:#2458B3">tokenů</text>
+        <path d="M380,${4 * 92 + 30} H440 V30 H386" class="acc"/>${ah(440, 30, 382, 30, "#2458B3")}
       </svg>
-      <div class="col" style="gap:30px; margin-top:40px">
+      <div class="col" style="gap:30px; margin-top:20px">
         ${[["Kočka sedí na", "·st"], ["Kočka sedí na st", "ře"], ["Kočka sedí na stře", "še"], ["Kočka sedí na střeše", "."]].map(([c, t], i) =>
           `<div class="row" ${i ? st(i) : ""} style="gap:24px"><span class="mono" style="font-size:34px; width:440px">${c}</span>${arr}${box(t, "ai")}</div>`).join("")}
         <p class="fine gap-s">Tokeny podle o200k_base, konkrétní volby ilustrativní.</p>
       </div>
     </div>` });
 
-  S.push({ id: "proc-chytre", act: "II", html: `
-    <h2>Tak proč je to tak chytré?</h2>
-    <div class="col" style="gap:22px">
-      ${[["Hlavní město Austrálie je …", "fakta"], ["def is_even(n): return …", "kód"], ["„Le chat dort.“ = „Kočka …", "překlad"], ["Pokud A > B a B > C, pak A …", "struktura"]].map(([p, k], i) =>
-        `<div class="row" ${i ? st(i) : ""} style="gap:28px">${box(p)}${arr}<span class="mono accent" style="font-size:32px">${k}</span></div>`).join("")}
-    </div>
-    <p class="lead push" ${st(4)}>Aby model dobře předpovídal text, učí se vzory a vztahy použitelné i pro překlad, kód a řešení úloh.</p>` });
-
   const KNOBS = [20, 110, 200, 300, 45, 160, 250, 330, 80, 190, 280, 15];
-  S.push({ id: "training", act: "II", html: `
-    <h2>Pootočíme pár miliard knoflíků</h2>
+  S.push({ id: "pretraining", act: "II", html: `
+    <h2>Odkud to umí? Z textu. Hodně textu.</h2>
     <div class="row" style="align-items:flex-start; gap:70px">
-      <div class="col" style="gap:20px; width:760px">
-        <p class="mono" style="font-size:30px">text:  Kočka sedí na rohožce.</p>
-        <p class="mono muted" style="font-size:30px">model: Kočka sedí na …</p>
-        ${bars([["·st", .40], ["·ro", .03]], { cls: "compact", scale: .4, max: "380px" })}
-        <p class="fine">Ilustrativní pravděpodobnosti.</p>
-        <p class="mono accent" style="font-size:30px; font-weight:700" ${st(1)}>skutečný další token v textu: ·ro</p>
-        <p class="mono" style="font-size:28px; line-height:1.6" ${st(2)}>chyba → malá úprava parametrů → znovu<br><span class="accent">× biliony tokenů</span></p>
-        <p class="fine" ${st(3)}>Pak post-training: instrukce, preference, odměny.</p>
+      <div class="col" style="gap:22px; width:780px">
+        ${[["Kočka sedí na", "rohožce"], ["Hlavní město Austrálie je", "Canberra"], ["def is_even(n): return n % 2 ==", "0"]].map(([t, n], i) =>
+          `<div class="row" ${i ? st(i) : ""} style="gap:18px"><span class="mono" style="font-size:30px">${t}</span><span class="box ai" style="font-size:28px; padding:8px 16px">${n}</span></div>`).join("")}
+        <p class="mono" style="font-size:28px; line-height:1.6; margin-top:20px" ${st(3)}>zakryj další token → model hádá → porovnej<br>→ maličko uprav naučená čísla → znovu<br><span class="accent">× biliony tokenů</span></p>
       </div>
-      <svg class="diagram" viewBox="0 0 440 330" width="440" height="330" data-on="2">
+      <svg class="diagram" viewBox="0 0 440 330" width="440" height="330" data-on="3">
         ${KNOBS.map((a, i) => {
-          const cx = 50 + (i % 4) * 112, cy = 50 + Math.floor(i / 4) * 112, r = 40, rad = (a * Math.PI) / 180;
-          const hi = i === 5;
+          const cx = 50 + (i % 4) * 112, cy = 50 + Math.floor(i / 4) * 112, r = 40, rad = (a * Math.PI) / 180, hi = i === 5;
           return `<circle cx="${cx}" cy="${cy}" r="${r}" class="${hi ? "acc" : "ink"}" fill="#fff"/>
           <line class="knob-hand" style="transform-origin:${cx}px ${cy}px; --r:${(i % 3 - 1) * 14 + 9}deg" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(rad) * r * .8}" y2="${cy + Math.sin(rad) * r * .8}" stroke="${hi ? "#2458B3" : "#17212B"}" stroke-width="4" stroke-linecap="round"/>`;
         }).join("")}
       </svg>
-    </div>` });
+    </div>
+    <p class="lead push" ${st(4)}>Aby dobře doplňoval text, učí se jazyk, fakta, kód, styl a vztahy.</p>
+    <p class="fine gap-s"><span class="tag">ilustrace, slova místo tokenů</span></p>` });
 
-  S.push({ id: "jpeg", act: "II", html: `
-    <h2>Co mají LLM společného s JPEGem?</h2>
-    ${[["JPEG", ["obrázek", "ztrátová komprese", "malý soubor", "přibližná rekonstrukce"], 0], ["LLM", ["biliony tokenů", "training", "parametry", "generování"], 1]].map(([lbl, items, step]) => `
-      <div class="row gap-s" ${step ? st(step) : ""} style="gap:20px; margin-bottom:28px">
-        <span class="mono accent" style="font-size:30px; font-weight:700; width:110px">${lbl}</span>
-        ${items.map((t) => box(t)).join(arr)}
-      </div>`).join("")}
-    <p class="lead gap-m" ${st(2)}>Parametry nejsou databáze dokumentů.</p>
-    <p class="say muted gap-s" ${st(2)}>LLM není JPEG. Je to analogie pro intuici, ne technický popis.</p>` });
+  S.push({ id: "gpt2", act: "II", html: `
+    <h2>Co z toho vyleze? GPT-2, 2019</h2>
+    <div class="col" style="gap:28px">
+      <div class="row" style="gap:28px; align-items:baseline">
+        <span class="mono muted" style="font-size:24px; width:200px; flex:none">vstup (lidský)</span>
+        <p class="say">Fiktivní zpráva: v Andách objevili stádo jednorožců, kteří mluví anglicky.</p>
+      </div>
+      <div class="row" ${st(1)} style="gap:28px; align-items:baseline">
+        <span class="mono accent" style="font-size:24px; width:200px; flex:none">pokračování</span>
+        <p class="say">Článek v novinovém stylu. Vymyšlený biolog Jorge Pérez. Citace „vědců“.</p>
+      </div>
+    </div>
+    <p class="lead push" ${st(2)}>Plynulý text ve správném žánru. Rozvíjí zadanou fikci. Není to ověřování zprávy.</p>
+    <p class="fine gap-s"><span class="tag">české shrnutí skutečné ukázky: Radford et al. 2019, tab. 13</span></p>` });
+
+  const FROG_PROMPT = `<div class="row" style="gap:24px; align-items:baseline">
+        <span class="mono muted" style="font-size:24px; width:200px; flex:none">prompt</span>
+        <p class="say">Napiš francouzsky krátký příběh: žába cestuje časem do antického Řecka.</p>
+      </div>`;
+  S.push({ id: "base-model", act: "II", html: `
+    <h2>Base model není asistent</h2>
+    <div class="col" style="gap:30px">
+      ${FROG_PROMPT}
+      <div class="row" ${st(1)} style="gap:24px; align-items:baseline">
+        <span class="mono accent" style="font-size:24px; width:200px; flex:none">GPT-3 (base)</span>
+        <p class="say">Další zadání: příběh o dítěti a hrách bohů. Příběh o mladíkovi v jiné době. Příběh o dítěti s imaginárním přítelem…</p>
+      </div>
+    </div>
+    <p class="lead push" ${st(2)}>Umí pokračovat v textu. Roli pomocníka ale nemá zaručenou.</p>
+    <p class="fine gap-s"><span class="tag">české shrnutí skutečných výstupů: Ouyang et al. 2022, obr. 42</span></p>` });
+
+  S.push({ id: "instruction", act: "II", html: `
+    <h2>Naučíme ho formát konverzace</h2>
+    <pre class="code" style="font-size:28px; white-space:pre-wrap; max-width:1150px">Uživatel: Přelož „dobrý den“ do angličtiny.
+Asistent: Good morning / Good afternoon.
+
+Uživatel: Shrň tenhle e-mail jednou větou.
+Asistent: Klient posouvá schůzku na čtvrtek.</pre>
+    <p class="say muted gap-m" ${st(1)}>Lidé napíšou obě strany dialogu. Tisíce takových ukázek.</p>
+    <p class="lead push" ${st(2)}>Pořád doplňuje dokument. Jen dokument teď vypadá jako konverzace.</p>
+    <p class="fine gap-s"><span class="tag">ilustrace</span></p>` });
+
+  S.push({ id: "preference", act: "II", html: `
+    <h2>Která odpověď je lepší?</h2>
+    <p class="mono" style="font-size:30px; margin-bottom:28px">Vysvětli mi jednou větou, co je token.</p>
+    <div class="grid2" style="gap:50px">
+      <div class="pref" data-pick="a">
+        <p class="mono muted" style="font-size:22px; margin-bottom:10px">odpověď A</p>
+        <p class="say" style="font-size:30px">Tokenizace má dlouhou historii. Začněme tím, jak počítače kódují znaky… <span class="muted">(a dalších pět odstavců)</span></p>
+      </div>
+      <div class="pref" data-pick="b">
+        <p class="mono muted" style="font-size:22px; margin-bottom:10px">odpověď B</p>
+        <p class="say" style="font-size:30px">Kousek textu, se kterým model pracuje: někdy celé slovo, někdy jen jeho část.</p>
+      </div>
+    </div>
+    <p class="lead gap-l" ${st(1)}>Lidé porovnávají. Model se posouvá k odpovědím, které hodnotitelé preferují.</p>
+    <p class="push"><span class="tag">ilustrace, ne skutečný anotační záznam</span></p>
+    <style>
+      [data-id="preference"] .pref { border: 2.5px solid var(--line); border-radius: 8px; padding: 26px 30px; background: #fff; transition: border-color .3s, box-shadow .3s; }
+      [data-id="preference"].s1 .pref[data-pick="b"] { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+      [data-id="preference"].s1 .pref[data-pick="b"]::after { content: "✓ vybráno"; display: block; margin-top: 14px; font: 700 24px var(--mono); color: var(--accent); }
+    </style>` });
+
+  S.push({ id: "zaba-po", act: "II", html: `
+    <h2>Stejný prompt, po post-trainingu</h2>
+    <div class="col" style="gap:30px">
+      ${FROG_PROMPT}
+      <div class="row" style="gap:24px; align-items:baseline">
+        <span class="mono muted" style="font-size:24px; width:200px; flex:none">GPT-3 (base)</span>
+        <p class="say muted">Další zadání dalších příběhů…</p>
+      </div>
+      <div class="row" ${st(1)} style="gap:24px; align-items:baseline">
+        <span class="mono accent" style="font-size:24px; width:200px; flex:none">InstructGPT</span>
+        <p class="say">Příběh o ztracené, unavené žábě, která hledá cestu do starého Řecka.</p>
+      </div>
+    </div>
+    <p class="lead push" ${st(2)}>Stejný motor. Jiné chování.</p>
+    <p class="fine gap-s"><span class="tag">české shrnutí skutečných výstupů: Ouyang et al. 2022, obr. 42</span></p>` });
+
+  S.push({ id: "evoluce", act: "II", html: `
+    <h2>Tři kroky k chatbotovi</h2>
+    <div class="row" style="gap:28px; margin-top:20px; align-items:flex-start">
+      ${[["doplňovač textu", "pretraining"], ["asistent", "instruction tuning"], ["lepší asistent", "preference"]].map(([a, b], i) => `
+        ${i ? `<span ${st(i)} style="display:flex; padding-top:52px">${arr}</span>` : ""}
+        <div class="col" ${i ? st(i) : ""} style="gap:14px; width:380px">
+          <span class="box ${i === 2 ? "ai" : ""}" style="font-family:var(--sans); font-size:40px; font-weight:700; padding:28px 20px">${a}</span>
+          <span class="mono muted" style="font-size:24px; text-align:center">${b}</span>
+        </div>`).join("")}
+    </div>
+    <p class="lead push" ${st(3)}>Nejdřív jsme model naučili pokračovat v textu. Pak jsme ho naučili, jak má pokračovat, když po něm něco chceme.</p>` });
+
+  S.push({ id: "porad-token", act: "II", html: `
+    <p class="big" style="margin-top:90px; font-size:96px">Uvnitř asistenta pořád běží tentýž motor.</p>
+    <div class="row gap-l mono" style="gap:22px; font-size:30px">
+      ${box("kontext")}${arr}${box("síť")}${arr}${box("rozdělení")}${arr}${box("další token", "ai")}<span class="accent" style="font-size:44px">↺</span>
+    </div>
+    <p class="lead push" ${st(1)}>Výsledek je odhad dalšího tokenu. Ne vyhledaný fakt.</p>` });
 
   // ===== III. Kde to skřípe ================================================
   S.push({ id: "halucinace", act: "III", html: `
     <h2>Proč halucinuje?</h2>
-    <pre class="code">while not done:
-    probs = model(context)    <span class="c"># vždycky nějaké rozdělení</span>
-    token = sample(probs)     <span class="c"># vždycky nějaký token</span>
-    context += token</pre>
-    <p class="lead gap-m" ${st(1)}>Věrohodné pokračování není záruka pravdy.</p>
-    <p class="say muted gap-s" ${st(1)}>Model může říct „nevím“. Generování ale nezaručuje, že správně pozná kdy.</p>` });
+    <p class="big" style="font-size:88px; margin-top:40px">Zní to jako odpověď.</p>
+    <p class="big accent" style="font-size:88px; margin-top:16px" ${st(1)}>To nezaručuje pravdu.</p>
+    <p class="say muted push" ${st(2)}>Model může říct „nevím“. Generování ale nezaručuje, že správně pozná kdy.</p>` });
 
   S.push({ id: "pocitani", act: "III", html: `
     <p class="big" style="margin-top:60px; font-size:150px">2837 × 491 = ?</p>
@@ -249,38 +277,31 @@
     <p class="lead push" ${st(2)}>Když mám kalkulačku, použiju kalkulačku.</p>` });
 
   // ===== IV. Stavíme kolem toho software ===================================
-  const CHAIN = [["LLM", 0], ["+ aplikační\nkontext", 0], ["+ retrieval", 0], ["+ tools", 1], ["+ state", 1], ["= agent", 2]];
-  S.push({ id: "nastroje", act: "IV", html: `
-    <h2>Tak mu dejme nástroje</h2>
-    <div class="row" style="gap:18px">
-      ${CHAIN.map(([t, s], i) => `<span class="box chain ${i === 5 ? "dashed" : ""}" data-chain="${s}" style="width:200px; height:110px; font-size:24px; padding:8px">${t}</span>`).join("")}
+  S.push({ id: "aktualni", act: "IV", html: `
+    <h2>Co v tréninku nenajde</h2>
+    <div class="col" style="gap:20px">
+      <p class="quote" style="font-size:52px">„Kolik teď stojí bitcoin?“</p>
+      <p class="quote" style="font-size:52px" ${st(1)}>„Co říká naše interní směrnice o cestovném?“</p>
     </div>
-    <div class="gap-l" style="position:relative; height:260px">
-      <div class="swap" data-until="1"><p class="lead">RAG: najdeme relevantní informace a vložíme je do kontextu.</p><p class="say muted gap-s">Do modelu nic nenahráváme.</p></div>
-      <div class="swap" ${st(1)} data-until="2"><p class="lead">Tools: kalkulačka, search, databáze, API, Python.</p><p class="say muted gap-s">Model navrhne volání, náš kód ho provede a vrátí výsledek.</p></div>
-      <div class="swap" ${st(2)}><p class="lead">LLM není celý agent. Je to jedna komponenta.</p><p class="say muted gap-s">Agent je smyčka: zvol akci, spusť tool, přečti výsledek, pokračuj, nebo skonči.</p></div>
+    <p class="say muted gap-m" ${st(2)}>Trénink někdy skončil. A pokud naše dokumenty nedostal, nemá se o co opřít.</p>
+    <div class="row gap-m" ${st(3)} style="gap:20px">
+      ${box("dotaz")}${arr}${box("search / API / retrieval")}${arr}${box("výsledek do kontextu")}${arr}${box("LLM odpoví", "ai")}
     </div>
-    <style>
-      [data-id="nastroje"] .chain { transition: border-color .3s, color .3s, background-color .3s; }
-      [data-id="nastroje"][data-now="0"] .chain:is([data-chain="1"], [data-chain="2"]),
-      [data-id="nastroje"][data-now="1"] .chain[data-chain="2"] { border-color: var(--line); color: var(--line); background: transparent; }
-      [data-id="nastroje"][data-now="0"] .chain[data-chain="0"],
-      [data-id="nastroje"][data-now="1"] .chain[data-chain="1"],
-      [data-id="nastroje"][data-now="2"] .chain[data-chain="2"] { border-color: var(--accent); color: var(--accent); font-weight: 700; }
-    </style>` });
+    <p class="lead push" ${st(3)}>Najdeme podklady. Přidáme je k otázce.</p>` });
 
-  S.push({ id: "dva-svety", act: "IV", html: `
-    <h2>Dva světy</h2>
-    <div class="grid2">
-      <div class="col" style="gap:14px">
-        <p class="lead" style="margin-bottom:12px">Deterministic</p>
-        ${["pravidla", "výpočty", "validace", "autorizace", "DB constraints", "workflows"].map((t) => `<p class="say">${t}</p>`).join("")}
-      </div>
-      <div class="col" ${st(1)} style="gap:14px">
-        <p class="lead accent" style="margin-bottom:12px">Probabilistic</p>
-        ${["interpretace jazyka", "klasifikace nejasného vstupu", "extrakce", "sumarizace", "generování", "fuzzy matching"].map((t) => `<p class="say">${t}</p>`).join("")}
-      </div>
-    </div>` });
+  S.push({ id: "agent", act: "IV", html: `
+    <h2>Agent? Tohle ve smyčce.</h2>
+    <svg class="diagram" viewBox="0 0 1360 380" width="1360" height="380">
+      ${[["LLM navrhne akci", 0, true], ["kód ji ověří a spustí", 1], ["výsledek do kontextu", 2]].map(([t, i, acc]) => {
+        const x = 40 + i * 450;
+        return `<rect x="${x}" y="40" width="380" height="90" rx="6" class="${acc ? "acc" : "ink"}" fill="#fff"/>
+        <text x="${x + 190}" y="95" font-size="26" text-anchor="middle" ${acc ? 'style="fill:#2458B3;font-weight:700"' : ""}>${t}</text>
+        ${i < 2 ? `<line x1="${x + 382}" y1="85" x2="${x + 446}" y2="85" stroke="#5F6B78" stroke-width="2.5"/>${ah(x + 382, 85, x + 446, 85)}` : ""}`;
+      }).join("")}
+      <path d="M1130,132 V230 H230 V136" class="acc" stroke-dasharray="10 8"/>${ah(230, 180, 230, 134, "#2458B3")}
+      <text x="680" y="272" font-size="24" text-anchor="middle" style="fill:#2458B3">znovu, dokud není hotovo</text>
+    </svg>
+    <p class="lead push" ${st(1)}>LLM není celý agent. Je to jedna součástka systému.</p>` });
 
   S.push({ id: "spatne", act: "IV", html: `
     <h2>Dosáhl 18 let?</h2>
@@ -309,8 +330,8 @@
     <p class="lead push" ${st(2)}>Tady rychle přibývají výjimky. Tady se model může hodit.</p>` });
 
   S.push({ id: "architektura", act: "IV", html: `
-    <h2 style="margin-bottom:28px">To nejlepší z obou světů</h2>
-    <svg class="diagram" viewBox="0 0 1360 640" width="1360" height="640">
+    <h2 style="margin-bottom:20px; font-size:52px">Deterministic software + probabilistic capabilities</h2>
+    <svg class="diagram" viewBox="0 0 1360 640" width="1190" height="560" style="align-self:center">
       
       <g>
         <rect x="580" y="0" width="200" height="50" rx="5" class="ink" fill="#fff"/><text x="680" y="33" font-size="22" text-anchor="middle">USER</text>
@@ -365,9 +386,8 @@
     <div class="row" style="align-items:flex-start; gap:90px">
       <div class="col" style="gap:30px; flex:1">
         ${[["Transformer Explainer", "https://poloclub.github.io/transformer-explainer/", "poloclub.github.io/transformer-explainer"],
-           ["Vaswani et al. 2017: Attention Is All You Need", "https://arxiv.org/abs/1706.03762", "arxiv.org/abs/1706.03762"],
+           ["Radford et al. 2019: GPT-2", "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf", "cdn.openai.com/better-language-models/…multitask_learners.pdf"],
            ["Ouyang et al. 2022: InstructGPT", "https://arxiv.org/abs/2203.02155", "arxiv.org/abs/2203.02155"],
-           ["Lewis et al. 2020: Retrieval-Augmented Generation", "https://arxiv.org/abs/2005.11401", "arxiv.org/abs/2005.11401"],
            ["Karpathy: Deep Dive into LLMs like ChatGPT", "https://www.youtube.com/watch?v=7xTGNNLPyMI", "youtube.com/watch?v=7xTGNNLPyMI"]].map(([t, u, d]) =>
           `<div><p class="say" style="font-weight:600">${t}</p><a class="mono" style="font-size:24px" href="${u}" target="_blank" rel="noopener">${d}</a></div>`).join("")}
       </div>

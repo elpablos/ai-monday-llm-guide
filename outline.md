@@ -1,80 +1,63 @@
 # Outline — Stopařův průvodce po LLMs
 
-Vlastník: prez-opus. Technické review: prez-astra (`tech-review.md`).
-Stav: v1 + tech review zapracované do `deck/build.js` (deck v1). Zdroj pravdy pro texty je teď generátor; tato osnova drží strukturu a timing.
+Vlastník: prez-opus. Technické review: prez-astra (`tech-review.md`, `sources.md`).
+Zdroj pravdy pro texty: `html/slides.js` + `html/notes.js`. Tato osnova drží příběh a timing.
 
-Cíl: 29:00 obsah + 1:00 rezerva (živé demo / smích / zdržení) = 30:00.
-Značka **[Z]** = zjednodušení pro vysvětlení, ve speaker notes bude explicitně označené.
+Cíl: 29:00 obsah + 1:00 rezerva (živé demo / zdržení) = 30:00.
 
-## Dramaturgie
+## Příběh
 
-Jeden objekt prochází celou přednáškou: černá krabička `prompt → LLM → answer`.
-Act I ji otevřeme, Act II rozebereme na šroubky, Act III ukážeme, kde to skřípe,
-Act IV kolem ní postavíme software. Finále = stejná krabička, ale už víme, co v ní je.
-
-Running gags (dávkovat): DON'T PANIC, „pootočíme pár miliard knoflíků", 42 (jen jednou, u distribuce).
+Autocomplete → minimum motoru → rozdělení, kostka, smyčka → odkud to umí (pretraining) →
+base model není asistent → jak se z něj stal asistent (formát konverzace, preference) →
+motor je pořád stejný → co z toho plyne (halucinace, počítání, chybějící znalosti) →
+nástroje a agent → pravidlo vs. jazyk → deterministic software + probabilistic capabilities → DON'T PANIC.
 
 ## I. Otevíráme krabičku — 2:30
 
-| # | Slide | Pointa | Čas |
-|---|-------|--------|-----|
-| 1 | DON'T PANIC | Zničí nás AI? Myslí? Ví? → lidé se bojí toho, čemu nerozumí. Tak to rozebereme. | 1:30 |
-| 2 | Šroubovák | Černá krabička LLM + šroubovák. „Většina věcí už po mně nefungovala." | 1:00 |
+| id | Slide | Pointa | Čas |
+|---|---|---|---|
+| dont-panic | DON'T PANIC + otázky | Bojíme se toho, čemu nerozumíme. | 1:30 |
+| sroubovak | Šroubovák (Skullpix) | Rozebereme krabičku. | 1:00 |
 
-## II. Rozebíráme — 14:00
+## II. Motor a jak se z něj stal asistent — 16:15
 
-| # | Slide | Pointa | Čas |
-|---|-------|--------|-----|
-| 3 | Kočka sedí na … | Pauza pro publikum → „Gratuluju, právě jste byli language model." | 1:15 |
-| 4 | LLM nevidí text | Věta rozpadlá na tokeny (CZ vs EN: čeština se tokenizuje hůř). | 1:15 |
-| 5 | Tokeny → čísla | Token ID → vektor. Podobné věci mají podobné vektory. Žádná „mapa významu". **[Z]** | 1:15 |
-| 6 | Attention | Na které předchozí tokeny se při zpracování tohoto dívat? Ukázka se zájmenem. Q/K/V jen v notes. **[Z]** | 1:45 |
-| 7 | Transformer | attention + MLP, opakováno N×. Žádná databáze odpovědí, jen parametry. **[Z]** | 1:00 |
-| 8 | Co vypadne | logits → softmax → distribuce (střeše 31 %, gauči 18 % …). Klíčový slide. | 1:15 |
-| 9 | Hodíme kostkou | Sampling. Kostka, která před každým hodem změní strany. Temperature = tvar distribuce, ne „kreativita". | 1:45 |
-| 10 | A znovu. A znovu. | Autoregresivní smyčka context → prediction → token ↺. Krabička je teď celá rozebraná (build). | 0:45 |
-| 11 | Tak proč je to chytré? | Dobrá predikce dalšího tokenu vyžaduje zachytit obrovské množství struktur v datech. Opatrně, bez „model světa" jako faktu. | 1:15 |
-| 12 | Training | Predikce vs. správný token → chyba → malá úprava parametrů → opakuj. „Pár miliard knoflíků." + post-training (chat model ≠ čistý LM). **[Z]** | 1:15 |
-| 13 | LLM jako JPEG? | Ztrátová komprese jako intuice: parametry nejsou databáze dokumentů. Explicitně: LLM není JPEG, je to analogie. **[Z]** | 1:15 |
+| id | Slide | Pointa | Čas |
+|---|---|---|---|
+| kocka | Kočka sedí na … | Právě jste byli language model. Našeptávač. | 1:15 |
+| motor | Co je uvnitř? Jen minimum. | text → tokeny → čísla → síť → skóre; attention jedna věta. | 2:00 |
+| rozdeleni | Vypadne rozdělení | Výstup = pravděpodobnosti dalšího tokenu (ilustrace). | 1:00 |
+| kostka | Hodíme kostkou | Stochastický ≠ chaos (ilustrace). | 1:15 |
+| smycka | A znovu. A znovu. | Generování = smyčka. | 0:45 |
+| pretraining | Z textu. Hodně textu. | Malé opravy × biliony; učí se jazyk, fakta, kód, styl, vztahy. | 1:45 |
+| gpt2 | GPT-2, 2019 | Rozvíjí zadanou fikci (shrnutí, tab. 13). | 1:15 |
+| base-model | Base model není asistent | Žába: base píše další zadání (shrnutí, obr. 42). | 1:15 |
+| instruction | Formát konverzace | Pořád doplňuje dokument; dokument je konverzace (ilustrace). | 1:15 |
+| preference | Která odpověď je lepší? | Hodnotitelé vybírají (ilustrace). | 1:30 |
+| zaba-po | Stejný prompt po post-trainingu | Stejný motor, jiné chování (obr. 42). | 1:15 |
+| evoluce | Tři kroky k chatbotovi | Nejdřív pokračovat v textu, pak jak pokračovat, když něco chceme. | 1:00 |
+| porad-token | Pořád tentýž motor | Odhad dalšího tokenu, ne vyhledaný fakt. | 0:45 |
 
-## III. Kde to skřípe — 3:30
+## III. Kde to skřípe — 4:30
 
-| # | Slide | Pointa | Čas |
-|---|-------|--------|-----|
-| 14 | Proč halucinuje? | Úkol = věrohodné pokračování. „Nevím" není vestavěný výstup ani přístup k autoritativním faktům. Post-training a tools pomáhají, generování samo pravdivost neřeší. **[Z]** | 2:00 |
-| 15 | 2837 × 491 = ? | Kde jste v tom stroji viděli násobičku? Umí vzory, ne garantovanou aritmetiku → calculator tool. „Když mám kalkulačku, použiju kalkulačku." **[Z]** | 1:30 |
+| id | Slide | Pointa | Čas |
+|---|---|---|---|
+| halucinace | Zní to jako odpověď | Zní to jako odpověď ≠ zaručená pravda. | 1:30 |
+| pocitani | 2837 × 491 | Když mám kalkulačku, použiju kalkulačku. | 1:15 |
+| aktualni | Co v tréninku nenajde | Najdeme podklady, přidáme je k otázce. | 1:45 |
 
-## IV. Stavíme kolem toho software — 9:00
+## IV. Software kolem — 5:45
 
-| # | Slide | Pointa | Čas |
-|---|-------|--------|-----|
-| 16 | Dejme mu nástroje | Build: LLM → +context → +retrieval (RAG) → +tools → +state → agent. RAG nenahrává znalosti do modelu, vkládá je do kontextu. LLM není celý agent. | 3:00 |
-| 17 | Dva světy | DETERMINISTIC vs PROBABILISTIC — co patří kam. | 1:15 |
-| 18 | Špatně | `birth_date → LLM → "ano"` vs `birth_date → code → true/false`. | 1:00 |
-| 19 | Dobře | „No paráda, zase mi to přišlo rozbitý." → complaint/praise/question. Tady if/else prohraje. | 1:00 |
-| 20 | Best of both worlds | Architektura: LLM + deterministic tools + knowledge + VALIDATION. | 1:30 |
-| 21 | DON'T PANIC | Poctivé uzavření rizik (viz níže) + „It's just software. Very weird software." + certainty vs probability. | 1:15 |
-| 22 | Resources | Transformer Explainer (QR) + 3–4 primární zdroje. Visí během Q&A. | 0:00 |
+| id | Slide | Pointa | Čas |
+|---|---|---|---|
+| agent | Agent? Tohle ve smyčce. | LLM je součástka. | 1:15 |
+| spatne | Dosáhl 18 let? | Pravidlo napiš jako pravidlo. | 1:15 |
+| dobre | Je to stížnost? | Jazyk nech modelu. | 1:15 |
+| architektura | Deterministic software + probabilistic capabilities | Autorizace před akcí, validace výstupu. | 1:00 |
+| terminatori | Terminátoři → DON'T PANIC | Znalost mechanismu ≠ bezpečnost; DON'T PANIC ≠ don't care. | 1:00 |
+| zdroje | Kam dál | QR Explainer, papers, Karpathy. | 0:00 |
 
-**Součet: 2:30 + 14:00 + 3:30 + 9:00 = 29:00 + 1:00 rezerva = 30:00.**
-
-## Uzavření rizik (slide 21)
-
-Odpověď na úvodní „zničí nás Terminátoři?" nesmí být falešné uklidnění.
-Formulace: rozumět mechanismu ≠ důkaz, že systém je bezpečný. Rizika existují,
-ale jsou to hlavně rizika toho, *jak* LLM nasazujeme: jaké nástroje a oprávnění
-mu dáme, co validujeme, kde necháme člověka. DON'T PANIC ≠ don't care.
+**Součet: 2:30 + 16:15 + 4:30 + 5:45 = 29:00.**
 
 ## Živá ukázka
 
-Transformer Explainer (https://poloclub.github.io/transformer-explainer/) po slidu 9:
-posunout temperature slider a ukázat, jak se mění distribuce. Max 1 min, bere z rezervy.
-Záložní varianta (bez Wi-Fi): slide 9 má statické temperature bary.
-
-## Otevřené otázky pro Astru
-
-1. Slide 4: konkrétní tokenizer pro ukázku (tiktoken o200k_base?), ať čísla sedí.
-2. Slide 8: čísla distribuce — reálný výstup malého modelu, nebo ilustrativní (označit)?
-3. Slide 11: bezpečná formulace emergentních schopností + zdroj.
-4. Slide 14: zdroj k halucinacím (např. OpenAI „Why language models hallucinate", 2025).
-5. Slide 9 notes: nedeterminismus i při temperature 0 (batching, floating point) — zdroj.
+Transformer Explainer po slidu `kostka` (temperature slider), max 1 min z rezervy. Záloha: statické bary.

@@ -1,5 +1,7 @@
 # Technická oponentura — Astra
 
+Aktuální obsahový refactor HTML je posouzen v poslední sekci. Starší číslování slidů níže dokumentuje předchozí verze.
+
 Ověřeno 4. 10. 2026. Scope: outline.md v1; nikoliv ještě hotový deck. Zdroje a jejich dosah: sources.md. Doporučení níže jsou připravená pro zapracování Opusem.
 
 ## Rozhodnutí pro generátor
@@ -132,3 +134,30 @@ Kontrola proběhla přes Chrome DevTools CLI, offline `file://`, nikoli jen čte
 - Skullpix 0.3.0: vlastní transparentní ilustrace + JSON, strict render bez chyb a varování.
 
 Finální opravné screenshoty: `html/review/final-720.png`, `final-mobile.png`, `final-overview.png`, `final-notes.png`.
+
+
+## Narativní refactor — kontrola nových tvrzení
+
+Primární zdroje S6 a S14–S16 ověřeny 4. 10. 2026. HTML je hlavní verze, starý PPTX se touto změnou neaktualizuje.
+
+- **Pretraining** učí predikovat pozorovaný další token; tréninkový text nemusí být pravdivý. Metafora knoflíků popisuje učení parametrů, ne ruční pravidla. Schopnosti se opírají o pravidelnosti v datech, nikoli o „emergenci“ coby vysvětlení.
+- **Base model** může s vhodným kontextem plnit úlohy; neříkat, že nikdy neodpovídá. Rozdíl je v cíli tréninku a spolehlivosti chování pomocníka.
+- **Historické srovnání žáby** je GPT-3 vs hotový InstructGPT. Nedokládá izolovaný účinek SFT. Ukázka byla vybraná autory a není měřením úspěšnosti. Francouzský originál je na slidech česky shrnutý, nikoli vydávaný za český modelový výstup.
+- **GPT-2 jednorožci** ilustrují pokračování žánru nad fikčním vstupem; neprokazují halucinaci na faktickou otázku. Vybráno z deseti generování.
+- **Asistent** vzniká učením na požadovaných odpovědích a dialogu, ne pouhým připsáním štítků User/Assistant. Původní ChatGPT a InstructGPT jsou historicky odlišné modely; dialogová data dokládá S15.
+- **Preference** nejsou obecná lidská pravda ani preference všech lidí. A/B je naše označená demonstrace, ne výstup z paperu či skutečný hlas hodnotitele. Historická cesta s reward modelem a RL má alternativy (S16); do hlavního výkladu taxonomie nepatří.
+- **Stejný motor** znamená zachovaný princip autoregresivního generování. Parametry i distribuce post-training mění; nevzniká tím garantované úložiště faktů.
+- **Nástroje a dokumenty**: bez přístupu k aktuálním datům nelze ověřit nynější cenu. Interní podklady nemusely být v tréninku; netvrdit bez důkazu, že je žádný model nikdy neviděl. Retrieval dodá kontext, nezaručí správné použití podkladů.
+- **Determinismus** nezaručuje správnost programu. Výpočet věku vyžaduje definovaná pravidla; interpretaci zprávy je potřeba empiricky ověřit. Model navrhuje akce, software kontroluje oprávnění a argumenty před provedením.
+
+### Ověření implementace
+
+- Chrome DevTools: 24 slidů, všech 75 build states, žádné zjištěné přetékání ani chyby viditelnosti. Konzole bez zpráv. Výsledek v `html/review/narrative/report.json`.
+- Vizuálně prohlédnuty rendery všech 75 stavů; po posledních formulacích znovu změněné stavy 9, 16, 18 a Resources 24. Historické ukázky navíc zkontrolovány v plné velikosti. Bez zjištěných kolizí a ořezu.
+- Všech 24 notes má ŘÍCT, POINTA a PŘECHOD; přečten mluvený tahák i nuance. Upraveny formulace o tokenizaci, trénování dialogu, preferencích, fikci a nejistotě. Žádný smyšlený historický transcript.
+- Součet notes i osnovy: 1740 sekund = 29:00 + 1:00 rezerva. Je to plán, nikoli měřený živý přednes.
+- Znovu ověřeny Home/ArrowRight, panel notes a formátování nadpisů, overview se všemi finálními stavy a návrat Escape; emulace 390×844 zachovává celý slide v poměru 16:9. Notes nepřekrývají slide.
+- PDF z HTML má 24 stran; vizuálně prohlédnuty všechny stránky. Obsahuje finální stavy buildů, nikoli každé mezikrokové odhalení. PPTX zůstává historický fallback.
+- `node --check` pro slides.js, notes.js a app.js; `git diff --check` bez chyb.
+
+Zbývá živý dry-run a projekce v místnosti. Při přetažení nejdřív vynechat live Explainer, zrychlit temperature a závěrečný architektonický diagram; chránit kontrast base model → asistent a preference.

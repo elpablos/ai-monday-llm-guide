@@ -1,26 +1,487 @@
-// Speaker notes per slide id. Source of truth for notes (migrated from the reviewed PPTX deck v2).
-// Builds within one slide are separated by '— další krok —'.
+// Speaker notes per slide id. ŘÍCT = short spoken lines; nuance goes to TECHNICKÁ POZNÁMKA.
+// Builds within one slide are separated by '— další krok —'. Times sum to 29:00 (+1:00 reserve).
 window.NOTES = {
-  "dont-panic": "⏱ 0:30 (sekce I celkem 2:30)\n\nŘÍCT:\nPředstavit se jednou větou. Název: Stopařův průvodce po LLMs. DON'T PANIC je rada z obálky Průvodce — a dneska je to i rada pro debatu o AI.\n\nPOINTA: Nastavit tón: lehce, ale vážně míněno.\n\nVTIP / CALLBACK: Průvodce měl na obálce velkými přátelskými písmeny DON'T PANIC. My máme slidy.\n\nPŘECHOD: Co se o AI dneska nejčastěji ptáme?\n\n— další krok —\n\n⏱ 1:00\n\nŘÍCT:\nProjít otázky rychle, nechat je viset. Neodpovídat — slíbit, že se k první vrátíme na konci, poctivě.\n\nPOINTA: Strach pramení z neznalosti mechanismu. Dneska mechanismus otevřeme.\n\nTECHNICKÁ POZNÁMKA: Neslibovat, že porozumění mechanismu = bezpečnost. Na konci (slide Terminátoři) to uzavřeme poctivě.\n\nPŘECHOD: Já jsem na neznámé věci měl vždycky jeden nástroj.",
-  "sroubovak": "⏱ 1:00\n\nŘÍCT:\nPříběh z dětství: šroubovák, rozebírání, nic už nefungovalo. Co se v mládí naučíš… Dneska vezmeme pomyslný otvírák na konzervy na tuhle krabičku: prompt dovnitř, odpověď ven.\n\nPOINTA: Celá přednáška = postupné rozebírání téhle krabičky.\n\nVTIP / CALLBACK: Rodiče by vám řekli, kolik rádií to stálo.\n\nPŘECHOD: Než sáhneme dovnitř, zkusíme si, co ta krabička vlastně dělá. Na sobě.",
-  "kocka": "⏱ 0:30 (spolu s dalším slidem 1:15)\n\nŘÍCT:\nNic neříkat. Nechat publikum doplnit nahlas. Počkat 3–4 vteřiny.\n\nPOINTA: Každý v sále má v hlavě několik kandidátů s různou jistotou.\n\nPŘECHOD: Klik — co jste říkali.\n\n— další krok —\n\n⏱ 0:45\n\nŘÍCT:\nVyjmenovat, co zaznělo. Nikdo nevěděl ‚správnou' odpověď — ale všichni věděli, co je pravděpodobné a co ne (‚na kvantové fyzice' asi nikdo).\n\nPOINTA: Language model dělá přesně tohle: z kontextu odhaduje, co bude dál.\n\nTECHNICKÁ POZNÁMKA: Zatím vědomě neříkáme nic o transformeru ani o tom, že model nepracuje se slovy.\n\nPŘECHOD: Jenže je tu háček: model ty věty nevidí jako my.",
-  "tokeny": "⏱ 1:15\n\nŘÍCT:\nModel nedostane ‚Kočka sedí na střeše'. Dostane kousky — tokeny. Někdy celé slovo, někdy kus slova, mezera bývá součástí tokenu, tečka je samostatný token. Pod každým tokenem je jeho číslo ve slovníku tokenizeru.\n\nPOINTA: Základní jednotka LLM je token, ne slovo ani význam.\n\nVTIP / CALLBACK: Střecha se rozpadla na ‚st', ‚ře', ‚še'. Tak tohle si model musí dát dohromady sám.\n\nTECHNICKÁ POZNÁMKA: Skutečný výstup tiktoken o200k_base pro tyto dvě věty. Jiné modely mají jiné tokenizery a jiná čísla. Počet tokenů záleží na tokenizeru a konkrétním textu — nezobecňovat na ‚čeština je vždycky horší'. ‚Nevidí text' = dostává token IDs; neplyne z toho, že uvnitř nevznikají reprezentace významu. Tokenizace je bezeztrátová (z ID jde text přesně zrekonstruovat).\n\nZDROJ: github.com/openai/tiktoken\n\nPŘECHOD: A s čísly ve slovníku se ještě nedá počítat. Potřebujeme víc.",
-  "embeddings": "⏱ 1:15\n\nŘÍCT:\nAby s tím počítač mohl počítat, z každého tokenu uděláme dlouhý vektor čísel — embedding. Přidá se i informace o pozici, protože ‚pes kousl pošťáka' není ‚pošťák kousl psa'. Tyhle vektory se model naučí při tréninku a zachycují vztahy mezi tokeny — tokeny používané v podobných souvislostech často skončí blízko sebe.\n\nPOINTA: Jazyk převedeme na čísla. Naučené vektory zachycují vztahy mezi tokeny.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — Hodnoty vektorů jsou vymyšlené. Token ID je jen index ve slovníku, není seřazené podle významu. Blízkost ve vektorovém prostoru není univerzální záruka významové podobnosti. Obrázek vpravo je 2D ilustrace; reálný prostor má stovky až tisíce dimenzí a jednotlivé souřadnice obvykle nemají lidsky čitelný význam. Pozice se dnes často kóduje přímo uvnitř attention (např. RoPE), ne jen přičtením k embeddingu.\n\nPŘECHOD: Teď máme řadu vektorů. Jak model pozná, které spolu souvisí?",
-  "attention": "⏱ 1:45\n\nŘÍCT:\nModel čte zleva doprava. Zpracovává ‚měla' — ‚hlad' ještě nevidí. Kdo měla? Kočka i myš jsou ženského rodu, gramatika nepomůže. Vy tušíte, že spíš kočka. Attention je mechanismus, kterým model pro každý token spočítá, na které předchozí tokeny se ‚podívat' a jak moc — a z nich si poskládá novou reprezentaci.\n\nPOINTA: Attention = každý token si vybírá, co z kontextu je pro něj relevantní.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — Váhy na slidu jsou vymyšlené pro ilustraci. V decoder-only modelu je attention kauzální: token vidí sebe a předchozí tokeny, budoucí jsou maskované (na slidu přerušovaně, bez váhy). Na slidu jsou slova, reálně jsou to tokeny (např. Ko|čka). Reálně běží mnoho attention hlav paralelně v mnoha vrstvách a jednotlivé hlavy sledují různé vztahy; jedna hlava se nedá číst jako ‚model si myslí X'. Attention není totéž co uvažování. Mechanika pro zvídavé: query/key/value — každý token vyšle dotaz (query), porovná ho s klíči (keys) ostatních tokenů a vezme vážený průměr jejich hodnot (values). Na slide nedávat.\n\nZDROJ: Vaswani et al. 2017, Attention Is All You Need; Transformer Explainer (sekce Attention)\n\nPŘECHOD: Attention je jedna součástka. Teď ukážeme, jak se skládají.",
-  "transformer": "⏱ 1:00\n\nŘÍCT:\nTransformer blok = attention (tokeny si vyměňují informace) + MLP (každý token se zpracuje zvlášť). A tenhle blok se opakuje — desítky vrstev nad sebou. Na konci vypadne pro každou pozici sada čísel: logits.\n\nPOINTA: Uvnitř není ručně napsaná tabulka odpovědí. Je tam architektura a parametry naučené z dat.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — Vynechány normalizace, residual connections, detaily výstupní vrstvy. Počet vrstev a parametrů se liší model od modelu; u velkých modelů jde o desítky až přes sto vrstev a miliardy až stovky miliard parametrů (u uzavřených modelů často nezveřejněno). Za běhu vznikají aktivace (mezivýsledky). Některé tréninkové pasáže může model memorovat (viz slide JPEG).\n\nPŘECHOD: Co přesně z toho na konci vypadne?",
-  "rozdeleni": "⏱ 1:15\n\nŘÍCT:\nTohle je nejdůležitější slide. Model nevrací ‚správnou odpověď'. Vrací skóre (logits) pro každý token ve slovníku a softmax je převede na pravděpodobnosti, které dávají dohromady 100 %. Celý slovník — desítky až stovky tisíc tokenů.\n\nPOINTA: Výstup LLM je distribuce pravděpodobností dalšího tokenu, ne odpověď.\n\nVTIP / CALLBACK: Odpověď ‚42' tam někde taky je. S hodně malou pravděpodobností.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — Čísla jsou ilustrativní a kandidáti jsou celá slova. Reálně (viz tokenizer) by model nejdřív volil první token, např. ‚·st', a ‚střeše' by vzniklo až během několika kroků. 31 % neznamená 31% jistotu, že je odpověď pravdivá — je to podíl pravděpodobnosti pro tento token. Chatovací modely navíc po post-trainingu nemají distribuce jako čistý jazykový model. Přesnější varianta pro technické publikum: EN ‚The cat sits on the' → ·roof/·mat/·floor/·sofa (všechno jednotlivé tokeny o200k_base).\n\nZDROJ: Transformer Explainer — sekce výstupních pravděpodobností\n\nPŘECHOD: A z rozdělení musíme vybrat jeden token. Jak?",
-  "kostka": "⏱ 1:45 (+ až 1:00 živá ukázka z rezervy)\n\nŘÍCT:\nZ rozdělení se vybere token — sampling. Je to kostka, ale extrémně zatížená, a před každým hodem se přezváží podle kontextu. Temperature mění tvar rozdělení: nízká ho zostří (vyhrává favorit), vysoká ho zploští (víc šance pro outsidery). Pořadí kandidátů se nemění, mění se jen poměry.\n\nPOINTA: Stochastický neznamená chaotický. Rozdělení je velmi strukturované; náhoda jen vybírá v jeho rámci.\n\nTECHNICKÁ POZNÁMKA: Temperature není ‚míra kreativity', je to parametr, který dělí logits před softmaxem: softmax(logits/T); hodnoty na slidu jsou skutečně spočtené pro 4 syntetické kandidáty (bez top-k/top-p). Ani nízká, ani vysoká T nezaručuje pravdivost. T = 0 je konvence pro greedy decoding (vždy nejpravděpodobnější token), ne dělení nulou. Greedy je deterministická volba pro stejné logits, ale celá inference nemusí být bitově reprodukovatelná: floating-point, pořadí operací a dávkování mohou posunout skóre a u blízkých kandidátů změnit i greedy volbu. Sampling tedy není jediný zdroj variability. Další strategie: top-k, top-p.\n\nZDROJ: Transformer Explainer (temperature slider); PyTorch docs — Reproducibility, Numerical accuracy\n\nPŘECHOD: ŽIVÁ UKÁZKA (volitelně, max 1 min): poloclub.github.io/transformer-explainer — posunout temperature slider, ukázat jak se mění rozdělení. Pak: a tohle se opakuje.",
-  "smycka": "⏱ 0:45\n\nŘÍCT:\nVybraný token (jeho ID) se přilepí ke kontextu tokenů — text se znovu netokenizuje — a celé se to spustí znovu. Token po tokenu. Teď vidíte celou rozebranou krabičku — vlevo je to, co bylo uvnitř. Vpravo vidíte, jak vzniká ‚střeše' ze tří tokenů.\n\nPOINTA: Generování = smyčka: kontext → pravděpodobnosti → token → nový kontext. Nic víc.\n\nTECHNICKÁ POZNÁMKA: Smyčka běží do ukončovacího tokenu nebo limitu délky. Mezivýsledky předchozích tokenů se obvykle cachují (KV cache), takže se nepřepočítává všechno od nuly. ‚Opakuj' neznamená ‚uč se': při běžném chatu se váhy modelu nemění. Kontext má omezenou délku (context window).\n\nPŘECHOD: A teď ta otázka, která by vás měla trápit nejvíc.",
-  "proc-chytre": "⏱ 1:15\n\nŘÍCT:\nPokud je základní operace jen hádání dalšího tokenu, odkud se bere překlad, kód, sumarizace? Odpověď: abyste u těchto vět dobře tipovali další token, musíte zachytit fakta, syntaxi kódu, vztahy mezi jazyky, strukturu argumentu. Trénink tlačí model, aby si tyhle pravidelnosti nějak zakódoval — jinak by predikoval špatně.\n\nPOINTA: Jednoduchá úloha × obrovská data × velký model (+ post-training) → schopnosti, které nikdo explicitně neprogramoval.\n\nTECHNICKÁ POZNÁMKA: Opatrně: neříkat jako fakt, že model ‚má model světa' nebo ‚rozumí'. Jak přesně jsou tyhle struktury uvnitř reprezentované, je otevřená výzkumná otázka (interpretability). Slovo ‚emergence' nepoužívat jako vysvětlení. Úspěch v úlohách je empirický fakt, ne důkaz lidského myšlení. Schopnosti závisí na datech, architektuře, škále i post-trainingu. Pojem ‚emergentní schopnosti' je odborně sporný — část skokových efektů závisí na zvolené metrice (Schaeffer et al. 2023). Dnešní chat modely navíc prošly post-trainingem (instrukce, RLHF/RL), nejsou to čisté next-token prediktory.\n\nZDROJ: Brown et al. 2020 (Language Models are Few-Shot Learners); Schaeffer et al. 2023 (Are Emergent Abilities a Mirage?)\n\nPŘECHOD: Jak se to model naučí?",
-  "training": "⏱ 1:15\n\nŘÍCT:\nVezmeme skutečný text, zakryjeme další token a necháme model hádat. Řekněme, že dá 40 % tokenu ‚·st' (střeše) a jen 3 % tokenu ‚·ro' (rohožce) — čísla jsou ilustrativní. V textu ale bylo ‚·ro'. Spočítáme chybu a všechny parametry maličko pootočíme tím směrem, aby příště dal ‚·ro' o kousek víc. A tohle zopakujeme na bilionech tokenů, mnoho pozic a příkladů najednou.\n\nPOINTA: Training = obří množství malých oprav, ne zapisování faktů do tabulky.\n\nVTIP / CALLBACK: Pár miliard knoflíků. Ručně by to trvalo.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — ‚Skutečný další token' není ‚správná odpověď' — trénovací text nemusí být fakticky pravdivý; ztráta jen penalizuje nízkou pravděpodobnost pozorovaného tokenu. Úprava parametrů = gradient descent přes backpropagation; nevysvětlujeme. Tohle je pre-training. Chat model pak prochází post-trainingem: supervised fine-tuning na ukázkách konverzací a ladění podle preferencí (RLHF), případně odměny za vyřešené úlohy (RL) — proto odpovídá jako asistent, ne jako doplňovač textu.\n\nZDROJ: Ouyang et al. 2022 (InstructGPT) pro post-training\n\nPŘECHOD: Co tedy v těch parametrech vlastně je?",
-  "jpeg": "⏱ 1:15\n\nŘÍCT:\nJPEG zahazuje část detailů a obrázek pak přibližně zrekonstruuje. Na LLM se dá dívat podobně: z obrovského množství textu zůstalo v parametrech něco jako ztrátově zhuštěné pravidelnosti — ne kopie dokumentů. Když generuje, vytváří nové pokračování z naučených pravidelností; neobnovuje konkrétní originální dokument.\n\nPOINTA: Model není databáze originálů. Je to ztrátová, zhuštěná reprezentace pravidelností.\n\nVTIP / CALLBACK: Analogie je od Teda Chianga: ChatGPT is a blurry JPEG of the web.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — LLM není doslova kompresní algoritmus a halucinace nejsou JPEG artefakty. Nuance: modely si přesto umí zapamatovat a doslova reprodukovat části trénovacích dat (memorization), hlavně často opakované texty — ‚není databáze' neznamená ‚nic si nepamatuje'. Formální vztah predikce a komprese existuje (Delétang et al. 2023), ale to je jiná rovina než tahle intuice.\n\nZDROJ: Ted Chiang, ChatGPT Is a Blurry JPEG of the Web, The New Yorker 2023 — newyorker.com/tech/annals-of-technology/chatgpt-is-a-blurry-jpeg-of-the-web (autorská analogie); Delétang et al. 2023, Language Modeling Is Compression — arxiv.org/abs/2309.10668; Carlini et al. 2020, Extracting Training Data from LLMs\n\nPŘECHOD: A tím se dostáváme k tomu, co nám na LLM nejvíc vadí.",
-  "halucinace": "⏱ 2:00\n\nŘÍCT:\nPodívejte se na smyčku. Model v každém kroku vyrobí nějaké rozdělení a my z něj vždycky něco vybereme. Nikde v té smyčce není krok ‚ověř, jestli je to pravda'. Model generuje věrohodné pokračování — a věrohodné a pravdivé se většinou překrývá, ale ne vždycky. Pravděpodobnost textu není pravdivost.\n\nPOINTA: Halucinace vyplývá z toho, co generativní model dělá; není to cizí bug navíc.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — Halucinace nemají jediný mechanismus (chybějící nebo vzácná data, konflikty v datech, chyby při dekódování, tlak tréninku a evaluací odměňovat tipování víc než ‚nevím'). ‚Nevím' je možný výstup a moderní modely se dají trénovat, aby nejistotu přiznávaly častěji, používaly tools a citovaly zdroje — jen na to není garance ze samotného generování tokenů. RAG ani tools nejsou univerzální oprava. Kalai et al. popisují tlak na hádání místo abstence jako jeden mechanismus, ne úplnou teorii všech chyb.\n\nZDROJ: Kalai et al. 2025, Why Language Models Hallucinate (OpenAI)\n\nPŘECHOD: Druhá věc, která lidi překvapuje.",
-  "pocitani": "⏱ 0:45 (spolu s dalším slidem 1:30)\n\nŘÍCT:\nNechat chvíli viset. Pak: vzpomeňte si na rozebranou krabičku — tokenizer, embeddings, attention, logits, sampling. Kde byla násobička? (Hned dodat:) Hardware uvnitř samozřejmě násobí. Jen nám to nezaručuje správné násobení čísel z promptu.\n\nPOINTA: V architektuře není deterministická aritmetická jednotka pro tenhle úkol.\n\nTECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ — ‚Není tam násobička' je rétorická zkratka, ne doslovný popis: uvnitř je spousta násobení matic, jen ne garantovaný algoritmus pro násobení čísel z promptu. Modely aritmetiku částečně umí jako naučené vzory a moderní reasoning modely jsou v matematice velmi dobré; víceciferné násobení bez nástroje ale zůstává náchylné k chybám. Čísla se navíc tokenizují po kouscích. Hardware samozřejmě násobí — jde o to, že v LM není garantovaný převod úlohy na přesný aritmetický výsledek. Neříkat, že modely matematiku ‚neumí'.\n\nPŘECHOD: Tak co s tím?\n\n— další krok —\n\n⏱ 0:45\n\nŘÍCT:\nŘešení není nutit model, aby se naučil násobit líp. Řešení je dát mu kalkulačku. Model pozná, že jde o výpočet, zavolá nástroj, a výsledek je přesný.\n\nPOINTA: Deterministický problém → deterministický nástroj.\n\nVTIP / CALLBACK: Kalkulačka za 50 Kč porazí model za miliardy. V tomhle jednom.\n\nTECHNICKÁ POZNÁMKA: Kalkulačka spočítá přesně jen to, co dostane: systém musí ověřit, že model předal správné argumenty, a výsledek validovat. Výsledek 1 392 967 ověřen integer aritmetikou.\n\nPŘECHOD: A tohle je obecný princip. Pojďme mu dávat nástroje.",
-  "nastroje": "⏱ 1:00\n\nŘÍCT:\nZačneme holým modelem. Kontext má model vždycky — první rozšíření je aplikační kontext: co mu do promptu vloží aplikace (instrukce, historie, data o uživateli). Druhé: retrieval. Nejdřív vyhledáme relevantní dokumenty (search, vektorová DB, cokoliv) a vložíme je do kontextu. Model pak odpovídá nad nimi.\n\nPOINTA: RAG nenahrává znalosti do modelu. Dává mu je do kontextu při každém dotazu.\n\nTECHNICKÁ POZNÁMKA: Parametry se při RAG nemění. Kvalita odpovědi stojí na kvalitě vyhledávání; model může i přes dodaný kontext halucinovat nebo ho špatně použít.\n\nZDROJ: Lewis et al. 2020, Retrieval-Augmented Generation\n\nPŘECHOD: A když nestačí informace, potřebujeme akce.\n\n— další krok —\n\n⏱ 1:00\n\nŘÍCT:\nTools: model nedělá výpočet ani dotaz sám. Vygeneruje strukturovaný požadavek (‚zavolej calculator s 2837×491'), náš kód ho vykoná a výsledek vrátí do kontextu. State/memory: co si systém pamatuje mezi kroky a konverzacemi — ukládá to software kolem, ne model.\n\nPOINTA: Tools a state dávají systému schopnosti, které samotný model nemá.\n\nTECHNICKÁ POZNÁMKA: Model sám o sobě nic nespouští; volání nástrojů provádí okolní kód (a ten rozhoduje o oprávněních).\n\nPŘECHOD: Když to dáme dohromady ve smyčce, dostaneme to, čemu se dnes říká agent.\n\n— další krok —\n\n⏱ 1:00\n\nŘÍCT:\nSamotné přidání stavu z toho agenta nedělá. Agent = smyčka: model zvolí akci, systém spustí tool, výsledek jde zpátky do kontextu, model rozhodne, jestli pokračovat, nebo skončit. A všimněte si: LLM je jedna krabička z šesti. Zbytek je normální software.\n\nPOINTA: Agent není synonymum pro LLM. LLM je komponenta.\n\nZDROJ: Yao et al. 2022, ReAct\n\nPŘECHOD: A tady začíná klasický software.",
-  "dva-svety": "⏱ 1:15\n\nŘÍCT:\nVlevo věci, kde umíme pravidlo napsat přesně a chceme stejný výsledek pokaždé. Vpravo věci, kde pravidlo napsat neumíme — jazyk, nejasné vstupy, význam.\n\nPOINTA: Nejde o to, co je modernější. Jde o to, jaký typ problému řešíme.\n\nTECHNICKÁ POZNÁMKA: Jde o vhodné role, ne striktně oddělené typy softwaru. I klasifikátor může běžet deterministicky; determinismus ≠ správnost; model pracující s pravděpodobnostmi ≠ vždy losující program.\n\nPŘECHOD: Ukážu na dvou příkladech.",
-  "spatne": "⏱ 1:00\n\nŘÍCT:\nDatum narození — dosáhl 18 let? To jsou tři řádky kódu. Poslat to do LLM znamená: pomalejší, dražší, a občas špatně. Výstup navíc může kolísat; ani opakovatelný výstup ale nezaručuje správnost.\n\nPOINTA: Když umíš napsat pravidlo, napiš pravidlo.\n\nVTIP / CALLBACK: Halucinující ověření věku. Přesně to, co chce slyšet compliance.\n\nTECHNICKÁ POZNÁMKA: Kód potřebuje datum posouzení a definovaná kalendářní pravidla (29. 2. apod.). Ilustrace výpočtu, ne právní rozhodování.\n\nPŘECHOD: A kde naopak LLM dává smysl?",
-  "dobre": "⏱ 1:00\n\nŘÍCT:\n‚No paráda' — klíčové slovo říká pochvala, člověk okamžitě ví, že je to sarkastická stížnost. U rozmanitých zpráv rychle přibývají výjimky. Tady se vyplatí model vyzkoušet a změřit, jak dobře klasifikuje.\n\nPOINTA: LLM tam, kde pravidlo napsat neumíme.\n\nTECHNICKÁ POZNÁMKA: LLM není jediný možný klasifikátor (menší specializovaný model může stačit). Výstup omezit na validovaný enum včetně možnosti ‚nejisté' s eskalací na člověka; výsledek je odhad, ne fakt.\n\nPŘECHOD: Dejme to dohromady.",
-  "architektura": "⏱ 1:30\n\nŘÍCT:\nLLM uprostřed tam, kde je potřeba pracovat s nejistotou: pochopit, co uživatel chce, rozhodnout, co zavolat, vygenerovat text. Kolem něj deterministický software: nástroje, data, pravidla. Model jen navrhuje volání. Software před akcí ověří oprávnění a argumenty a teprve pak tool spustí. A na výstupu deterministická validace — guardrails, které ověří, že výsledek má správný tvar a splňuje pravidla, než s ním něco uděláme. (V reálu je to smyčka: výsledek toolu jde zpátky do LLM.)\n\nPOINTA: Take the best of both worlds. Pravděpodobnost tam, kde je potřeba; jistota všude, kde jde.\n\nTECHNICKÁ POZNÁMKA: Guardrails = schema validace, allow-listy akcí, oprávnění, limity, human-in-the-loop u nevratných akcí. Schema validace ověří tvar, ne pravdivost obsahu.\n\nPŘECHOD: Takže… zničí nás Terminátoři?",
-  "terminatori": "⏱ 0:45\n\nŘÍCT:\nSlíbil jsem poctivou odpověď. Dnes jsme rozebrali výpočetní mechanismus. Samotným rozborem jsme ale nevyřešili otázku vědomí ani bezpečnosti. Ale to, že rozumíme mechanismu, neznamená, že systémy postavené nad LLM jsou automaticky bezpečné. Chyby, zneužití, špatně nastavená oprávnění agentů — to jsou reálná rizika. Prakticky můžeme hned řídit oprávnění, ověřování a lidský dohled.\n\nPOINTA: Nepanikařit neznamená nestarat se.\n\nTECHNICKÁ POZNÁMKA: Nezlehčovat ani nepřehánět. Neříkat, že rizika jsou ‚hlavně v nasazení' — talk to nedokládá. Neimplikovat vyřešené dlouhodobé riziko ani jistotu o vědomí. Nedělat predikce o AGI. Pokud padne dotaz na dlouhodobá rizika: je to legitimní výzkumná a regulační oblast, dnešní přednáška ji neřeší.\n\nPŘECHOD: Takže na závěr.\n\n— další krok —\n\n⏱ 0:30\n\nŘÍCT:\nLLM není magie. Je to velmi zvláštní a velmi silný software. Nenahrazujte jistotu pravděpodobností, pokud pravděpodobnost neřeší problém, který jistota neumí. Budoucnost není AI místo softwaru — je to deterministický software s probabilistickými schopnostmi. DON'T PANIC. Díky.\n\nPOINTA: Callback na začátek. Konec.\n\nPŘECHOD: Resources + Q&A.",
-  "zdroje": "⏱ 0:00 (visí během Q&A)\n\nŘÍCT:\nKdo si chce na krabičku sáhnout sám: Transformer Explainer běží v prohlížeči, všechno co jsme dnes rozebrali tam jde proklikat.\n\nPOINTA: Zdroje pro hlubší ponoření.\n\nZDROJ: Kompletní seznam se zdroji ke každému tvrzení: sources.md (S1–S12).\n\nPŘECHOD: Q&A.\n\nVIDEO PRO ZVÍDAVÉ: Andrej Karpathy, Deep Dive into LLMs like ChatGPT (youtube.com/watch?v=7xTGNNLPyMI). Kapitoly: tokenizace 07:47, vstup/výstup sítě 14:27, inference 26:01, post-training 59:23, halucinace a tools 1:20:32. (sources.md S13)",
+  "dont-panic": `⏱ 1:30
+
+ŘÍCT:
+Stopařův průvodce po LLMs. Na obálce Průvodce stálo velkými přátelskými písmeny DON'T PANIC.
+
+— další krok —
+
+Zničí nás AI? Vezme nám práci? Myslí? Ví, co říká?
+Neodpovídám. Slibuju, že se k první otázce na konci vrátíme poctivě.
+
+— další krok —
+
+Nejvíc se bojíme toho, čemu nerozumíme. Tak to pojďme rozebrat.
+
+POINTA: Strach z neznámého mechanismu. Dnes ho otevřeme.
+
+PŘECHOD: Na neznámé věci jsem měl vždycky jeden nástroj.`,
+
+  "sroubovak": `⏱ 1:00
+
+ŘÍCT:
+Jako malej jsem všechno rozebíral šroubovákem. Tady je krabička: prompt dovnitř, odpověď ven.
+
+— další krok —
+
+Tak ji otevřeme. Většina věcí po mně už nefungovala. Ale vždycky jsem se něco naučil.
+
+POINTA: Celá přednáška = rozebírání téhle krabičky.
+
+PŘECHOD: Než sáhneme dovnitř, zkusíme si, co dělá. Na sobě.`,
+
+  "kocka": `⏱ 1:15
+
+ŘÍCT:
+Nic neříkat. Nechat sál doplnit. Počkat 3–4 vteřiny.
+
+— další krok —
+
+Střeše, gauči, zemi… Nikdo nevěděl tu „správnou“. Ale všichni věděli, co je pravděpodobné.
+
+— další krok —
+
+Gratuluju, právě jste byli language model. Je to našeptávač z mobilu. Jen hodně velký.
+
+POINTA: Language model odhaduje, co bude dál.
+
+PŘECHOD: Co k tomu potřebuje uvnitř? Jen minimum.`,
+
+  "motor": `⏱ 2:00
+
+ŘÍCT:
+Pět kroků. Víc nepotřebujete.
+Text.
+
+— další krok —
+
+Rozseká se na tokeny: slova, části slov, interpunkci. Tady jsou z „kočky“ dva kousky.
+
+— další krok —
+
+Každý token je číslo ve slovníku. A z čísla se udělá dlouhý seznam čísel, se kterým jde počítat.
+
+— další krok —
+
+Ta čísla projdou sítí. Miliardy naučených čísel, žádná tabulka odpovědí. Uvnitř se každý token může podívat na předchozí text — tomu se říká attention.
+
+— další krok —
+
+Na konci vypadne skóre pro každý možný další token.
+
+POINTA: Text → tokeny → čísla → síť → skóre. Žádná databáze odpovědí.
+
+TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Tokenizace podle o200k_base (tiktoken); jiné modely mají jiné tokenizery. Token ID → embedding (vektor) + informace o pozici. Síť = transformer: vrstvy attention + MLP, opakované N×; vynechány normalizace, residual connections. Attention je kauzální (vidí současnou a předchozí pozice, ne budoucí) a není totéž co uvažování. Model může některé tréninkové pasáže memorovat, takže „není databáze“ ≠ „nic si doslova nepamatuje“.
+
+ZDROJ: tiktoken (S3); Vaswani et al. 2017 (S2); Transformer Explainer (S1).
+
+PŘECHOD: Co přesně je to skóre?`,
+
+  "rozdeleni": `⏱ 1:00
+
+ŘÍCT:
+Model nevrací odpověď. Vrací rozdělení: jak pravděpodobný je každý možný další token.
+
+— další krok —
+
+Střeše 31 %, gauči 18 %… a zbytek rozprostřený přes desítky tisíc dalších tokenů.
+
+POINTA: Výstup je rozdělení pravděpodobností dalšího tokenu.
+
+TECHNICKÁ POZNÁMKA: Síť vrací skóre (logits), softmax z nich udělá pravděpodobnosti. Čísla ilustrativní, kandidáti jako celá slova (ve skutečnosti by šel první token, např. „·st“). 31 % není 31% jistota pravdivosti. Chat modely po post-trainingu mají jiné distribuce než čistý LM.
+
+VTIP: „42“ tam někde je taky. S hodně malou pravděpodobností.
+
+PŘECHOD: Z rozdělení musíme vybrat jeden token.`,
+
+  "kostka": `⏱ 1:15
+
+ŘÍCT:
+Vybírá se losem. Ale kostka je extrémně zatížená.
+
+— další krok —
+
+Temperature nízko: vyhrává favorit.
+
+— další krok —
+
+Temperature výš: šanci dostanou i outsideři.
+
+— další krok —
+
+Kostka, která před každým hodem změní pravděpodobnosti svých stěn. Stochastický neznamená chaos.
+
+POINTA: Náhoda vybírá uvnitř velmi strukturovaného rozdělení.
+
+TECHNICKÁ POZNÁMKA: Ilustrativní čísla: syntetické logits [3,2,1,0], softmax(logits / T), hodnoty skutečně spočtené. Pořadí kandidátů se nemění. Temperature není „kreativita“ a nezaručuje pravdivost. T = 0 = konvence pro greedy. Ani greedy nemusí být bitově reprodukovatelné (floating point, dávkování); sampling není jediný zdroj variability.
+
+ZDROJ: Transformer Explainer (S1); PyTorch Reproducibility / Numerical accuracy (S9, S10).
+
+ŽIVÁ UKÁZKA (volitelně, max 1 min z rezervy): Transformer Explainer, posunout temperature slider.
+
+PŘECHOD: A tohle se opakuje.`,
+
+  "smycka": `⏱ 0:45
+
+ŘÍCT:
+Vybraný token se přilepí ke kontextu a jede se znovu. Token po tokenu.
+(Rychle proklikat 3 kroky vpravo.) „Střeše“ vzniká ze tří tokenů.
+
+POINTA: Generování = smyčka. Nic víc.
+
+TECHNICKÁ POZNÁMKA: Běží do ukončovacího tokenu nebo limitu. Text se znovu netokenizuje, přidá se ID. Při chatu se váhy nemění.
+
+PŘECHOD: Odkud to ale ví, co je pravděpodobné?`,
+
+  "pretraining": `⏱ 1:45
+
+ŘÍCT:
+Z textu. Kus internetu, knih, kódu. Zakryjeme další slovo a necháme model hádat.
+
+— další krok —
+
+Funguje to na fakta…
+
+— další krok —
+
+…i na kód.
+
+— další krok —
+
+Porovnáme odhad s tím, co v textu opravdu bylo, a maličko upravíme naučená čísla. A znovu. Bilionkrát.
+
+— další krok —
+
+A aby to dobře doplňoval, musí se naučit jazyk, fakta, kód, styl a vztahy. Nikdo pro každou z těch úloh nenapsal zvláštní pravidla.
+
+POINTA: Pretraining = obří množství malých oprav. Schopnosti jsou vedlejší produkt dobrého doplňování.
+
+VTIP: Pár miliard knoflíků. Ručně by to trvalo.
+
+TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Slova místo tokenů, příklady ilustrativní. „Knoflíky“ = naučené parametry, ne fyzické prvky. Nejde o binární správně/špatně: trénink zvyšuje pravděpodobnost skutečně pozorovaného tokenu (gradient descent přes backpropagation). Trénovací text nemusí být pravdivý. Schopnosti jsou empirický výsledek škály dat a modelu, ne důkaz lidského myšlení; slovo „emergence“ nepoužívat jako vysvětlení.
+
+ZDROJ: Brown et al. 2020 (S4); Schaeffer et al. 2023 (S5).
+
+PŘECHOD: Jak vypadá výsledek? Skutečná ukázka z roku 2019.`,
+
+  "gpt2": `⏱ 1:15
+
+ŘÍCT:
+GPT-2, 2019. Lidé mu dali začátek vymyšlené zprávy: v Andách objevili jednorožce, kteří mluví anglicky.
+
+— další krok —
+
+A model napsal článek. Novinový styl, vymyšlený biolog Jorge Pérez, citace vědců.
+
+— další krok —
+
+Plynulý text ve správném žánru. Rozvíjí zadanou fikci. Není to ověřování zprávy.
+
+POINTA: Pretrained model umí plynule pokračovat v žánru, který dostane.
+
+TECHNICKÁ POZNÁMKA: České shrnutí skutečné ukázky (Radford et al. 2019, tab. 13), ne doslovná citace. Autoři vybrali 1 z 10 pokusů, sampling top-k 40. Je to pokračování fikce: vstup už byl fikce, nejde o halucinaci při faktické otázce.
+
+ZDROJ: Radford et al. 2019, GPT-2 (S14).
+
+PŘECHOD: Co když ho požádáme o něco?`,
+
+  "base-model": `⏱ 1:15
+
+ŘÍCT:
+Skutečný prompt: napiš francouzsky krátký příběh o žábě, která cestuje časem do antického Řecka.
+
+— další krok —
+
+GPT-3 bez dalšího tréninku příběh nenapsal. Přidal další zadání: příběh o dítěti a bozích, o mladíkovi v jiné době…
+
+— další krok —
+
+Viděl začátek seznamu zadání. A v seznamu pokračoval. Umí pokračovat v textu. Roli pomocníka ale nemá zaručenou.
+
+POINTA: Base model doplňuje dokument; pomoc není jeho výchozí role.
+
+TECHNICKÁ POZNÁMKA: České shrnutí skutečných výstupů (Ouyang et al. 2022, obr. 42, stejný prompt jako obr. 8), příklad vybraný autory pro ilustraci, ne benchmark. Base model umí instrukce plnit i přes vhodně postavený prompt; není absolutně neschopný. Starší completion model, ne dnešní chat.
+
+ZDROJ: Ouyang et al. 2022, InstructGPT (S6), https://arxiv.org/html/2203.02155v1#A6.F42
+
+PŘECHOD: Jak z doplňovače uděláme asistenta?`,
+
+  "instruction": `⏱ 1:15
+
+ŘÍCT:
+Ukážeme mu dokumenty, které vypadají jako konverzace. Uživatel se ptá, asistent odpovídá.
+
+— další krok —
+
+Lidé napíšou obě strany dialogu. Tisíce takových ukázek. A na těchto ukázkách dál trénujeme stejnou síť.
+
+— další krok —
+
+Pořád doplňuje dokument. Jen dokument teď vypadá jako konverzace.
+
+POINTA: Instruction tuning nemění motor, mění to, jaký dokument model doplňuje.
+
+TECHNICKÁ POZNÁMKA: Ukázka na slidu je ilustrace. Supervised fine-tuning (SFT); u ChatGPT lidští trenéři psali obě strany dialogu (S15). Recepty se liší model od modelu; nepřisuzovat přesně původnímu InstructGPT.
+
+ZDROJ: OpenAI 2022, Introducing ChatGPT (S15); Ouyang et al. 2022 (S6).
+
+PŘECHOD: Odpovědí je ale víc. Která je lepší?`,
+
+  "preference": `⏱ 1:30
+
+ŘÍCT:
+Otázka chce odpověď jednou větou. A se pustí do dlouhého vysvětlování. B dá jednu větu. Kterou chcete?
+
+— další krok —
+
+Lidé takhle porovnávají tisíce dvojic. Model se posouvá k odpovědím, které hodnotitelé preferují.
+
+POINTA: Preference = ladění podle toho, co hodnotitelé vyberou.
+
+TECHNICKÁ POZNÁMKA: Syntetická ilustrace, ne skutečný anotační záznam. Kratší není obecně lepší: B vyhrává, protože otázka výslovně chtěla jednu větu. Typicky reward model z lidských porovnání + RL (RLHF); jiné postupy např. DPO (S16). Preference ≠ pravda; jde o preference konkrétní skupiny podle instrukcí. Launch ChatGPT zmiňuje i bias hodnotitelů k delším odpovědím, takže netvrdit, že RLHF automaticky zkracuje.
+
+ZDROJ: Ouyang et al. 2022 (S6); OpenAI 2022 (S15); Rafailov et al. 2023, DPO (S16).
+
+PŘECHOD: Vraťme se k žábě.`,
+
+  "zaba-po": `⏱ 1:15
+
+ŘÍCT:
+Stejný prompt. Base model psal další zadání.
+
+— další krok —
+
+Model po celém post-trainingu napsal příběh. O ztracené, unavené žábě, která hledá cestu do starého Řecka.
+
+— další krok —
+
+Stejný motor. Jiné chování.
+
+POINTA: Post-training mění chování, ne mechanismus.
+
+TECHNICKÁ POZNÁMKA: České shrnutí skutečných výstupů (obr. 42). InstructGPT = celý pipeline SFT + RLHF, ne izolovaný efekt jednoho kroku. Výstupy s různým nastavením (GPT-3 T 0.7, InstructGPT T 1).
+
+ZDROJ: Ouyang et al. 2022, obr. 42 (S6).
+
+PŘECHOD: Shrnuto do tří kroků.`,
+
+  "evoluce": `⏱ 1:00
+
+ŘÍCT:
+Doplňovač textu.
+
+— další krok —
+
+Asistent.
+
+— další krok —
+
+Lepší asistent.
+
+— další krok —
+
+Nejdřív jsme model naučili pokračovat v textu. Pak jsme ho naučili, jak má pokračovat, když po něm něco chceme.
+
+POINTA: Pretraining → instruction tuning → preference.
+
+TECHNICKÁ POZNÁMKA: Moderní modely mají další fáze (např. RL na úlohách s ověřitelným výsledkem). Pro talk stačí tři.
+
+PŘECHOD: A co se změnilo uvnitř?`,
+
+  "porad-token": `⏱ 0:45
+
+ŘÍCT:
+Uvnitř běží pořád stejný motor. Kontext, síť, rozdělení, další token.
+
+— další krok —
+
+Výsledek je odhad dalšího tokenu. Ne vyhledaný fakt.
+
+POINTA: Post-training mění chování, ne mechanismus.
+
+PŘECHOD: Z toho plyne první problém.`,
+
+  "halucinace": `⏱ 1:30
+
+ŘÍCT:
+Asistent zní jako odpověď. Sebejistě, ve správném formátu.
+
+— další krok —
+
+To nezaručuje pravdu. Motor pořád odhaduje další token; není to databáze pravdy.
+
+— další krok —
+
+Model může říct „nevím“. Generování ale nezaručuje, že správně pozná kdy.
+
+POINTA: Vypadá jako asistent ≠ garantovaně správně.
+
+TECHNICKÁ POZNÁMKA: V každém kroku vznikne nějaké rozdělení a vybere se nějaký token; samotné generování neobsahuje krok ověření pravdy. Halucinace nemají jediný mechanismus (vzácná data, konflikty, dekódování, tlak na hádání místo abstence). Trénink může abstenci zlepšit; RAG ani tools nejsou univerzální oprava.
+
+ZDROJ: Kalai et al. 2025 (S7).
+
+PŘECHOD: Druhá věc, která lidi překvapuje.`,
+
+  "pocitani": `⏱ 1:15
+
+ŘÍCT:
+Chvíli nechat viset.
+
+— další krok —
+
+Kde jste v té mašině viděli násobičku? Hardware samozřejmě násobí. Jen nám nikdo nezaručí správné násobení čísel z promptu.
+
+— další krok —
+
+Řešení: dát mu kalkulačku. Když mám kalkulačku, použiju kalkulačku.
+
+POINTA: Deterministický problém → deterministický nástroj.
+
+TECHNICKÁ POZNÁMKA: Modely umí aritmetiku částečně a reasoning modely jsou v matematice silné; víceciferné násobení bez nástroje zůstává náchylné k chybám. Systém musí ověřit argumenty i výsledek nástroje. 2837 × 491 = 1 392 967 ověřeno.
+
+PŘECHOD: A pak jsou věci, které model vědět nemůže vůbec.`,
+
+  "aktualni": `⏱ 1:45
+
+ŘÍCT:
+Kolik teď stojí bitcoin?
+
+— další krok —
+
+Co říká naše interní směrnice?
+
+— další krok —
+
+Trénink někdy skončil. A pokud naše dokumenty nedostal, nemá se o co opřít. Bez podkladů by mohl jen hádat; v lepším případě přizná nejistotu nebo odmítne.
+
+— další krok —
+
+Takže podklady najdeme za něj. Search, API, vyhledání v dokumentech. Přidáme je k otázce a model odpoví nad nimi.
+
+POINTA: Retrieval (RAG) a nástroje dávají systému informace, které model nemá.
+
+TECHNICKÁ POZNÁMKA: Parametry se při RAG nemění. Kvalita stojí na vyhledávání; model může dodaný kontext i tak špatně použít.
+
+ZDROJ: Lewis et al. 2020, RAG (S11).
+
+PŘECHOD: A když tohle pustíme ve smyčce, máme agenta.`,
+
+  "agent": `⏱ 1:15
+
+ŘÍCT:
+Model navrhne akci. Náš kód ji ověří a spustí. Výsledek jde zpátky do kontextu. A znovu, dokud není hotovo.
+
+— další krok —
+
+LLM není celý agent. Je to jedna součástka. Zbytek je normální software.
+
+POINTA: Agent = LLM + nástroje + kód ve smyčce.
+
+TECHNICKÁ POZNÁMKA: Model sám nic nespouští; okolní kód rozhoduje o oprávněních. Samotné přidání paměti/stavu z modelu agenta nedělá.
+
+ZDROJ: Yao et al. 2022, ReAct (S12).
+
+PŘECHOD: Kam tedy LLM patří a kam ne?`,
+
+  "spatne": `⏱ 1:15
+
+ŘÍCT:
+Datum narození. Dosáhl 18 let? Poslat to do LLM: pomalejší, dražší a občas špatně.
+
+— další krok —
+
+Tři řádky kódu. Podle přesně daných pravidel.
+
+— další krok —
+
+Nedělej z deterministického problému probabilistický jen proto, že máš LLM.
+
+POINTA: Když umíš napsat pravidlo, napiš pravidlo.
+
+VTIP: Halucinující ověření věku. Přesně to, co chce slyšet compliance.
+
+TECHNICKÁ POZNÁMKA: Determinismus není správnost: kód je správný, jen když jsou správná pravidla. Věk potřebuje datum posouzení a kalendářní pravidla (29. 2.). Ilustrace výpočtu, ne právní rozhodování.
+
+PŘECHOD: A kde naopak LLM dává smysl?`,
+
+  "dobre": `⏱ 1:15
+
+ŘÍCT:
+„No paráda, zase mi to přišlo rozbitý.“
+
+— další krok —
+
+Klíčové slovo říká pochvala. A pravidel přibývá: výjimka, výjimka z výjimky…
+
+— další krok —
+
+Každý člověk ví, že je to stížnost. Tady se vyplatí model vyzkoušet a změřit, jak dobře klasifikuje.
+
+POINTA: LLM tam, kde pravidlo napsat neumíme.
+
+TECHNICKÁ POZNÁMKA: LLM není jediný možný klasifikátor. Výstup omezit na validovaný výčet včetně „nejisté → člověk“; výsledek je odhad, ne fakt.
+
+PŘECHOD: Dejme to dohromady.`,
+
+  "architektura": `⏱ 1:00
+
+ŘÍCT:
+LLM uprostřed: pochopí, co uživatel chce, navrhne další krok.
+
+— další krok —
+
+Než se cokoliv stane, software ověří oprávnění a argumenty. Pak nástroje a data.
+
+— další krok —
+
+Výsledky jdou zpátky modelu.
+
+— další krok —
+
+A na výstupu zase deterministická kontrola.
+
+POINTA: Deterministic software + probabilistic capabilities.
+
+TECHNICKÁ POZNÁMKA: Guardrails = schema validace, allow-listy, oprávnění, limity, human-in-the-loop u nevratných akcí. Schema validace ověří tvar, ne pravdivost.
+
+PŘECHOD: Takže… zničí nás Terminátoři?`,
+
+  "terminatori": `⏱ 1:00
+
+ŘÍCT:
+Slíbil jsem poctivou odpověď.
+
+— další krok —
+
+Rozebrali jsme mechanismus. Tím jsme ale nevyřešili otázku vědomí ani bezpečnosti. Co můžeme řídit hned: oprávnění, ověřování, lidský dohled.
+
+— další krok —
+
+DON'T PANIC neznamená don't care.
+
+— další krok —
+
+LLM není magie. Je to software. Velmi zvláštní software. Nenahrazujte jistotu pravděpodobností, pokud pravděpodobnost neřeší problém, který jistota neumí. Díky.
+
+POINTA: Nepanikařit ≠ nestarat se. Callback na začátek.
+
+TECHNICKÁ POZNÁMKA: Nezlehčovat ani nepřehánět. Neříkat, že rizika jsou „hlavně v nasazení“. Nedělat predikce o AGI.
+
+PŘECHOD: Resources + Q&A.`,
+
+  "zdroje": `⏱ 0:00 (visí během Q&A)
+
+ŘÍCT:
+Kdo si chce na krabičku sáhnout sám: Transformer Explainer běží v prohlížeči.
+
+VIDEO PRO ZVÍDAVÉ: Andrej Karpathy, Deep Dive into LLMs like ChatGPT. Kapitoly: tokenizace 07:47, vstup/výstup sítě 14:27, inference 26:01, post-training 59:23, halucinace a tools 1:20:32. (S13)
+
+POINTA: Kdo chce krabičku rozebrat hlouběji sám, má kde začít.
+
+ZDROJ: kompletní seznam v sources.md (S1–S16).
+
+PŘECHOD: Q&A.`,
+
 };

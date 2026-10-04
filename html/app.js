@@ -75,7 +75,7 @@
     if (!body.classList.contains("notes-open")) return;
     const s = SLIDES[idx];
     const txt = esc(NOTES[s.id] || "Bez poznámek.")
-      .replace(/^(ŘÍCT:|POINTA:|VTIP \/ CALLBACK:|TECHNICKÁ POZNÁMKA:|ZDROJ:|PŘECHOD:|⏱[^\n]*)/gm, '<span class="k">$1</span>');
+      .replace(/^([A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ][A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ /()]+:|⏱[^\n]*)/gm, '<span class="k">$1</span>');
     const el = Math.floor((t0 ? Date.now() - t0 : 0) / 1000);
     notesEl.innerHTML = `<header><span>Slide ${idx + 1} z ${SLIDES.length}, krok ${step} z ${maxStep[idx]}</span><span class="timer">${String(Math.floor(el / 60)).padStart(2, "0")}:${String(el % 60).padStart(2, "0")}</span></header>${txt}`;
   }
