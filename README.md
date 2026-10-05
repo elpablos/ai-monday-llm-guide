@@ -32,7 +32,6 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 | `html/doodles.js` | vlastní editovatelné SVG kresby pro historické zastávky |
 | `html/qr.js` | vygenerovaný SVG QR na Transformer Explainer |
 | `html/assets/` | vlastní černobílé SVG ilustrace + archiv starších Skullpix pokusů |
-| `html/stoparuv-pruvodce-po-llms.pdf` | starší PDF export před archeologickým refactorem (26 stran); hlavní verze je HTML |
 
 Opening má čtyři snímky: titul, praktik Pavel Lorenz, motivace archeologického průzkumu a mapa „Back to the roots“. Historie z issue #1 nyní tvoří páteř příběhu: u zastávky řešíme problém, zlepšení a zbývající limit. Word2vec je související větev, nikoli přímý technický předek Transformeru.
 
@@ -52,7 +51,7 @@ Timeline má vyhrazené místo a nepřekrývá slide. V přehledu se schová; v 
 
 ### Ověření
 
-Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states --output html/review/archaeology` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing, přetékání a synchronizaci timeline. Interakce a mobilní rozložení: `python3 scripts/review-navigation.py --page 2`.
+Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states --output html/review/archaeology` (číslo stránky uprav podle `chrome-devtools list_pages`). Screenshoty z review a PDF exporty jsou lokální generované soubory, které Git ignoruje; JSON reporty zůstávají verzované. Skript ukládá screenshoty a kontroluje všechny stavy, notes, timing, přetékání a synchronizaci timeline. Interakce a mobilní rozložení: `python3 scripts/review-navigation.py --page 2`.
 
 Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/archaeology/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
 
@@ -66,7 +65,6 @@ PPTX níže je starší artefakt, dál se negeneruje.
 |---|---|---|
 | `deck/stoparuv-pruvodce-po-llms.pptx` | starší fallback deck v2 (schválen technickou a vizuální oponenturou, viz tech-review.md) se speaker notes ke každému snímku | prez-opus |
 | `deck/build.js` | editovatelný zdroj — všechny texty, diagramy, notes, data | prez-opus |
-| `deck/render/*.pdf`, `sheet-*.jpg` | render pro vizuální kontrolu | prez-opus |
 | `outline.md` | osnova s timingem | prez-opus |
 | `tech-review.md` | technická oponentura po slidech | prez-astra |
 | `sources.md` | zdroje S1–S26 a původ historických ukázek | prez-astra |

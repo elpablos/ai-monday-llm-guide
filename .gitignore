@@ -5,3 +5,11 @@ node_modules/
 .env.*
 
 __pycache__/
+
+# Generated review screenshots and PDF exports
+html/review/**/*.png
+html/review/**/*.jpg
+html/review/**/*.jpeg
+html/review/**/*.webp
+html/*.pdf
+deck/render/*.pdf
