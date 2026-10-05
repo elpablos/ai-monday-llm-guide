@@ -59,3 +59,7 @@ Pavel zadal přímo implementaci na `main`: od autocomplete přes pretraining, i
 - 2026-10-05 — prez-astra: lokální main fast-forward na hotovou historii PR #2; nový runtime timeline (10 zastávek + slider), černobílé CSS, vlastní doodles.js, zdroje S25–S26. Opus převzal slides/notes/outline a Skullpix; po obsahovém review proběhlo zjednodušení openingu a přesnost historie. Finální Chrome DevTools QA: 31 slidů / 93 stavů / 29:00, bez nalezených problémů; vizuální průchod všech stavů a funkční test navigace.
 - 2026-10-05 11:21 CEST — Opus: 3 SVG ilustrace (robot-guide, opened-llm, archaeology) hotové + assets/README doplněn; kontrola v kontextu slidů 1–3 OK. Assets FREEZE.
 - 2026-10-05 — vizuální připomínky: prez-opus vytvořil robot-guide.svg, opened-llm.svg a archaeology.svg; prez-astra upravil titul/callback, zvětšil piktogramy na190px, integroval kresby a zkontroloval93stavů přes Chrome DevTools (bez nálezů).
+
+## 2026-10-05 — úklid repozitáře
+
+Odstraněný starý PPTX projekt a jeho rendery/závislosti, nepoužívané varianty ilustrací a lokální screenshoty. Stav před úklidem je dohledatelný v Gitu pod `ee49094`. Původní zadání, prompty a tento log přesunuty beze změn obsahu do `docs/history/`. HTML je jediná udržovaná verze.

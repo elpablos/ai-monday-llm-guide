@@ -220,3 +220,13 @@ Nové formulace zkontrolovány proti S17–S23, doplněným primárním zdrojům
 - Titul: datum 5. 10. 2026, označení #17 místo úvodního DON'T PANIC, robůtek vpravo a podtitul „Terminátoři či transformátoři?“. Stejný callback v závěru a notes.
 - Piktogramy zastávek zvětšeny z 90 na 190 px; nadpisy mají rezervované místo. Pixelová krabička a lopata nahrazeny vlastními linkovými SVG od prez-opus: otevřená krabička a archeologická scéna.
 - Znovu Chrome DevTools: 31 slidů / 93 stavů / 0 problémů / prázdná konzole. Dotčené slidy vizuálně prohlédnuty, opening a závěr v plné velikosti. Timing zůstává 29:00 + rezerva.
+
+## Úklid repozitáře — 5. 10. 2026
+
+Staré PPTX zdroje a exporty, nepoužívané ilustrace a lokální review screenshoty byly odstraněny. Historické záznamy výše popisují tehdejší verze; odkazy na odstraněné soubory lze dohledat v historii Gitu (např. `ee49094`). JSON reporty zůstávají, screenshoty si kontrolní skripty vygenerují znovu. Původní zadání a koordinační log jsou v `docs/history/`.
+
+Kontrola úklidu: Codex + Opus nezávisle potvrdily sedm aktivních externích obrázků a zastaralou dokumentaci assetů. Doporučení ponechat starý PPTX/zdrojový archiv nebylo převzato: HTML je jediná udržovaná verze podle zadání; kompletní historie zůstává v Gitu.
+
+Chrome DevTools po úklidu: 31 slidů, všech 95 stavů, 0 nalezených problémů, konzole bez chyb. Timing notes 1 740 s (29 minut). Kontrola syntaxe všech HTML JavaScriptů a existence lokálních závislostí prošla. Příkaz regenerace QR ověřen bez závislosti na odstraněném `deck/`. Nové screenshoty jsou pouze v dočasném adresáři mimo repo.
+
+Kontrola navigace prošla bez problémů: 10 historických zastávek, posuvník, klávesnice, poznámky, přehled i mobilní rozložení. Vizuálně ověřen titul a závěrečný callback.

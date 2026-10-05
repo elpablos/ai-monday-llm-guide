@@ -157,18 +157,12 @@ Spodní timeline je **mapa vybraných zastávek** v čase: rozestupy nejsou prop
 - Doplnění S27 — stanovisko školitele k Mikolovově disertaci potvrzuje šest měsíců na JHU v roce 2010 pod vedením Freda Jelínka a Sanjeeva Khudanpura: https://www.vut.cz/www_base/zav_prace_soubor_verejne.php?file_id=136989&zp_id=99806 . Stáž popisuje i Mikolov v rozhovoru Forbes NEXT (2018), archiv VUT: https://www.fit.vut.cz/fit/press/2505/.cs . Callback v notes cca 10 sekund.
 
 
-### Portrét řečníka (slide O mně)
+### Ilustrace aktuálního decku
 
-- Vstupní fotografie: GitHub avatar dodaný Pavlem Lorenzem, https://avatars.githubusercontent.com/u/11454911 .
-- `html/assets/pavel-portrait.png`: černobílá ilustrace vytvořená nástrojem imagegen podle této fotografie; nejde o původní fotografii ani historickou ilustraci.
+- Vstupní fotografie pro lidské postavy: GitHub avatar dodaný Pavlem Lorenzem, https://avatars.githubusercontent.com/u/11454911 .
+- `html/assets/pavel-archaeologist.png`: imagegen podle Pavlova avataru a předchozí archeologické kompozice. Jednoduchá lidská postava s lupou, bez šrafování; vizuální metafora průzkumu.
+- `robot-explorer-simple.png`, `pavel-portrait-simple.png`, `robot-question-simple.png` a `robot-finale-simple.png`: imagegen podle stylové předlohy `pavel-archaeologist.png`; portrét také podle dodaného avataru. Nejde o historické ilustrace. Všechny používají společnou CSS pozici `.story-art`.
+- `world-compression.svg` a `calculator.svg`: vlastní editovatelné linkové kresby. Svěrák je pouze metafora, nikoli technický popis komprese modelu.
+- Historické piktogramy v `html/doodles.js` a diagramy v `html/slides.js` jsou vlastní SVG/HTML.
 
-- `html/assets/robot-explorer.png`: původní ilustrace vygenerovaná nástrojem imagegen pro titulní slide — robot se šroubovákem otevírá krabičku LLM, černobílá kresba bez externí předlohy.
-
-- `html/assets/robot-archaeologist.png`: companion ilustrace vytvořená imagegen podle `robot-explorer.png`; robot s lupou odkrývá vrstvy s krabičkou LLM, knihou a děrnou páskou. Vizuální metafora průzkumu, nikoli historický diagram.
-
-- `html/assets/pavel-archaeologist.png`: zjednodušená aktuální ilustrace slidu 3, imagegen podle Pavlova GitHub avataru a předchozí archeologické kompozice. Robot nahrazen lidskou postavou; bez šrafování.
-
-
-### Sjednocené ilustrace úvodu a závěru
-
-Aktuální slidy 1, 2, 3 a oba závěrečné stavy slidu 30 používají jednotný jednoduchý černobílý doodle styl podle `pavel-archaeologist.png`: silné obrysy, bílé plochy, bez šrafování. Nové soubory `robot-explorer-simple.png`, `pavel-portrait-simple.png`, `robot-question-simple.png` a `robot-finale-simple.png` vytvořil imagegen s touto stylovou předlohou (portrét také podle dodaného GitHub avataru). Všechny používají společnou CSS pozici `.story-art`; starší varianty zůstávají jako pracovní assets, nejsou v těchto slidech použité.
+Starší obrazové mezikroky (detailní portrét, robot průzkumník, robot archeolog, Skullpix pokusy a nahrazené SVG) byly při úklidu odstraněny; jejich původ a soubory jsou zachované v historii Gitu, např. `ee49094`.
