@@ -214,3 +214,9 @@ Nové formulace zkontrolovány proti S17–S23, doplněným primárním zdrojům
 - Původní PPTX i starší PDF (26 stran) jsou ponechané jako historické exporty; hlavní a aktualizovaný artefakt je HTML. Nový tiskový styl přidává na každou stranu vlastní statickou timeline.
 
 **Dry-run:** nejdřív škrtat volitelný live Explainer, detail backoff a slovní rozbor word2vec analogie. U motoru hlídat dvě minuty; při přetažení zkrátit architektonický diagram. Zachovat base model → asistent, preference a příklad pravidlo vs. jazyk. Ověřit čitelnost osy na skutečném projektoru.
+
+### Vizuální připomínky — AI Monday #17
+
+- Titul: datum 5. 10. 2026, označení #17 místo úvodního DON'T PANIC, robůtek vpravo a podtitul „Terminátoři či transformátoři?“. Stejný callback v závěru a notes.
+- Piktogramy zastávek zvětšeny z 90 na 190 px; nadpisy mají rezervované místo. Pixelová krabička a lopata nahrazeny vlastními linkovými SVG od prez-opus: otevřená krabička a archeologická scéna.
+- Znovu Chrome DevTools: 31 slidů / 93 stavů / 0 problémů / prázdná konzole. Dotčené slidy vizuálně prohlédnuty, opening a závěr v plné velikosti. Timing zůstává 29:00 + rezerva.

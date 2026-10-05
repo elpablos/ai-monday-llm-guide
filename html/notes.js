@@ -5,8 +5,7 @@ window.NOTES = {
 
 ŘÍCT:
 Stopařův průvodce po LLMs. Jmenuju se Pavel Lorenz.
-Zničí nás AI? Vezme nám práci? Myslí? Ví, co říká? K první otázce se na konci vrátíme poctivě.
-Na obálce Průvodce stálo DON'T PANIC. To platí i dnes.
+AI Monday číslo sedmnáct. Zničí nás Terminátoři, nebo transformátoři? Malá narážka: to T v GPT znamená Transformer. K té otázce se na konci vrátíme poctivě.
 
 POINTA: Nejvíc se bojíme toho, čemu nerozumíme.
 
@@ -584,12 +583,12 @@ POINTA: Deterministic software + probabilistic capabilities.
 
 TECHNICKÁ POZNÁMKA: Guardrails = schema validace, allow-listy, oprávnění, limity, human-in-the-loop u nevratných akcí. Schema validace ověří tvar, ne pravdivost.
 
-PŘECHOD: Takže… zničí nás Terminátoři?`,
+PŘECHOD: Takže… zničí nás Terminátoři či transformátoři?`,
 
   "terminatori": `⏱ 1:00
 
 ŘÍCT:
-Slíbil jsem poctivou odpověď.
+Tak Terminátoři, nebo transformátoři? Slíbil jsem poctivou odpověď.
 
 — další krok —
 

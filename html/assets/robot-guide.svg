@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#161616" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Malý přátelský robot průvodce s otazníkem v bublině">
+  <!-- speech bubble -->
+  <path d="M262 62 Q261 39 290 38 L351 35 Q377 35 377 61 L378 104 Q378 127 352 127 L312 128 L287 152 L292 128 Q264 129 263 105 Z" fill="#FFFFFF"/>
+  <text x="321" y="106" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="66" font-weight="800" text-anchor="middle" fill="#161616" stroke="none">?</text>
+  <!-- antenna -->
+  <path d="M151 94 Q147 74 153 54"/>
+  <circle cx="154" cy="44" r="11" fill="#161616"/>
+  <!-- head -->
+  <path d="M101 97 Q149 88 204 94 Q215 95 215 107 L217 167 Q216 181 203 182 Q150 187 103 181 Q90 179 90 166 L88 109 Q89 98 101 97 Z" fill="#FFFFFF"/>
+  <path d="M88 124 L78 126 L79 150 L89 150 M217 122 L227 121 L228 146 L217 147"/>
+  <circle cx="129" cy="134" r="10" fill="#161616" stroke="none"/>
+  <circle cx="178" cy="132" r="10" fill="#161616" stroke="none"/>
+  <circle cx="132" cy="130" r="3" fill="#FFFFFF" stroke="none"/>
+  <circle cx="181" cy="128" r="3" fill="#FFFFFF" stroke="none"/>
+  <path d="M128 158 Q153 174 179 157"/>
+  <!-- neck -->
+  <path d="M140 183 L141 196 M166 183 L167 196"/>
+  <!-- arms (behind body) -->
+  <path d="M101 220 Q73 238 66 270"/>
+  <circle cx="64" cy="281" r="11" fill="#FFFFFF"/>
+  <path d="M207 218 Q239 202 251 170"/>
+  <circle cx="253" cy="160" r="12" fill="#FFFFFF"/>
+  <path d="M236 150 Q232 140 236 132 M268 144 Q276 138 278 128" stroke-width="4"/>
+  <!-- body -->
+  <path d="M105 196 Q152 191 201 197 Q210 198 210 207 L208 291 Q207 301 198 301 L109 303 Q99 303 99 294 L98 206 Q98 197 105 196 Z" fill="#FFFFFF"/>
+  <path d="M124 222 Q153 218 182 221 L183 251 Q154 254 125 253 Z"/>
+  <path d="M134 236 L146 236 M158 236 L172 235"/>
+  <circle cx="139" cy="275" r="6" fill="#161616" stroke="none"/>
+  <circle cx="166" cy="274" r="6" fill="#161616" stroke="none"/>
+  <!-- legs -->
+  <path d="M129 303 L127 345 M180 302 L182 345"/>
+  <path d="M110 349 Q126 344 143 349 M166 348 Q183 343 199 348"/>
+</svg>

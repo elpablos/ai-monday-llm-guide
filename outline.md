@@ -9,7 +9,7 @@ Cíl: 29:00 obsah + 1:00 rezerva = 30:00. Každá zastávka: problém → zlepš
 
 | id | Slide | Pointa | Čas |
 |---|---|---|---|
-| dont-panic | Titul | Stopařův průvodce, Pavel Lorenz; otázky jen mluveně. | 0:45 |
+| dont-panic | Titul | Stopařův průvodce, Pavel Lorenz, AI Monday #17; Terminátoři či transformátoři + robůtek. | 0:45 |
 | o-mne | Kdo vám to dneska vypráví? | Staff engineer, praktik; rozebírám věci (sticker). | 0:45 |
 | motivace | Zničí nás? Nahradí nás? | Než se bát, podívat se dovnitř; tři vrstvy průzkumu. | 1:00 |
 | back-to-roots | Back to the roots | Deset zastávek: problém → zlepšení → limit. | 0:30 |
@@ -88,7 +88,7 @@ Cíl: 29:00 obsah + 1:00 rezerva = 30:00. Každá zastávka: problém → zlepš
 | spatne | Dosáhl 18 let? | Pravidlo napiš jako pravidlo. | 1:00 |
 | dobre | Je to stížnost? | Jazyk nech modelu. | 1:00 |
 | architektura | Deterministic software + probabilistic capabilities | Autorizace před akcí, validace výstupu. | 0:45 |
-| terminatori | Terminátoři → DON'T PANIC | Znalost mechanismu ≠ bezpečnost. | 1:00 |
+| terminatori | Terminátoři / transformátoři → DON'T PANIC | Znalost mechanismu ≠ bezpečnost. | 1:00 |
 | zdroje | Kam dál | QR Explainer, GPT-2, InstructGPT, Karpathy. | 0:00 |
 
 **Součet: 3:00 + 0:45 + 2:15 + 2:15 + 0:45 + 0:45 + 0:45 + 2:00 + 5:15 + 3:15 + 8:00 = 29:00.**

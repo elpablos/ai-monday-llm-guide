@@ -1,6 +1,21 @@
 # Vlastní ilustrace
 
-`llm-open-box.json` je editovatelný zdroj pro Skullpix 0.3.0. PNG má 176 × 96 px a průhledné pozadí. V prezentaci se zvětšuje celočíselně pomocí `image-rendering: pixelated`.
+## Aktuální linkové kresby
+
+Černobílé editovatelné SVG od prez-opus, vytvořené přímo pro prezentaci. Čára 6 px s kulatými konci, černá `#161616` a bílá; robot má viewBox 400 × 400, ostatní 500 × 360.
+
+| Soubor | Obsah | Slide |
+|---|---|---|
+| `robot-guide.svg` | zvědavý robůtek s otazníkem | titul |
+| `opened-llm.svg` | otevřená krabička LLM, víko a šroubovák | o mně |
+| `archaeology.svg` | odkrytá krabička ve vrstvách země, lupa a lopatka | motivace |
+
+SVG se upravují přímo, nemají build krok ani externí závislosti. Nahrazují první pixelové pokusy, které už aktuální HTML nepoužívá. Kresby historických zastávek jsou v `../doodles.js`; zvětšeny na 190 × 190 px v designové ploše slidu.
+
+## Starší Skullpix pokusy (archiv)
+
+
+`llm-open-box.json` je editovatelný zdroj pro Skullpix 0.3.0. PNG má 176 × 96 px a průhledné pozadí. V původní verzi se zvětšoval celočíselně pomocí `image-rendering: pixelated`.
 
 Regenerace z kořene tohoto projektu:
 
@@ -10,12 +25,12 @@ python -m skullpix render html/assets/llm-open-box.json -o html/assets/llm-open-
 
 Skullpix je lokálně v `/Users/pavel.lorenz/Projects/bastlinet/skullpix`; jeho Python je `.venv/bin/python`. Ilustrace byla vytvořena pro tuto prezentaci, bez převzatých obrazových assetů. Vlastní diagramy zůstávají editovatelné přímo v `../slides.js` jako HTML/SVG.
 
-## Černobílé stickery (archeologická verze decku)
+### Starší černobílé pixelové stickery
 
 | Zdroj | PNG | Kde |
 |---|---|---|
-| `llm-open-box-bw.json` | 176 × 96 | slide `o-mne` (528 × 288) |
-| `shovel-bw.json` | 64 × 96 | slide `motivace` (128 × 192) |
+| `llm-open-box-bw.json` | 176 × 96 | původní slide `o-mne` |
+| `shovel-bw.json` | 64 × 96 | původní slide `motivace` |
 
 `llm-open-box-bw.json` je `llm-open-box.json` s černobílou paletou. Regenerace:
 

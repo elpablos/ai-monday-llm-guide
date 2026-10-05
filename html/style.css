@@ -205,8 +205,13 @@ body.overview .help { display:none; }
 .pil { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; margin-top:auto; padding-top:24px; border-top:2px solid var(--ink); }
 .pil-cell { font:500 28px/1.25 var(--sans); }
 .pil-label { display:block; margin-bottom:10px; color:var(--muted); font:400 20px var(--mono); }
-.sticker { object-fit:contain; image-rendering:pixelated; flex-shrink:0; }
+.sticker { object-fit:contain; image-rendering:auto; flex-shrink:0; }
 .doodle { fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:3; overflow:visible; }
 
-.stop { position:relative; padding-right:112px; }
-.era-doodle { position:absolute; right:0; top:-16px; width:90px; height:90px; transform:rotate(3deg); color:var(--ink); }
+.stop { position:relative; padding-right:230px; }
+.era-doodle { position:absolute; right:0; top:-28px; width:190px; height:190px; transform:rotate(3deg); color:var(--ink); }
+
+.slide:has(.era-doodle) h2 { max-width:1100px; }
+.title-heading { margin-top:75px; font-size:104px; max-width:980px; }
+.title-subtitle { margin-top:48px; max-width:980px; font-size:44px; font-weight:500; }
+.title-robot { position:absolute; right:-10px; top:85px; object-fit:contain; transform:rotate(4deg); }

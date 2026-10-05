@@ -33,11 +33,11 @@
   const S = [];
 
   S.push({ id: "dont-panic", era: null, html: `
-    <p class="fine" style="font-size:28px">AI Monday, 5. 10. 2026</p>
-    <h1 class="huge" style="margin-top:70px; font-size:112px">Stopařův průvodce<br>po LLMs</h1>
-    <p class="lead muted gap-m" style="font-weight:500">aneb zničí nás Terminátoři?</p>
+    <h1 class="huge title-heading">Stopařův průvodce<br>po LLMs</h1>
+    <p class="lead muted title-subtitle">aneb zničí nás<br>Terminátoři či transformátoři?</p>
+    <img class="title-robot" src="assets/robot-guide.svg" width="370" height="410" alt="Zvědavý kreslený robůtek s otazníkem">
     <p class="lead push">Pavel Lorenz</p>
-    <p class="say muted gap-s">DON'T PANIC</p>` });
+    <p class="say muted gap-s">AI Monday #17 - 5. 10. 2026</p>` });
 
   S.push({ id: "o-mne", era: null, html: `
     <h2>Kdo vám to dneska vypráví?</h2>
@@ -49,7 +49,7 @@
         <p class="say" ${st(1)}>A odmalička rozebírám věci, kterým nerozumím.</p>
         <p class="say muted" ${st(1)}><em>Většina z nich už pak nefungovala.</em></p>
       </div>
-      <img class="sticker" ${st(1)} src="assets/llm-open-box-bw.png" width="528" height="288" alt="Rozebraná krabička se šroubovákem">
+      <img class="sticker" ${st(1)} src="assets/opened-llm.svg" width="560" height="400" alt="Rozebraná krabička se šroubovákem">
     </div>` });
 
   const LAYERS = [["dnešní asistenti", "GPT, ChatGPT"], ["modely a odbočky", "BERT, rerankery"], ["základy", "Shannon, Markov"]];
@@ -64,7 +64,7 @@
             <span class="say muted">${d}</span>
           </div>`).join("")}
       </div>
-      <img class="sticker" src="assets/shovel-bw.png" width="128" height="192" alt="Lopata">
+      <img class="sticker" src="assets/archaeology.svg" width="420" height="310" alt="Archeologický průzkum: lupa nad odkrytou krabičkou LLM">
     </div>
     <p class="lead push" ${st(3)}>Jsem praktik, který kopal. Ne archeolog.</p>` });
 
@@ -458,7 +458,7 @@ Asistent: Klient posouvá schůzku na čtvrtek.</pre>
 
   S.push({ id: "terminatori", era: "today", html: `
     <div class="swap" data-until="3">
-      <p class="big" style="font-size:88px">Takže… zničí nás Terminátoři?</p>
+      <p class="big" style="font-size:76px">Takže… zničí nás<br>Terminátoři či transformátoři?</p>
       <p class="lead gap-l" ${st(1)}>Znalost mechanismu není důkaz bezpečnosti.</p>
       <p class="say muted gap-s" ${st(1)}>Co můžeme řídit hned: oprávnění, ověřování a lidský dohled.</p>
       <p class="lead accent push" ${st(2)}>DON'T PANIC ≠ don't care.</p>

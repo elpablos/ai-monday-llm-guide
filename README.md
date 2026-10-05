@@ -31,7 +31,7 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 | `html/app.js` | navigace, notes, přehled, tisk, škálování 1600×900 |
 | `html/doodles.js` | vlastní editovatelné SVG kresby pro historické zastávky |
 | `html/qr.js` | vygenerovaný SVG QR na Transformer Explainer |
-| `html/assets/` | vlastní černobílé Skullpix stickery, PNG + editovatelné JSONy |
+| `html/assets/` | vlastní černobílé SVG ilustrace + archiv starších Skullpix pokusů |
 | `html/stoparuv-pruvodce-po-llms.pdf` | starší PDF export před archeologickým refactorem (26 stran); hlavní verze je HTML |
 
 Opening má čtyři snímky: titul, praktik Pavel Lorenz, motivace archeologického průzkumu a mapa „Back to the roots“. Historie z issue #1 nyní tvoří páteř příběhu: u zastávky řešíme problém, zlepšení a zbývající limit. Word2vec je související větev, nikoli přímý technický předek Transformeru.
@@ -56,7 +56,7 @@ Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python
 
 Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/archaeology/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
 
-Vizuální směr: černobílý zápisník z výpravy, vlastní Skullpix stickery a jednoduchá schémata. Karpathyho technická tabule (sources.md S13) zůstává inspiračním zdrojem a doplňujícím videem.
+Vizuální směr: černobílý zápisník z výpravy, vlastní linkové SVG kresby a jednoduchá schémata. Karpathyho technická tabule (sources.md S13) zůstává inspiračním zdrojem a doplňujícím videem.
 
 PPTX níže je starší artefakt, dál se negeneruje.
 
