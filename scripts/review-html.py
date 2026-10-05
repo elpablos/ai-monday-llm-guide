@@ -32,6 +32,10 @@ for s in meta:
    run('take_screenshot',a.page,'--filePath',str(out/f"{s['index']:02d}-{s['id']}-{step}.png"))
  print(s['index'],s['id'],flush=True)
 report['console']=run('list_console_messages',a.page)
+# Filter in DevTools and read structured data: ordinary logs/warnings must not fail QA.
+console_errors=json.loads(run('list_console_messages',a.page,'--types','error','--output-format','json')).get('consoleMessages',[])
+for error in console_errors:
+ report['issues'].append({'consoleError':error['text'],'consoleMessageId':error['id']})
 (out/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
 print(json.dumps(report,indent=2,ensure_ascii=False))
 

@@ -186,3 +186,7 @@ Zdroje S17–S24 ověřeny 4. 10. 2026. Rozšířené zadání issue požaduje 3
 - `node --check` (slides.js, notes.js), `python3 -m py_compile scripts/review-html.py` a `git diff --check` bez chyb.
 
 Odhad času není měřený živý přednes. Pokud historie při dry-runu přeteče přes čtyři minuty, nejdřív vypustit volitelný Claude callback a detail backoff; zachovat oba Mikolovovy příspěvky a rozlišení kontextu / reprezentací / paralelizace tréninku.
+
+### PR #2 — oprava QA po automatickém review (5. 10. 2026)
+
+Chyby konzole se nyní načítají jako strukturované `consoleMessages` s filtrem `error`, přidávají do `issues` a způsobí exit code 1. Ověřeno přes skutečný Chrome DevTools na izolované testovací stránce: běžný log + warning → exit 0; `console.error` → exit 1; nezachycená JS výjimka → exit 1. Text chyby je uložen v reportu. Syntax a `git diff --check` prošly. Obsah prezentace se touto opravou nemění.
