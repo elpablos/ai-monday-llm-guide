@@ -1,35 +1,84 @@
 // Speaker notes per slide id. ŘÍCT = short spoken lines; nuance goes to TECHNICKÁ POZNÁMKA.
 // Builds within one slide are separated by '— další krok —'. Times sum to 29:00 (+1:00 reserve).
 window.NOTES = {
-  "dont-panic": `⏱ 1:15
+  "dont-panic": `⏱ 0:45
 
 ŘÍCT:
-Stopařův průvodce po LLMs. Na obálce Průvodce stálo velkými přátelskými písmeny DON'T PANIC.
+Stopařův průvodce po LLMs. Jmenuju se Pavel Lorenz.
+Zničí nás AI? Vezme nám práci? Myslí? Ví, co říká? K první otázce se na konci vrátíme poctivě.
+Na obálce Průvodce stálo DON'T PANIC. To platí i dnes.
 
-— další krok —
+POINTA: Nejvíc se bojíme toho, čemu nerozumíme.
 
-Zničí nás AI? Vezme nám práci? Myslí? K první otázce se na konci vrátíme poctivě.
+PŘECHOD: Kdo vám to vlastně vypráví?`,
 
-— další krok —
-
-Nejvíc se bojíme toho, čemu nerozumíme. Tak to pojďme rozebrat.
-
-POINTA: Strach z neznámého mechanismu. Dnes ho otevřeme.
-
-PŘECHOD: Na neznámé věci jsem měl vždycky jeden nástroj.`,
-
-  "sroubovak": `⏱ 1:00
+  "o-mne": `⏱ 0:45
 
 ŘÍCT:
-Jako malej jsem všechno rozebíral šroubovákem. Tady je krabička: prompt dovnitř, odpověď ven.
+Jsem Pavel, staff engineer a hlavně praktik. AI řeším dnes a denně. Zajímá mě, co z toho funguje v praxi.
 
 — další krok —
 
-Tak ji otevřeme. Většina věcí po mně už nefungovala. Ale vždycky jsem se něco naučil.
+A odmalička rozebírám věci, kterým nerozumím. Většina z nich už pak nefungovala. Ale vždycky jsem se něco naučil.
 
-POINTA: Celá přednáška = rozebírání téhle krabičky.
+POINTA: Pohled praktika, ne výzkumníka.
 
-PŘECHOD: Než sáhneme dovnitř, zkusíme si, co dělá. Na sobě.`,
+PŘECHOD: Tak jsem rozebral i tohle.`,
+
+  "motivace": `⏱ 1:00
+
+ŘÍCT:
+Zničí nás? Nahradí nás? Tyhle titulky čtete taky. Než se začnu bát, chci vědět, co je uvnitř. Tak jsem kopal. Nahoře dnešní asistenti, GPT a ChatGPT.
+
+— další krok —
+
+Cestou jsem potkal i BERT a rerankery. Užitečné odbočky.
+
+— další krok —
+
+A až dole základy: Shannon a Markov.
+
+— další krok —
+
+Nestudoval jsem to desítky let. Jsem praktik, který si dohledává, co se tu vlastně objevilo. Tenhle pohled ale pomáhá každému, kdo si s AI hraje.
+
+POINTA: Strach z neznámého → podívat se dovnitř.
+
+TECHNICKÁ POZNÁMKA: Tři vrstvy jsou mapa talku, ne genealogie: BERT (S25) a rerankery jsou odbočky, ne předchůdci GPT.
+
+ZDROJ: BERT (S25); GPT 2018 (S26).
+
+PŘECHOD: Pojďme tedy od začátku.`,
+
+  "back-to-roots": `⏱ 0:30
+
+ŘÍCT:
+Back to the roots. Deset zastávek. U každé: jaký problém řešili, co zlepšili a na jaký nový limit narazili.
+
+POINTA: Příběh limitů, ne seznam jmen.
+
+PŘECHOD: Rok 1913.`,
+
+  "markov": `⏱ 0:45
+
+ŘÍCT:
+1913, Andrej Markov. Vzal dvacet tisíc písmen Evžena Oněgina.
+
+— další krok —
+
+Každé písmeno označil: samohláska, nebo souhláska. A počítal, jak často po sobě jdou jednotlivé dvojice.
+
+— další krok —
+
+Problém, zlepšení, limit: závislost na předchozím symbolu se dá spočítat. Ale vidí jen kousek zpět a nic neví o významu.
+
+POINTA: Kořen myšlenky „další symbol závisí na předchozím“.
+
+TECHNICKÁ POZNÁMKA: Písmena na slidu jsou ilustrace (latinkou, ne Markovova data). Neříkat, že Markov vynalezl language model, ani konkrétní výsledky, které slide nepodkládá.
+
+ZDROJ: Markov 1913 (S17).
+
+PŘECHOD: O 35 let později to někdo vzal vážně pro celý jazyk.`,
 
   "kocka": `⏱ 1:15
 
@@ -46,12 +95,132 @@ Gratuluju, právě jste byli language model. Je to našeptávač z mobilu. Jen h
 
 POINTA: Language model odhaduje, co bude dál.
 
-PŘECHOD: Co k tomu potřebuje uvnitř? Jen minimum.`,
+PŘECHOD: Tuhle hru hrál už v roce 1951 Claude Shannon.`,
 
-  "motor": `⏱ 1:45
+  "shannon": `⏱ 1:00
 
 ŘÍCT:
-Pět kroků. Text.
+V roce 1951 dělal Claude Shannon v zásadě stejnou hru, kterou jsme před chvílí hráli my.
+
+— další krok —
+
+Lidi dostali začátek textu a hádali další písmeno. Na téhle ilustraci číslo říká, kolikátým pokusem se člověk trefil. Často hned napoprvé.
+
+— další krok —
+
+Stejná hra jako s kočkou. Jen po písmenech. Problém: kolik informace nese text. Limit: hádal člověk, stroj zatím jen z tabulek.
+
+(Volitelně, 10 s:) Claude Shannon. To jméno vám možná něco připomíná. WIRED píše, že v Claudeovi lze číst i odkaz na něj.
+
+POINTA: „Hádej, co bude dál“ je desítky let stará myšlenka.
+
+TECHNICKÁ POZNÁMKA: Řádek s počty pokusů je česká ilustrace principu, ne Shannonova data (experiment byl v angličtině, 1951, Prediction and Entropy of Printed English; 1948 A Mathematical Theory of Communication: aproximace jazyka různých řádů). Markov 1913 = analýza sekvenční závislosti samohlásek/souhlásek, ne „vynález language modelu“. Myšlenka nebyla „u ledu“: postupně se používala a zlepšovala. Claude callback: podle WIRED (Levy 2025) jméno vyjadřuje familiaritu a vřelost a podle toho, koho se ptáte, i odkaz na Shannona — není to jednoznačný původ názvu, říkat jen jako vtip.
+
+ZDROJ: Markov 1913 (S17); Shannon 1948, 1951 (S18); WIRED 2025 (S24).
+
+PŘECHOD: Jak z toho udělat stroj? Nejdřív prostě počítáním.`,
+
+  "ngramy": `⏱ 1:30
+
+ŘÍCT:
+Vezmeme hromadu textu a spočítáme, co chodí po „sedí na“. Střeše padesátkrát, gauči dvacetkrát. Z toho je rozdělení. Dvě předchozí slova určují odhad třetího — trigram. Stejná smyčka jako dnes, jen pravděpodobnosti jsou z tabulky.
+
+— další krok —
+
+Problém: když chci delší historii včetně kočky, tabulka zná „kočka sedí na střeše“, ale „kotě sedí na střeše“ nikdy neviděla. Pro ni jsou kočka a kotě dvě nesouvisející kolonky.
+
+— další krok —
+
+Řešilo se to chytře: když neznám delší kontext, zkusím kratší. Backoff.
+
+— další krok —
+
+Fungovalo to desítky let, třeba v rozpoznávání řeči. Limit: jsou to tabulky četností a podobná slova nesdílí nic.
+
+POINTA: N-gramy: správný princip, ale základní slovní tabulka sama nesdílí podobnost slov.
+
+TECHNICKÁ POZNÁMKA: N-gram = posloupnost N slov; trigram predikuje z 2 předchozích. Exploze kombinací: slovník 100 000 slov → 10^10 bigramů, 10^15 trigramů; většinu nikdy neuvidíme (sparsity), proto nepomůže jen zvyšovat N. Smoothing a backoff byly vyspělé techniky (srovnání Chen & Goodman 1996); statistický speech recognition (IBM, Jelinek, 70. léta). Neprezentovat jako primitivní slepou uličku. „Kočka ≠ kotě“ platí pro základní slovní model; class-based n-gramy podobnost slov částečně řešily. Četnosti na slidu ilustrativní: 50/20/10 z korpusu se třemi pokračováními = 62,5 / 25 / 12,5 %. Exploze kombinací = teoretický počet možností, ne nutně alokovaná velikost tabulky.
+
+ZDROJ: Jelinek 1976, Chen & Goodman 1996 (S19).
+
+PŘECHOD: Z četností rovnou plyne rozdělení.`,
+
+  "rozdeleni": `⏱ 0:45
+
+ŘÍCT:
+Model nevrací odpověď. Vrací rozdělení: jak pravděpodobný je každý možný další token.
+
+— další krok —
+
+Z četností z minulého slidu: 50 z 80 je 62,5 %, 20 z 80 je 25 %, 10 z 80 je 12,5 %. To je rozdělení. Tenhle princip dnešní modely zdědily.
+
+POINTA: Výstup je rozdělení pravděpodobností dalšího tokenu.
+
+TECHNICKÁ POZNÁMKA: Ilustrativní korpus se třemi pokračováními; skutečný n-gram model by navíc vyhlazoval a nechal pravděpodobnost i neviděným slovům. Dnešní modely počítají skóre (logits) a softmax, ne četnosti, ale výstup je stejně rozdělení. Pravděpodobnost ≠ jistota pravdivosti.
+
+VTIP: Ani velká pravděpodobnost není razítko pravdy.
+
+PŘECHOD: Jenže kočka a kotě jsou pro tabulku cizí.`,
+
+  "bengio": `⏱ 0:45
+
+ŘÍCT:
+2003, Bengio a kolegové. Co kdyby kočka a kotě nebyly dvě kolonky? Každé slovo dostane naučenou polohu. Síť se může naučit, že se kočka a kotě používají podobně, a zvládnout i kombinace, které neviděla. Auto je jinde.
+
+— další krok —
+
+Limit: okno kontextu je pořád pevné a trénink byl tehdy drahý.
+
+POINTA: Z tabulky četností k naučené reprezentaci jazyka.
+
+TECHNICKÁ POZNÁMKA: Obrázek je schematická 2D podobnost, ne měření. Bengio 2003 se učí vektory slov a pravděpodobnosti společně; pevné okno N předchozích slov; výpočetní náročnost je explicitní téma paperu.
+
+ZDROJ: Bengio et al. 2003 (S20).
+
+PŘECHOD: Jak se zbavit pevného okna?`,
+
+  "mikolov": `⏱ 0:45
+
+ŘÍCT:
+2010, Tomáš Mikolov a kolegové. Rekurentní síť si nese historii textu ve svém stavu. Žádné pevné okno. Mimochodem, docela podstatná část téhle historie se odehrávala v Brně.
+
+— další krok —
+
+Limit: počítá krok za krokem a dlouhé závislosti se učí špatně.
+
+POINTA: Stav místo pevného okna.
+
+TECHNICKÁ POZNÁMKA: Mikolov, Karafiát, Burget, Černocký, Khudanpur (Interspeech 2010; VUT Brno + JHU). Stav RNN ≠ garantovaná neomezená paměť; vanishing/exploding gradients. LSTM (1997, S23) existovalo dřív, jen nuance. Neříkat, že Mikolov vynalezl LLM.
+
+ZDROJ: Mikolov et al. 2010 (S21); Hochreiter & Schmidhuber 1997 (S23).
+
+PŘECHOD: A pak odbočka.`,
+
+  "word2vec": `⏱ 0:45
+
+ŘÍCT:
+2013, word2vec. Mikolov a kolegové, tentokrát v Googlu. Tady nejde o generování textu. Jde o to, levně se naučit dobré vektory slov z jejich okolí v obřím korpusu.
+
+— další krok —
+
+Slavný příklad: král minus muž plus žena vyjde blízko královny. Funguje to přibližně, ne vždy.
+
+— další krok —
+
+Limit: jedno slovo, jeden vektor, bez ohledu na kontext. A text sám netvoří.
+
+POINTA: Vedlejší větev, která ukázala, kolik struktury je ve vektorech slov.
+
+TECHNICKÁ POZNÁMKA: CBOW a Skip-gram (arXiv 1301.3781), negative sampling v navazující práci (1310.4546). Word2vec není další generace RNN LM ani přímý předchůdce embeddingů v Transformeru. Analogie král/královna je z původních prací, výsledky přibližné.
+
+ZDROJ: Mikolov et al. 2013a, 2013b (S22).
+
+PŘECHOD: Zpátky k problému „krok za krokem“.`,
+
+  "motor": `⏱ 2:00
+
+ŘÍCT:
+2017, Transformer. Ukážu ho na dnešním motoru typu GPT, jen minimum. Pět kroků. Text.
 
 — další krok —
 
@@ -63,7 +232,7 @@ Každý token je číslo. Z něj dlouhý seznam čísel, se kterým jde počíta
 
 — další krok —
 
-Projdou sítí: miliardy naučených čísel, žádná tabulka odpovědí. Každý token se v ní může podívat na předchozí text. To je attention.
+Projdou sítí: miliardy naučených čísel, žádná tabulka odpovědí. Transformer staví na attention místo rekurence: každý token se může podívat na předchozí text a při tréninku se pozice zpracují paralelně. Limit: kontext má strop.
 
 — další krok —
 
@@ -71,28 +240,64 @@ Na konci vypadne skóre pro každý možný další token.
 
 POINTA: Text → tokeny → čísla → síť → skóre. Žádná databáze odpovědí.
 
-TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Tokenizace podle o200k_base (tiktoken); jiné modely mají jiné tokenizery. Token ID → embedding (vektor) + informace o pozici. Síť = transformer: vrstvy attention + MLP, opakované N×; vynechány normalizace, residual connections. Attention je kauzální (vidí současnou a předchozí pozice, ne budoucí) a není totéž co uvažování. Model může některé tréninkové pasáže memorovat, takže „není databáze“ ≠ „nic si doslova nepamatuje“.
+TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Attention existovala před rokem 2017; Transformer odstranil rekurenci. Ukazujeme dnešní autoregresivní LM, ne původní encoder–decoder Transformer: o200k a miliardy parametrů nejsou rok 2017. Paralelizace se týká tréninku, generování dál postupuje token po tokenu. Tokenizace podle o200k_base (tiktoken); jiné modely mají jiné tokenizery. Token ID → embedding (vektor) + informace o pozici. Síť = transformer: vrstvy attention + MLP, opakované N×; vynechány normalizace, residual connections. Attention je kauzální (vidí současnou a předchozí pozice, ne budoucí) a není totéž co uvažování. Model může některé tréninkové pasáže memorovat, takže „není databáze“ ≠ „nic si doslova nepamatuje“.
 
 ZDROJ: tiktoken (S3); Vaswani et al. 2017 (S2); Transformer Explainer (S1).
 
-PŘECHOD: Co přesně je to skóre?`,
+PŘECHOD: Odkud se ta naučená čísla vzala?`,
 
-  "rozdeleni": `⏱ 1:00
+  "pretraining": `⏱ 1:30
 
 ŘÍCT:
-Model nevrací odpověď. Vrací rozdělení: jak pravděpodobný je každý možný další token.
+2018, první GPT: tenhle motor nakrmíme hromadou textu. Dnešní modely dělají totéž v mnohem větším měřítku.
+Z textu. Zakryjeme další slovo a necháme model hádat.
 
 — další krok —
 
-Střeše 31 %, gauči 18 %… a zbytek rozprostřený přes desítky tisíc dalších tokenů.
+Funguje to na fakta…
 
-POINTA: Výstup je rozdělení pravděpodobností dalšího tokenu.
+— další krok —
 
-TECHNICKÁ POZNÁMKA: Síť vrací skóre (logits), softmax z nich udělá pravděpodobnosti. Čísla ilustrativní, kandidáti jako celá slova (ve skutečnosti by šel první token, např. „·st“). 31 % není 31% jistota pravdivosti. Chat modely po post-trainingu mají jiné distribuce než čistý LM.
+…i na kód.
 
-VTIP: „42“ tam někde je taky. S hodně malou pravděpodobností.
+— další krok —
 
-PŘECHOD: Z rozdělení musíme vybrat jeden token.`,
+Porovnáme s tím, co v textu bylo, a maličko upravíme naučená čísla. U dnešních velkých modelů se bavíme o bilionech tréninkových tokenů.
+
+— další krok —
+
+Aby dobře doplňoval, musí se naučit jazyk, fakta, kód, styl a vztahy. Pravidla mu nikdo nenapsal.
+
+POINTA: Pretraining = obří množství malých oprav. Schopnosti jsou vedlejší produkt dobrého doplňování.
+
+VTIP: Pár miliard knoflíků. Ručně by to trvalo.
+
+TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Slova místo tokenů, příklady ilustrativní. Biliony tokenů a ukázka kódu patří k dnešnímu měřítku, ne korpusu GPT 2018 (S26, menší korpus knih). „Knoflíky“ = naučené parametry, ne fyzické prvky. Nejde o binární správně/špatně: trénink zvyšuje pravděpodobnost skutečně pozorovaného tokenu (gradient descent přes backpropagation). Trénovací text nemusí být pravdivý. Schopnosti jsou empirický výsledek škály dat a modelu, ne důkaz lidského myšlení; slovo „emergence“ nepoužívat jako vysvětlení.
+
+ZDROJ: Radford et al. 2018 (S26); Brown et al. 2020 (S4); Schaeffer et al. 2023 (S5).
+
+PŘECHOD: Jak vypadá výsledek? Skutečná ukázka z roku 2019.`,
+
+  "gpt2": `⏱ 1:00
+
+ŘÍCT:
+GPT-2, 2019. Lidé mu dali začátek vymyšlené zprávy: v Andách objevili jednorožce, kteří mluví anglicky.
+
+— další krok —
+
+A model napsal článek. Novinový styl, vymyšlený biolog Jorge Pérez, citace vědců.
+
+— další krok —
+
+Plynulý text ve správném žánru. Rozvíjí zadanou fikci. Není to ověřování zprávy.
+
+POINTA: Pretrained model umí plynule pokračovat v žánru, který dostane.
+
+TECHNICKÁ POZNÁMKA: České shrnutí skutečné ukázky (Radford et al. 2019, tab. 13), ne doslovná citace. Autoři vybrali 1 z 10 pokusů, sampling top-k 40. Je to pokračování fikce: vstup už byl fikce, nejde o halucinaci při faktické otázce.
+
+ZDROJ: Radford et al. 2019, GPT-2 (S14).
+
+PŘECHOD: Jak vybírá konkrétní pokračování?`,
 
   "kostka": `⏱ 1:00
 
@@ -113,7 +318,7 @@ Stochastický neznamená chaos.
 
 POINTA: Náhoda vybírá uvnitř velmi strukturovaného rozdělení.
 
-TECHNICKÁ POZNÁMKA: Ilustrativní čísla: syntetické logits [3,2,1,0], softmax(logits / T), hodnoty skutečně spočtené. Pořadí kandidátů se nemění. Temperature není „kreativita“ a nezaručuje pravdivost. T = 0 = konvence pro greedy. Ani greedy nemusí být bitově reprodukovatelné (floating point, dávkování); sampling není jediný zdroj variability.
+TECHNICKÁ POZNÁMKA: Temperature je parametr dnešních modelů, ilustrace; nepřisuzovat ho historickým n-gramům (Shannon 1948 sice generoval text losováním z četností, ale bez tohohle slideru). Ilustrativní čísla: syntetické logits [3,2,1,0], softmax(logits / T), hodnoty skutečně spočtené. Pořadí kandidátů se nemění. Temperature není „kreativita“ a nezaručuje pravdivost. T = 0 = konvence pro greedy. Ani greedy nemusí být bitově reprodukovatelné (floating point, dávkování); sampling není jediný zdroj variability.
 
 ZDROJ: Transformer Explainer (S1); PyTorch Reproducibility / Numerical accuracy (S9, S10).
 
@@ -121,7 +326,7 @@ ZDROJ: Transformer Explainer (S1); PyTorch Reproducibility / Numerical accuracy 
 
 PŘECHOD: A tohle se opakuje.`,
 
-  "smycka": `⏱ 0:45
+  "smycka": `⏱ 0:30
 
 ŘÍCT:
 Vybraný token se přilepí ke kontextu a jede se znovu. Token po tokenu.
@@ -131,136 +336,7 @@ POINTA: Generování = smyčka. Nic víc.
 
 TECHNICKÁ POZNÁMKA: Běží do ukončovacího tokenu nebo limitu. Text se znovu netokenizuje, přidá se ID. Při chatu se váhy nemění.
 
-PŘECHOD: Mimochodem, tahle hra je hodně stará.`,
-
-  "shannon": `⏱ 1:00
-
-ŘÍCT:
-V roce 1951 dělal Claude Shannon v zásadě stejnou hru, kterou jsme před chvílí hráli my.
-
-— další krok —
-
-Lidi dostali začátek textu a hádali další písmeno. Na téhle ilustraci číslo říká, kolikátým pokusem se člověk trefil. Často hned napoprvé.
-
-— další krok —
-
-Stejná hra jako s kočkou. Jen po písmenech. Kořeny jdou ještě dál: Markov v roce 1913 počítal na dvaceti tisících písmen Evžena Oněgina, jak po sobě jdou samohlásky a souhlásky.
-
-(Volitelně, 10 s:) Claude Shannon. To jméno vám možná něco připomíná. WIRED píše, že v Claudeovi lze číst i odkaz na něj.
-
-POINTA: „Hádej, co bude dál“ je desítky let stará myšlenka.
-
-TECHNICKÁ POZNÁMKA: Řádek s počty pokusů je česká ilustrace principu, ne Shannonova data (experiment byl v angličtině, 1951, Prediction and Entropy of Printed English; 1948 A Mathematical Theory of Communication: aproximace jazyka různých řádů). Markov 1913 = analýza sekvenční závislosti samohlásek/souhlásek, ne „vynález language modelu“. Myšlenka nebyla „u ledu“: postupně se používala a zlepšovala. Claude callback: podle WIRED (Levy 2025) jméno vyjadřuje familiaritu a vřelost a podle toho, koho se ptáte, i odkaz na Shannona — není to jednoznačný původ názvu, říkat jen jako vtip.
-
-ZDROJ: Markov 1913 (S17); Shannon 1948, 1951 (S18); WIRED 2025 (S24).
-
-PŘECHOD: Jak z toho udělat stroj? Nejdřív prostě počítáním.`,
-
-  "ngramy": `⏱ 1:15
-
-ŘÍCT:
-Vezmeme hromadu textu a spočítáme, co chodí po „sedí na“. Střeše padesátkrát, gauči dvacetkrát. Z toho je rozdělení. Dvě předchozí slova určují odhad třetího — trigram. Stejná smyčka jako dnes, jen pravděpodobnosti jsou z tabulky.
-
-— další krok —
-
-Problém: když chci delší historii včetně kočky, tabulka zná „kočka sedí na střeše“, ale „kotě sedí na střeše“ nikdy neviděla. Pro ni jsou kočka a kotě dvě nesouvisející kolonky.
-
-— další krok —
-
-Řešilo se to chytře: když neznám delší kontext, zkusím kratší. Backoff.
-
-— další krok —
-
-Fungovalo to desítky let, třeba v rozpoznávání řeči. Ale pořád jsme skládali a vyhlazovali tabulky četností.
-
-POINTA: N-gramy: správný princip, ale základní slovní tabulka sama nesdílí podobnost slov.
-
-TECHNICKÁ POZNÁMKA: N-gram = posloupnost N slov; trigram predikuje z 2 předchozích. Exploze kombinací: slovník 100 000 slov → 10^10 bigramů, 10^15 trigramů; většinu nikdy neuvidíme (sparsity), proto nepomůže jen zvyšovat N. Smoothing a backoff byly vyspělé techniky (srovnání Chen & Goodman 1996); statistický speech recognition (IBM, Jelinek, 70. léta). Neprezentovat jako primitivní slepou uličku. „Kočka ≠ kotě“ platí pro základní slovní model; class-based n-gramy podobnost slov částečně řešily. Četnosti na slidu ilustrativní: 50/20/10 z korpusu se třemi pokračováními = 62,5 / 25 / 12,5 %. Exploze kombinací = teoretický počet možností, ne nutně alokovaná velikost tabulky.
-
-ZDROJ: Jelinek 1976, Chen & Goodman 1996 (S19).
-
-PŘECHOD: Co kdyby kočka a kotě nebyly dvě nesouvisející kolonky?`,
-
-  "neuronove": `⏱ 1:15
-
-ŘÍCT:
-2003, Bengio: slova jako naučené vektory. Síť se může naučit, že se kočka a kotě používají podobně, a zvládnout i kombinace, které neviděla. Jen trénink byl tehdy drahý a okno kontextu pořád pevné.
-
-— další krok —
-
-2010, Mikolov a kolegové: rekurentní síť nese historii textu ve svém stavu, bez pevného okna. Mimochodem, docela podstatná část téhle historie se odehrávala v Brně.
-
-— další krok —
-
-Vedle toho 2013, word2vec: vektory slov levně a ve velkém. Ukázalo se, kolik vztahů v nich je. Není to další generace chatbotů, spíš vedlejší větev.
-
-— další krok —
-
-RNN ale počítá krok za krokem. 2017, Transformer: místo rekurence attention. Trénink jde paralelně. A to se dá škálovat.
-
-— další krok —
-
-Největší WTF možná není nová myšlenka. Je to stará myšlenka s lepšími metodami, víc daty a výpočtem, v absurdním měřítku.
-
-POINTA: Každá generace řešila konkrétní limit té předchozí. Transformer nebyl začátek vesmíru.
-
-TECHNICKÁ POZNÁMKA: Netvrdit, že Mikolov vynalezl LLM, ani že word2vec je přímý technický předchůdce embeddingů v Transformeru; nepřehánět kauzalitu. Rané neuronové LM brzdila výpočetní náročnost (Bengio 2003 i Mikolov 2010 ji řeší explicitně). Klasické RNN trpěly při učení dlouhých závislostí (vanishing/exploding gradients); LSTM (Hochreiter & Schmidhuber 1997) bylo důležitým krokem. Transformer odstranil recurrence, takže trénink jde paralelizovat; generování (inference) jde dál token po tokenu. Bengio 2003 měl stále pevné okno. RNN stav ≠ garantovaná neomezená paměť. LSTM (1997) existovalo před Mikolovem 2010, jde jen o nuanci. Word2vec není další generace RNN LM ani autoregresivní model, proto je na slidu jako vedlejší větev. Nemluvit o „70 letech u ledu“ ani o „pouhém škálování“ bez algoritmů a dat. Mikolov et al. 2010 = Mikolov, Karafiát, Burget, Černocký, Khudanpur (Interspeech; VUT Brno + JHU). Word2vec = CBOW/Skip-gram (2013); už první práce zkoumala vztahy mezi vektory, navazující přidala negative sampling. Word2vec vznikl v Googlu: Brno patří k RNN LM 2010, netvrdit u word2vec.
-
-ZDROJ: Bengio et al. 2003 (S20); Mikolov et al. 2010 (S21); Mikolov et al. 2013a, 2013b (S22); Hochreiter & Schmidhuber 1997 (S23); Vaswani et al. 2017 (S2).
-
-PŘECHOD: Tak proč škálování doplňovače textu začne programovat a překládat?`,
-
-  "pretraining": `⏱ 1:30
-
-ŘÍCT:
-Z textu. Zakryjeme další slovo a necháme model hádat.
-
-— další krok —
-
-Funguje to na fakta…
-
-— další krok —
-
-…i na kód.
-
-— další krok —
-
-Porovnáme s tím, co v textu bylo, a maličko upravíme naučená čísla. Bilionkrát.
-
-— další krok —
-
-Aby dobře doplňoval, musí se naučit jazyk, fakta, kód, styl a vztahy. Pravidla mu nikdo nenapsal.
-
-POINTA: Pretraining = obří množství malých oprav. Schopnosti jsou vedlejší produkt dobrého doplňování.
-
-VTIP: Pár miliard knoflíků. Ručně by to trvalo.
-
-TECHNICKÁ POZNÁMKA: ZJEDNODUŠENÍ PRO VYSVĚTLENÍ. Slova místo tokenů, příklady ilustrativní. „Knoflíky“ = naučené parametry, ne fyzické prvky. Nejde o binární správně/špatně: trénink zvyšuje pravděpodobnost skutečně pozorovaného tokenu (gradient descent přes backpropagation). Trénovací text nemusí být pravdivý. Schopnosti jsou empirický výsledek škály dat a modelu, ne důkaz lidského myšlení; slovo „emergence“ nepoužívat jako vysvětlení.
-
-ZDROJ: Brown et al. 2020 (S4); Schaeffer et al. 2023 (S5).
-
-PŘECHOD: Jak vypadá výsledek? Skutečná ukázka z roku 2019.`,
-
-  "gpt2": `⏱ 1:15
-
-ŘÍCT:
-GPT-2, 2019. Lidé mu dali začátek vymyšlené zprávy: v Andách objevili jednorožce, kteří mluví anglicky.
-
-— další krok —
-
-A model napsal článek. Novinový styl, vymyšlený biolog Jorge Pérez, citace vědců.
-
-— další krok —
-
-Plynulý text ve správném žánru. Rozvíjí zadanou fikci. Není to ověřování zprávy.
-
-POINTA: Pretrained model umí plynule pokračovat v žánru, který dostane.
-
-TECHNICKÁ POZNÁMKA: České shrnutí skutečné ukázky (Radford et al. 2019, tab. 13), ne doslovná citace. Autoři vybrali 1 z 10 pokusů, sampling top-k 40. Je to pokračování fikce: vstup už byl fikce, nejde o halucinaci při faktické otázce.
-
-ZDROJ: Radford et al. 2019, GPT-2 (S14).
-
-PŘECHOD: Co když ho požádáme o něco?`,
+PŘECHOD: Teď ho zkusme o něco požádat.`,
 
   "base-model": `⏱ 1:15
 
@@ -273,7 +349,7 @@ GPT-3 bez dalšího tréninku příběh nenapsal. Přidal další zadání: př�
 
 — další krok —
 
-Viděl začátek seznamu zadání. A v seznamu pokračoval. Umí pokračovat v textu. Roli pomocníka ale nemá zaručenou.
+Viděl začátek seznamu zadání a pokračoval v něm. Limit éry GPT: umí pokračovat v textu, roli pomocníka nemá zaručenou.
 
 POINTA: Base model doplňuje dokument; pomoc není jeho výchozí role.
 
@@ -283,10 +359,10 @@ ZDROJ: Ouyang et al. 2022, InstructGPT (S6), https://arxiv.org/html/2203.02155v1
 
 PŘECHOD: Jak z doplňovače uděláme asistenta?`,
 
-  "instruction": `⏱ 1:00
+  "instruction": `⏱ 0:45
 
 ŘÍCT:
-Ukážeme mu dokumenty, které vypadají jako konverzace.
+2022, ChatGPT. Ukážeme mu dokumenty, které vypadají jako konverzace.
 
 — další krok —
 
@@ -321,7 +397,7 @@ ZDROJ: Ouyang et al. 2022 (S6); OpenAI 2022 (S15); Rafailov et al. 2023, DPO (S1
 
 PŘECHOD: Vraťme se k žábě.`,
 
-  "zaba-po": `⏱ 1:00
+  "zaba-po": `⏱ 0:45
 
 ŘÍCT:
 Stejný prompt. Base model psal další zadání.
@@ -332,7 +408,7 @@ Po celém post-trainingu napsal příběh o unavené žábě, která hledá cest
 
 — další krok —
 
-Stejný motor. Jiné chování.
+Stejný motor. Jiné chování. Limit: zní to jako odpověď, a to ještě nezaručuje pravdu.
 
 POINTA: Post-training mění chování, ne mechanismus.
 
@@ -342,7 +418,7 @@ ZDROJ: Ouyang et al. 2022, obr. 42 (S6).
 
 PŘECHOD: Shrnuto do tří kroků.`,
 
-  "evoluce": `⏱ 0:45
+  "evoluce": `⏱ 0:30
 
 ŘÍCT:
 Doplňovač textu.
@@ -365,10 +441,10 @@ TECHNICKÁ POZNÁMKA: Moderní modely mají další fáze (např. RL na úlohác
 
 PŘECHOD: Uvnitř jsme nevyměnili motor. A z toho plyne první problém.`,
 
-  "halucinace": `⏱ 1:15
+  "halucinace": `⏱ 1:00
 
 ŘÍCT:
-Zní to jako odpověď. Sebejistě.
+Dnes. Zní to jako odpověď. Sebejistě.
 
 — další krok —
 
@@ -386,7 +462,7 @@ ZDROJ: Kalai et al. 2025 (S7).
 
 PŘECHOD: Druhá věc, která lidi překvapuje.`,
 
-  "pocitani": `⏱ 1:15
+  "pocitani": `⏱ 1:00
 
 ŘÍCT:
 Chvíli nechat viset.
@@ -430,14 +506,14 @@ ZDROJ: Lewis et al. 2020, RAG (S11).
 
 PŘECHOD: A když tohle pustíme ve smyčce, máme agenta.`,
 
-  "agent": `⏱ 1:00
+  "agent": `⏱ 0:45
 
 ŘÍCT:
 Model navrhne akci, kód ji ověří a spustí, výsledek jde zpátky. A znovu, dokud není hotovo.
 
 — další krok —
 
-LLM není celý agent. Zbytek je normální software.
+LLM není celý agent. Zbytek je normální software. Limit: pořád je to odhad, za výsledek odpovídá systém.
 
 POINTA: Agent = LLM + nástroje + kód ve smyčce.
 
@@ -447,7 +523,7 @@ ZDROJ: Yao et al. 2022, ReAct (S12).
 
 PŘECHOD: Kam tedy LLM patří a kam ne?`,
 
-  "spatne": `⏱ 1:15
+  "spatne": `⏱ 1:00
 
 ŘÍCT:
 Datum narození. Dosáhl 18 let? Poslat to do LLM: pomalejší, dražší a občas špatně.
@@ -468,7 +544,7 @@ TECHNICKÁ POZNÁMKA: Determinismus není správnost: kód je správný, jen kdy
 
 PŘECHOD: A kde naopak LLM dává smysl?`,
 
-  "dobre": `⏱ 1:15
+  "dobre": `⏱ 1:00
 
 ŘÍCT:
 „No paráda, zase mi to přišlo rozbitý.“
@@ -487,7 +563,7 @@ TECHNICKÁ POZNÁMKA: LLM není jediný možný klasifikátor. Výstup omezit na
 
 PŘECHOD: Dejme to dohromady.`,
 
-  "architektura": `⏱ 1:00
+  "architektura": `⏱ 0:45
 
 ŘÍCT:
 LLM uprostřed: pochopí, co uživatel chce, navrhne další krok.
@@ -542,7 +618,7 @@ VIDEO PRO ZVÍDAVÉ: Andrej Karpathy, Deep Dive into LLMs like ChatGPT. Kapitoly
 
 POINTA: Kdo chce krabičku rozebrat hlouběji sám, má kde začít.
 
-ZDROJ: kompletní seznam v sources.md (S1–S24).
+ZDROJ: kompletní seznam v sources.md (S1–S26).
 
 PŘECHOD: Q&A.`,
 

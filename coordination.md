@@ -53,3 +53,7 @@ Pavel zadal přímo implementaci na `main`: od autocomplete přes pretraining, i
 - 2026-10-04 21:58 CEST — Opus (issue #1): PDF html/stoparuv-pruvodce-po-llms.pdf přegenerováno, 26 stran 16:9, prohlédnuto celé (grid) + detail kostky; slides+notes předány Astře.
 
 - prez-astra: finální review issue #1, 85 build states bez chyb, všechny rendery prohlédnuty; doplnění S17–S24, README, výsledků QA a CLI volby --output. Připraveno k PR z issue-1-language-model-history do main, bez přímých změn main.
+- 2026-10-05 10:44 CEST — Opus: archeologický deck obsah FREEZE: 31 slidů s era, notes 29:00, outline přegenerován po érách; B/W stickery llm-open-box-bw + shovel-bw (assets/README doplněn); opening zjednodušen dle Astry, Bengio obrázek, Markov S/K, rozdělení z četností 62,5/25/12,5.
+- 2026-10-05 10:45 CEST — Opus: notes tech opravy dle Astry (attention ≠ novinka 2017, GPT-like motor, GPT 2018 vs dnešní měřítko, přechody motor/gpt2/smyčka, motivace bez BERT v práci). FINÁLNÍ FREEZE.
+
+- 2026-10-05 — prez-astra: lokální main fast-forward na hotovou historii PR #2; nový runtime timeline (10 zastávek + slider), černobílé CSS, vlastní doodles.js, zdroje S25–S26. Opus převzal slides/notes/outline a Skullpix; po obsahovém review proběhlo zjednodušení openingu a přesnost historie. Finální Chrome DevTools QA: 31 slidů / 93 stavů / 29:00, bez nalezených problémů; vizuální průchod všech stavů a funkční test navigace.

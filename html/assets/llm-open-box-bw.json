@@ -1,0 +1,484 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 176,
+    "height": 96,
+    "background": "transparent"
+  },
+  "palette": {
+    "transparent": "#00000000",
+    "ink": "#161616",
+    "side": "#4A4A4A",
+    "blue": "#161616",
+    "pale": "#D9D9D9",
+    "steel": "#8C8C8C",
+    "shadow": "#EDEDED"
+  },
+  "layers": [
+    {
+      "name": "open-box",
+      "operations": [
+        {
+          "polygon": {
+            "points": [
+              [
+                20,
+                65
+              ],
+              [
+                90,
+                65
+              ],
+              [
+                118,
+                81
+              ],
+              [
+                48,
+                81
+              ]
+            ],
+            "color": "shadow",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                20,
+                40
+              ],
+              [
+                88,
+                40
+              ],
+              [
+                112,
+                54
+              ],
+              [
+                44,
+                54
+              ]
+            ],
+            "color": "ink",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                20,
+                40
+              ],
+              [
+                44,
+                54
+              ],
+              [
+                44,
+                79
+              ],
+              [
+                20,
+                64
+              ]
+            ],
+            "color": "side",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                44,
+                54
+              ],
+              [
+                112,
+                54
+              ],
+              [
+                112,
+                79
+              ],
+              [
+                44,
+                79
+              ]
+            ],
+            "color": "ink",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                27,
+                40
+              ],
+              [
+                85,
+                40
+              ],
+              [
+                102,
+                50
+              ],
+              [
+                44,
+                50
+              ]
+            ],
+            "color": "blue",
+            "fill": true
+          }
+        },
+        {
+          "line": {
+            "from": [
+              40,
+              42
+            ],
+            "to": [
+              49,
+              47
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              50,
+              42
+            ],
+            "to": [
+              59,
+              47
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              60,
+              42
+            ],
+            "to": [
+              69,
+              47
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              70,
+              42
+            ],
+            "to": [
+              79,
+              47
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              80,
+              42
+            ],
+            "to": [
+              89,
+              47
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              53,
+              42,
+              16,
+              6
+            ],
+            "color": "ink",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              57,
+              40,
+              2,
+              2
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              61,
+              40,
+              2,
+              2
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              65,
+              40,
+              2,
+              2
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                19,
+                15
+              ],
+              [
+                86,
+                15
+              ],
+              [
+                108,
+                28
+              ],
+              [
+                41,
+                28
+              ]
+            ],
+            "color": "ink",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                41,
+                28
+              ],
+              [
+                108,
+                28
+              ],
+              [
+                108,
+                33
+              ],
+              [
+                41,
+                33
+              ]
+            ],
+            "color": "side",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                19,
+                15
+              ],
+              [
+                41,
+                28
+              ],
+              [
+                41,
+                33
+              ],
+              [
+                19,
+                20
+              ]
+            ],
+            "color": "side",
+            "fill": true
+          }
+        },
+        {
+          "line": {
+            "from": [
+              24,
+              32
+            ],
+            "to": [
+              24,
+              26
+            ],
+            "color": "blue"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              94,
+              43
+            ],
+            "to": [
+              94,
+              37
+            ],
+            "color": "blue"
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              51,
+              62,
+              34,
+              2
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              51,
+              68,
+              22,
+              2
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              99,
+              64,
+              4,
+              4
+            ],
+            "color": "blue",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                116,
+                38
+              ],
+              [
+                120,
+                35
+              ],
+              [
+                143,
+                61
+              ],
+              [
+                139,
+                65
+              ]
+            ],
+            "color": "steel",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                136,
+                61
+              ],
+              [
+                143,
+                55
+              ],
+              [
+                156,
+                69
+              ],
+              [
+                156,
+                75
+              ],
+              [
+                150,
+                80
+              ],
+              [
+                145,
+                78
+              ]
+            ],
+            "color": "blue",
+            "fill": true
+          }
+        },
+        {
+          "line": {
+            "from": [
+              144,
+              64
+            ],
+            "to": [
+              152,
+              73
+            ],
+            "color": "pale"
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                114,
+                33
+              ],
+              [
+                117,
+                32
+              ],
+              [
+                122,
+                37
+              ],
+              [
+                118,
+                41
+              ]
+            ],
+            "color": "steel",
+            "fill": true
+          }
+        }
+      ]
+    }
+  ]
+}

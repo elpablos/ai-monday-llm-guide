@@ -1,12 +1,13 @@
-/* Stopařův průvodce po LLMs — light whiteboard deck. Stage is 1600×900, scaled to fit. */
+/* Stopařův průvodce po LLMs — black-and-white field notebook. Stage is 1600×900, scaled to fit. */
 :root {
-  --paper: #FAFBFC;
-  --ink: #17212B;
-  --accent: #2458B3;
-  --accent-soft: #E4ECF8;
-  --muted: #5F6B78;
-  --line: #CBD3DC;
-  --dot: #E3E8EE;
+  --nav-height: 108px;
+  --paper: #FFFFFF;
+  --ink: #161616;
+  --accent: #161616;
+  --accent-soft: #EFEFEF;
+  --muted: #666666;
+  --line: #B6B6B6;
+  --dot: #EEEEEE;
   --sans: "Avenir Next", "Avenir", "Segoe UI Variable Display", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --ease: cubic-bezier(.2, .7, .2, 1);
@@ -19,13 +20,13 @@ a { color: var(--accent); }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 /* ---- Stage ------------------------------------------------------------- */
-.viewport { position: fixed; inset: 0; overflow: hidden; }
+.viewport { position: fixed; inset: 0 0 var(--nav-height); overflow: hidden; }
 .deck { position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; transform: translate(-50%, -50%) scale(var(--scale, 1)); transform-origin: center; }
 .slide {
   position: absolute; inset: 0; display: none;
   padding: 88px 120px 96px;
   background-color: var(--paper);
-  background-image: radial-gradient(var(--dot) 1.6px, transparent 1.8px);
+  background-image: none;
   background-size: 32px 32px;
   background-position: 16px 16px;
 }
@@ -157,3 +158,55 @@ body.overview .counter, body.overview .progress { display: none; }
   body.print-notes .print-note { display: block !important; break-after: page; padding: 48px 120px; font: 400 20px/1.5 var(--sans); white-space: pre-wrap; }
 }
 .print-note { display: none; }
+
+/* Expedition map: evenly spaced stops, not a linear calendar scale. */
+.expedition { position:fixed; bottom:0; left:0; right:0; height:var(--nav-height); z-index:6; padding:8px 32px 8px; border-top:1px solid var(--line); background:var(--paper); }
+.era-stops { display:flex; height:66px; overflow-x:auto; scrollbar-width:thin; }
+.era-stop { position:relative; flex:1 0 108px; display:flex; align-items:center; flex-direction:column; gap:5px; border:0; padding:0 4px; color:#777; background:transparent; cursor:pointer; font-family:var(--sans); }
+.era-stop::before { content:""; position:absolute; height:1px; background:#ccc; top:26px; left:0; right:0; }
+.era-stop:first-child::before { left:50%; }
+.era-stop:last-child::before { right:50%; }
+.era-year { font:13px/16px var(--mono); }
+.era-dot { width:11px; height:11px; border:1.5px solid #888; border-radius:50%; background:#fff; position:relative; z-index:1; }
+.era-name { font-size:17px; line-height:20px; }
+.era-stop.past { color:#666; }
+.era-stop.past .era-dot { background:#aaa; border-color:#aaa; }
+.era-stop.current { color:#161616; font-weight:800; }
+.era-stop.current .era-dot { background:#161616; border-color:#161616; outline:2px solid #161616; outline-offset:3px; }
+.era-stop:hover .era-name { text-decoration:underline; }
+.era-stop:disabled { cursor:default; }
+.expedition.historical { border-top-color:#161616; }
+.scrubber { display:flex; align-items:center; gap:18px; height:24px; }
+.era-caption { min-width:150px; font:11px var(--mono); color:var(--muted); }
+#slide-position { width:100%; min-width:60px; margin:0; accent-color:#161616; cursor:ew-resize; height:18px; }
+.scrubber .counter { position:static; flex:none; font-size:11px; min-width:50px; text-align:right; }
+.help { bottom:calc(var(--nav-height) + 4px); background:#fff; padding:4px; }
+body.notes-open .viewport { bottom:calc(46vh + var(--nav-height)); }
+body.notes-open .expedition { bottom:46vh; }
+body.overview .expedition { display:none; }
+body.overview .help { display:none; }
+.print-trail { display:none; }
+@media (max-width:700px) {
+  .expedition { padding-left:12px; padding-right:12px; }
+  .era-caption { min-width:100px; font-size:10px; }
+  .scrubber { gap:10px; }
+  .era-stop { flex-basis:108px; }
+}
+@media print {
+  .expedition { display:none !important; }
+  .print-trail { display:block; position:absolute; left:80px; right:80px; bottom:22px; border-top:1px solid #bbb; padding-top:12px; text-align:center; font:14px var(--mono); color:#666; }
+  .print-trail .current { font-weight:800; color:#161616; }
+}
+
+/* Notes from the dig: dates, simple objects, one useful contrast per stop. */
+.stop { display:flex; align-items:baseline; gap:22px; margin-bottom:28px; }
+.stop-year { font:700 26px var(--mono); border:2px solid var(--ink); padding:6px 12px; transform:rotate(-2deg); }
+.stop-name { font:500 28px var(--sans); color:var(--muted); }
+.pil { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; margin-top:auto; padding-top:24px; border-top:2px solid var(--ink); }
+.pil-cell { font:500 28px/1.25 var(--sans); }
+.pil-label { display:block; margin-bottom:10px; color:var(--muted); font:400 20px var(--mono); }
+.sticker { object-fit:contain; image-rendering:pixelated; flex-shrink:0; }
+.doodle { fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:3; overflow:visible; }
+
+.stop { position:relative; padding-right:112px; }
+.era-doodle { position:absolute; right:0; top:-16px; width:90px; height:90px; transform:rotate(3deg); color:var(--ink); }

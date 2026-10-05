@@ -190,3 +190,27 @@ Odhad času není měřený živý přednes. Pokud historie při dry-runu přete
 ### PR #2 — oprava QA po automatickém review (5. 10. 2026)
 
 Chyby konzole se nyní načítají jako strukturované `consoleMessages` s filtrem `error`, přidávají do `issues` a způsobí exit code 1. Ověřeno přes skutečný Chrome DevTools na izolované testovací stránce: běžný log + warning → exit 0; `console.error` → exit 1; nezachycená JS výjimka → exit 1. Text chyby je uložen v reportu. Syntax a `git diff --check` prošly. Obsah prezentace se touto opravou nemění.
+
+## Archeologický refactor — 5. 10. 2026
+
+Nové formulace zkontrolovány proti S17–S23, doplněným primárním zdrojům S25 (BERT) a S26 (GPT 2018). Historické výstupy GPT-2 a GPT-3/InstructGPT zůstávají označená česká shrnutí původních ukázek S14/S6.
+
+- Timeline je navigační mapa, nikoli proporcionální časová škála nebo přímá genealogie. Word2vec je související větev; BERT a rerankery jsou odbočky průzkumu, nikoli předchůdci GPT.
+- Markov: latinkové ONEGIN a S/K jsou naše ilustrace, ne autentická data z roku 1913. Nevyvozujeme z obrázku konkrétní naměřený poměr přechodů.
+- Shannon: český řádek a počty pokusů jsou stále označená ilustrace; původní experiment z roku 1951 používal angličtinu.
+- N-gramy: navazující distribuce teď skutečně odpovídá zobrazeným četnostem 50/20/10 z 80: 62,5/25/12,5 %. Jde o zjednodušený tříslovný korpus bez smoothingu. Období 70.–90. léta označuje praktické využití, ne vynález n-gramů.
+- Bengio: obrázek kočka/kotě/auto je schematická podobnost, nikoli měřený embedding. Word2vec: král − muž + žena ≈ královna je zjednodušené přiblížení příkladu v úvodu S22, nikoli garantovaná slovní aritmetika. CBOW a Skip-gram zůstávají jen v technických notes.
+- Transformer: attention nevznikla v roce 2017. Historický posun je architektura bez rekurence a větší paralelizace tréninku. Zobrazený motor patří dnešnímu autoregresivnímu LM; o200k_base a miliardy parametrů nejsou popisem původního Transformeru. Generování zůstává postupné.
+- GPT: biliony tréninkových tokenů a příklad kódu vysvětlují dnešní měřítko, nikoli korpus GPT 2018. Původní GPT kombinoval pretraining s adaptací na úlohy; to nezaměňujeme s pozdějším učením chatovací role.
+- Přechody mezi slidy byly opraveny podle nového pořadí. Biografie vychází ze zadání: Pavel Lorenz, staff engineer, praktik, AI denně. Nepřidáváme firmu ani domnělé profesní používání konkrétních modelů.
+
+### Kontrola HTML a ovládání
+
+- Chrome DevTools: **31 slidů, všech 93 build stavů, 0 nalezených problémů**, žádné zprávy konzole. Report a screenshoty: `html/review/archaeology/`.
+- Vizuálně prohlédnuty všechny stavy, opening a historické zastávky také v samostatných náhledech; přehledná bílá plocha, černá typografie, monochromní grafy a ilustrace, bez zjištěných ořezů. Při review zjednodušen opening ze sedmi vrstev na tři, opraveno zalomení titulku a odstraněny číselné vektory z Bengia.
+- Deset tlačítek osy navádí na první slide éry; posuvník pokrývá celý deck. Ověřeny kliky, počátek/střed/konec posuvníku, jeho nativní ArrowRight/End, návrat Escape, notes, overview, a automatické zviditelnění každé zastávky při šířce 390 px. `navigation.json` obsahuje výsledek.
+- Notes jsou u 31/31 slidů, oddělují ŘÍCT od technických nuancí; po přesunech opraveny přechody. Osnova a notes shodně **1740 sekund = 29:00**, s minutou rezervy. Jde o plán, ne změřený přednes.
+- `node --check` pro JS, Python syntax a `git diff --check` prošly. Deck nadále funguje offline přes `file://`.
+- Původní PPTX i starší PDF (26 stran) jsou ponechané jako historické exporty; hlavní a aktualizovaný artefakt je HTML. Nový tiskový styl přidává na každou stranu vlastní statickou timeline.
+
+**Dry-run:** nejdřív škrtat volitelný live Explainer, detail backoff a slovní rozbor word2vec analogie. U motoru hlídat dvě minuty; při přetažení zkrátit architektonický diagram. Zachovat base model → asistent, preference a příklad pravidlo vs. jazyk. Ověřit čitelnost osy na skutečném projektoru.

@@ -6,13 +6,51 @@
   const counter = document.querySelector(".counter");
   const body = document.body;
 
+  const eras = [
+    ["markov", "1913", "Markov"], ["shannon", "1948 / 51", "Shannon"],
+    ["ngrams", "70.–90. léta", "n-gramy"], ["bengio", "2003", "Bengio"],
+    ["mikolov", "2010", "Mikolov"], ["word2vec", "2013", "word2vec"],
+    ["transformer", "2017", "Transformer"], ["gpt", "2018+", "GPT"],
+    ["chatgpt", "2022+", "ChatGPT"], ["today", "dnes", "Nástroje"]
+  ];
+  const navigation = document.querySelector(".expedition");
+  const range = document.querySelector("#slide-position");
+  range.max = SLIDES.length;
+  const destinations = eras.map(([id]) => SLIDES.findIndex(s => s.era === id));
+  const eraButtons = eras.map(([id, year, label], n) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "era-stop";
+    button.dataset.era = id;
+    button.innerHTML = `<span class="era-year">${year}</span><span class="era-dot" aria-hidden="true"></span><span class="era-name">${label}</span>`;
+    button.setAttribute("aria-label", `${year}: ${label}, přejít na zastávku`);
+    button.disabled = destinations[n] < 0;
+    button.addEventListener("click", (event) => {
+      if (body.classList.contains("overview")) toggleOverview(false);
+      go(destinations[n]);
+      if (event.detail > 0) button.blur();
+    });
+    document.querySelector(".era-stops").appendChild(button);
+    return button;
+  });
+  range.addEventListener("input", () => go(+range.value - 1));
+
   // ---- Build DOM ----------------------------------------------------------
   const els = SLIDES.map((s, i) => {
     const sec = document.createElement("section");
     sec.className = "slide";
     sec.dataset.id = s.id;
+    sec.dataset.era = s.era || "opening";
     sec.setAttribute("aria-label", `Slide ${i + 1} z ${SLIDES.length}`);
     sec.innerHTML = `<div class="inner">${s.html}</div>`;
+    const stopHeader = sec.querySelector(".stop");
+    if (stopHeader && window.ERA_DOODLES?.[s.era]) {
+      stopHeader.insertAdjacentHTML("beforeend", window.ERA_DOODLES[s.era]);
+    }
+    const printTrail = document.createElement("div");
+    printTrail.className = "print-trail";
+    printTrail.innerHTML = eras.map(([id, year, label]) => `<span${id === s.era ? ' class="current"' : ''}>${year} ${label}</span>`).join(" · ");
+    sec.appendChild(printTrail);
     deck.appendChild(sec);
     const pn = document.createElement("div");
     pn.className = "print-note";
@@ -52,6 +90,19 @@
     document.documentElement.style.setProperty("--progress", ((idx + (maxStep[idx] ? step / (maxStep[idx] + 1) : 0)) / (SLIDES.length - 1)) * 100 + "%");
     const h = `#/${idx + 1}` + (step ? `/${step}` : "");
     if (location.hash !== h) history.replaceState(null, "", h);
+    range.value = idx + 1;
+    range.setAttribute("aria-valuetext", `Slide ${idx + 1} z ${SLIDES.length}: ${els[idx].querySelector("h1,h2")?.textContent || SLIDES[idx].id}`);
+    const eraIndex = eras.findIndex(([id]) => id === SLIDES[idx].era);
+    navigation.classList.toggle("intro", eraIndex < 0);
+    navigation.classList.toggle("historical", eraIndex >= 0 && eraIndex < 7);
+    eraButtons.forEach((button, n) => {
+      button.classList.toggle("past", n < eraIndex);
+      button.classList.toggle("current", n === eraIndex);
+      if (n === eraIndex) button.setAttribute("aria-current", "step");
+      else button.removeAttribute("aria-current");
+    });
+    document.querySelector(".era-caption").textContent = eraIndex < 0 ? "Začínáme výpravu" : `${eras[eraIndex][1]} · ${eras[eraIndex][2]}`;
+    if (eraIndex >= 0) eraButtons[eraIndex].scrollIntoView({block:"nearest", inline:"nearest"});
     renderNotes();
   }
 
@@ -110,6 +161,11 @@
   document.addEventListener("keydown", (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const k = e.key;
+    // Keep native slider/button keyboard interaction; Escape returns to the deck.
+    if (e.target.closest("button,input,select,textarea,a")) {
+      if (k === "Escape") e.target.blur();
+      return;
+    }
     if (body.classList.contains("overview")) {
       if (k === "Escape" || k === "o" || k === "O" || k === "Enter") { toggleOverview(false); e.preventDefault(); }
       else if (k === "ArrowRight") go(idx + 1, 0);
@@ -141,7 +197,7 @@
   });
 
   let tx = null, ty = null;
-  document.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener("touchstart", (e) => { if (e.target.closest(".expedition,.notes,a,button,input")) { tx = null; return; } tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
   document.addEventListener("touchend", (e) => {
     if (tx === null || body.classList.contains("overview")) return;
     const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;

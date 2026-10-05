@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Offline browser QA using chrome-devtools CLI; saves screenshots and a JSON report.
-Run: python3 scripts/review-html.py --page 2 [--all-states] [--output html/review/narrative]
+Run: python3 scripts/review-html.py --page 2 [--all-states] [--output html/review/archaeology]
 Chrome DevTools page must already contain html/index.html.
 """
 import argparse,json,pathlib,re,subprocess
-p=argparse.ArgumentParser();p.add_argument('--page',default='2');p.add_argument('--all-states',action='store_true');p.add_argument('--output',default='html/review/narrative');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--page',default='2');p.add_argument('--all-states',action='store_true');p.add_argument('--output',default='html/review/archaeology');a=p.parse_args()
 root=pathlib.Path(__file__).resolve().parents[1];out=root/a.output;out.mkdir(parents=True,exist_ok=True)
 cli=['npx','--yes','--package','chrome-devtools-mcp','chrome-devtools']
 def run(*args):
@@ -24,7 +24,7 @@ for s in meta:
  for label in ['ŘÍCT:','POINTA:','PŘECHOD:']:
   if label not in s['notes']:report['issues'].append({'slide':s['id'],'missingNote':label})
  for step in range(s['max']+1):
-  result=js('''async () => {location.hash='#/%d/%d';await new Promise(r=>setTimeout(r,25));let el=document.querySelector('.slide.is-active'),b=el.getBoundingClientRect();let issues=[];for(let n of el.querySelectorAll('[data-step],[data-until]')){let hide=(n.dataset.step && %d<+n.dataset.step)||(n.dataset.until && %d>=+n.dataset.until);if(n.classList.contains('is-hidden')!==!!hide)issues.push('build:'+n.textContent.slice(0,50));}for(let n of el.querySelectorAll('h1,h2,p,pre,text,.box,.tok,figure,img')){let r=n.getBoundingClientRect();if(getComputedStyle(n).visibility!=='hidden'&&r.width&&(r.left<b.left-2||r.top<b.top-2||r.right>b.right+2||r.bottom>b.bottom+2))issues.push('overflow:'+n.textContent.slice(0,80));}return {id:el.dataset.id,issues};}'''%(s['index'],step,step,step))
+  result=js('''async () => {location.hash='#/%d/%d';await new Promise(r=>setTimeout(r,25));let el=document.querySelector('.slide.is-active'),b=el.getBoundingClientRect();let issues=[];for(let n of el.querySelectorAll('[data-step],[data-until]')){let hide=(n.dataset.step && %d<+n.dataset.step)||(n.dataset.until && %d>=+n.dataset.until);if(n.classList.contains('is-hidden')!==!!hide)issues.push('build:'+n.textContent.slice(0,50));}for(let n of el.querySelectorAll('h1,h2,p,pre,text,.box,.tok,figure,img')){let r=n.getBoundingClientRect();if(getComputedStyle(n).visibility!=='hidden'&&r.width&&(r.left<b.left-2||r.top<b.top-2||r.right>b.right+2||r.bottom>b.bottom+2))issues.push('overflow:'+n.textContent.slice(0,80));}let nav=document.querySelector('.expedition');if(nav){let expected=SLIDES[%d-1].era;let current=nav.querySelector('[aria-current=step]');if((current?.dataset.era||null)!==(expected||null))issues.push('wrong timeline stop');if(b.bottom>nav.getBoundingClientRect().top+2)issues.push('timeline overlaps stage');if(+document.querySelector('#slide-position').value!==%d)issues.push('wrong slider position');}return {id:el.dataset.id,issues};}'''%(s['index'],step,step,step,s['index'],s['index']))
   report['states']+=1
   if result['id']!=s['id']:result['issues'].append('wrong active slide')
   if result['issues']:report['issues'].append({'slide':s['id'],'step':step,**result})

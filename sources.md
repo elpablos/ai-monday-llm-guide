@@ -1,6 +1,6 @@
 # Zdroje a jejich použití
 
-Ověřeno 4. 10. 2026. Identifikátory S1–S24 používají notes a tech-review.md. Zdroje nepředstavují žebříček současných modelů.
+Ověřeno 4. 10. 2026. Identifikátory S1–S26 používají notes a tech-review.md. Zdroje nepředstavují žebříček současných modelů.
 
 | ID | Primární zdroj | Pro co jej používáme |
 |---|---|---|
@@ -73,7 +73,7 @@ Opora pro stručnou poznámku, že historický recept s odděleným reward model
 
 ## Historická rampa — issue #1
 
-Ověřeno 4. 10. 2026. Tři slidy mají ukázat změny metod a jejich limitů, nikoli úplnou genealogii AI. S17–S23 jsou původní práce, překlad původního textu či doplňující historický výzkum; S24 je reportáž a slouží pouze pro volitelný slovní callback.
+Ověřeno 4. 10. 2026. Historické zastávky ukazují změny metod a jejich limitů, nikoli úplnou genealogii AI. S17–S23 jsou původní práce, překlad původního textu či doplňující historický výzkum; S24 je reportáž a slouží pouze pro volitelný slovní callback.
 
 ### S17 — Markov: závislost v textu, 1913
 
@@ -127,3 +127,18 @@ Ověřeno 4. 10. 2026. Tři slidy mají ukázat změny metod a jejich limitů, n
 
 - Steven Levy, WIRED (2025), *If Anthropic Succeeds, a Nation of Benevolent AI Geniuses Could Be Born*: https://www.wired.com/story/anthropic-benevolent-artificial-intelligence/
 - Reportáž popisuje jméno Claude jako známé a vřelé; současně uvádí, že podle osloveného člověka může odkazovat také na Shannona. Používáme pouze jako opatrně připsanou slovní hříčku, ne potvrzení jediného nebo výhradního původu názvu. Nejde o technický zdroj ani další milník historie.
+
+
+## Archeologický refactor — další opory (5. 10. 2026)
+
+### S25 — BERT jako odbočka, ne předchůdce GPT
+
+Devlin et al., *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*, 2018/2019. [Primární práce](https://arxiv.org/abs/1810.04805).
+BERT se učí obousměrné reprezentace textu a adaptuje je na další úlohy. V motivaci představuje jednu ze souvisejících cest praktického průzkumu; není článkem přímé genealogie autoregresivních GPT. Rerankery jsou zmíněné jako praktická aplikace, nikoli samostatný historický milník.
+
+### S26 — GPT, 2018
+
+Radford, Narasimhan, Salimans, Sutskever, *Improving Language Understanding by Generative Pre-Training*. [Původní práce](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf).
+Generativní pretraining Transformer language modelu, následovaný adaptací na konkrétní úlohy. Dokládá zastávku GPT 2018; tento fine-tuning nezaměňujeme s pozdějším učením chatovacího asistenta. GPT-2 ukázka zůstává samostatně doložená v S14.
+
+Spodní timeline je **mapa vybraných zastávek** v čase: rozestupy nejsou proporcionální rokům a spojnice netvrdí přímou technickou návaznost všech metod. Word2vec je související větev reprezentací. N-gramy označujeme obdobím širokého praktického využití, nikoli datem vynálezu. Současné temperature bary jsou didaktický přesah, ne historický screenshot.

@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 64,
+    "height": 96,
+    "background": "transparent"
+  },
+  "palette": {
+    "transparent": "#00000000",
+    "ink": "#161616",
+    "grey": "#8C8C8C",
+    "pale": "#D9D9D9"
+  },
+  "layers": [
+    {
+      "name": "grip",
+      "operations": [
+        {
+          "rect": {
+            "box": [
+              24,
+              4,
+              16,
+              4
+            ],
+            "color": "ink",
+            "fill": true
+          }
+        },
+        {
+          "line": {
+            "from": [
+              24,
+              4
+            ],
+            "to": [
+              24,
+              14
+            ],
+            "color": "ink"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              39,
+              4
+            ],
+            "to": [
+              39,
+              14
+            ],
+            "color": "ink"
+          }
+        },
+        {
+          "line": {
+            "from": [
+              24,
+              14
+            ],
+            "to": [
+              39,
+              14
+            ],
+            "color": "ink"
+          }
+        }
+      ]
+    },
+    {
+      "name": "handle",
+      "operations": [
+        {
+          "rect": {
+            "box": [
+              30,
+              15,
+              4,
+              44
+            ],
+            "color": "grey",
+            "fill": true
+          }
+        },
+        {
+          "rect": {
+            "box": [
+              30,
+              15,
+              4,
+              44
+            ],
+            "color": "ink",
+            "fill": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "blade",
+      "operations": [
+        {
+          "polygon": {
+            "points": [
+              [
+                18,
+                58
+              ],
+              [
+                46,
+                58
+              ],
+              [
+                46,
+                78
+              ],
+              [
+                32,
+                92
+              ],
+              [
+                18,
+                78
+              ]
+            ],
+            "color": "pale",
+            "fill": true
+          }
+        },
+        {
+          "polygon": {
+            "points": [
+              [
+                18,
+                58
+              ],
+              [
+                46,
+                58
+              ],
+              [
+                46,
+                78
+              ],
+              [
+                32,
+                92
+              ],
+              [
+                18,
+                78
+              ]
+            ],
+            "color": "ink",
+            "fill": false
+          }
+        },
+        {
+          "line": {
+            "from": [
+              32,
+              62
+            ],
+            "to": [
+              32,
+              84
+            ],
+            "color": "grey"
+          }
+        }
+      ]
+    }
+  ]
+}

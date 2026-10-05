@@ -10,13 +10,16 @@
 </head>
 <body>
   <main class="viewport" aria-live="polite"><div class="deck"></div></main>
-  <div class="progress" aria-hidden="true"></div>
-  <div class="counter" aria-hidden="true"></div>
+  <nav class="expedition" aria-label="Historická osa přednášky">
+    <div class="era-stops"></div>
+    <div class="scrubber"><span class="era-caption">Na začátku výpravy</span><input id="slide-position" type="range" min="1" value="1" aria-label="Pozice v přednášce"><span class="counter" aria-hidden="true"></span></div>
+  </nav>
   <div class="help">←/→ nebo mezerník: další krok · F: celá obrazovka · N: poznámky · O: přehled · P: tisk (Shift+P s poznámkami) · T: reset časovače</div>
   <aside class="notes" aria-label="Poznámky řečníka"></aside>
   <noscript><p style="padding:40px;font:20px sans-serif">Prezentace potřebuje JavaScript.</p></noscript>
   <script src="qr.js"></script>
   <script src="notes.js"></script>
+  <script src="doodles.js"></script>
   <script src="slides.js"></script>
   <script src="app.js"></script>
 </body>

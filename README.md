@@ -4,7 +4,7 @@ Přednáška v češtině, cca 30 minut, AI Monday 5. 10. 2026.
 
 ## HTML deck (aktuální)
 
-26 slidů, 85 stavů odkrývání, 29 minut obsahu + minuta rezervy. Příběh: autocomplete → Shannon a n-gramy → neuronové LM (Bengio, Mikolov) a Transformer → pretraining → base model → asistent → preference → limity → nástroje → přesná pravidla a model.
+31 slidů, 93 stavů odkrývání, 29 minut obsahu + minuta rezervy. Aktuální verze: černobílý archeologický průvodce. Praktik otevírá dnešní krabičku a sleduje její kořeny: Markov → Shannon → n-gramy → naučené reprezentace a kontext → Transformer → GPT → asistent → nástroje → přesná pravidla a model. Počet slidů a timing viz `outline.md`; ověřené build stavy viz `html/review/archaeology/report.json`.
 
 Otevři `html/index.html` v prohlížeči — funguje offline ze souboru, bez serveru a CDN.
 
@@ -17,6 +17,9 @@ Otevři `html/index.html` v prohlížeči — funguje offline ze souboru, bez se
 | O | přehled všech slidů (Esc / klik = návrat) |
 | P / Shift+P | tisk všech slidů (finální stav buildů) / včetně poznámek |
 | ? | nápověda |
+| Spodní historické zastávky | skok na začátek dané éry |
+| Spodní posuvník | libovolný slide, vždy od prvního buildu |
+| Tab, Enter; šipky na posuvníku | přístupné ovládání navigace (Esc vrátí klávesy prezentaci) |
 
 Deeplink: `index.html#/7/2` = slide 7, krok 2.
 
@@ -24,29 +27,36 @@ Deeplink: `index.html#/7/2` = slide 7, krok 2.
 |---|---|
 | `html/slides.js` | obsah slidů (HTML/SVG), builds přes `data-step` / `data-until` / `data-on` |
 | `html/notes.js` | nové speaker notes podle id slidu; mluvený tahák + technické nuance |
-| `html/style.css` | vizuální systém: #FAFBFC / #17212B / #2458B3, Avenir Next → Segoe UI → Helvetica |
+| `html/style.css` | černobílý systém: #FFFFFF / #161616 / #666666, Avenir Next → Segoe UI → Helvetica |
 | `html/app.js` | navigace, notes, přehled, tisk, škálování 1600×900 |
+| `html/doodles.js` | vlastní editovatelné SVG kresby pro historické zastávky |
 | `html/qr.js` | vygenerovaný SVG QR na Transformer Explainer |
-| `html/assets/` | Skullpix pixel-art (prez-astra), PNG + editovatelný JSON |
-| `html/stoparuv-pruvodce-po-llms.pdf` | PDF (26 stran, finální stav buildů) |
+| `html/assets/` | vlastní černobílé Skullpix stickery, PNG + editovatelné JSONy |
+| `html/stoparuv-pruvodce-po-llms.pdf` | starší PDF export před archeologickým refactorem (26 stran); hlavní verze je HTML |
 
-Historická rampa z issue #1 má tři slidy a 3:30. Ukazuje postupné řešení problémů s kontextem, generalizací a výpočetní náročností. Word2vec je samostatná související linie; výklad zachovává rozdíl mezi paralelním tréninkem a postupným generováním.
+Opening má čtyři snímky: titul, praktik Pavel Lorenz, motivace archeologického průzkumu a mapa „Back to the roots“. Historie z issue #1 nyní tvoří páteř příběhu: u zastávky řešíme problém, zlepšení a zbývající limit. Word2vec je související větev, nikoli přímý technický předek Transformeru.
+
+### Spodní timeline
+
+Deset zastávek je stále vidět pod prezentací. Aktuální má plný černý bod a tučný název, minulé body jsou šedé, budoucí obrysové. Na openingu není vybraná žádná éra. Klik na bod otevře první slide s příslušným `era` v `slides.js`; slider pod osou prochází všechny slidy. Rozestupy jsou navigační, ne proporcionální rokům; jde o mapu výpravy, ne úplný rodokmen modelů. Na mobilu lze osu horizontálně posouvat a aktivní bod se sám ukáže.
+
+Timeline má vyhrazené místo a nepřekrývá slide. V přehledu se schová; v tisku má každý snímek vlastní statickou osu. Klávesnice, hash odkazy, poznámky a offline režim zůstávají funkční.
 
 ### Úpravy a regenerace
 
 - Deck nemá build krok: uprav `slides.js` / `notes.js` / `style.css` a obnov stránku.
 - QR kód (jen při změně URL), z `deck/` kvůli nainstalovanému `qrcode`:
-  `node -e "require('qrcode').toString('https://poloclub.github.io/transformer-explainer/',{type:'svg',margin:4,color:{dark:'#17212B',light:'#FFFFFF'}},(e,s)=>require('fs').writeFileSync('../html/qr.js','window.QR_SVG = '+JSON.stringify(s)+';\\n'))"`
+  `node -e "require('qrcode').toString('https://poloclub.github.io/transformer-explainer/',{type:'svg',margin:4,color:{dark:'#161616',light:'#FFFFFF'}},(e,s)=>require('fs').writeFileSync('../html/qr.js','window.QR_SVG = '+JSON.stringify(s)+';\\n'))"`
 - Pixel-art ilustrace: viz `html/assets/README.md` (Skullpix).
 - PDF: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --no-pdf-header-footer --print-to-pdf=html/stoparuv-pruvodce-po-llms.pdf "file://$PWD/html/index.html#/1"` (nebo v prohlížeči P / Shift+P s poznámkami).
 
 ### Ověření
 
-Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states --output html/review/issue-1` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing a přetékání.
+Reprodukovatelná kontrola otevřeného decku přes Chrome DevTools CLI: `python3 scripts/review-html.py --page 2 --all-states --output html/review/archaeology` (číslo stránky uprav podle `chrome-devtools list_pages`). Ukládá screenshoty a kontroluje všechny stavy, notes, timing, přetékání a synchronizaci timeline. Interakce a mobilní rozložení: `python3 scripts/review-navigation.py --page 2`.
 
-Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/issue-1/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
+Ověřování: prez-astra přes Chrome DevTools (`scripts/review-html.py`, všechny build stavy, konzole, notes, stage 1280×720, mobilní emulace, přehled); prez-opus headless screenshoty. Aktuální výsledek kontroly je v `html/review/archaeology/report.json` a na konci `tech-review.md`. Neověřeno: projektor a prezentační počítač — před přednáškou proklikat.
 
-Vizuální reference: Andrej Karpathy, *Deep Dive into LLMs like ChatGPT* (sources.md S13) — světlá technická tabule; video je i v Resources a v notes.
+Vizuální směr: černobílý zápisník z výpravy, vlastní Skullpix stickery a jednoduchá schémata. Karpathyho technická tabule (sources.md S13) zůstává inspiračním zdrojem a doplňujícím videem.
 
 PPTX níže je starší artefakt, dál se negeneruje.
 
@@ -59,7 +69,7 @@ PPTX níže je starší artefakt, dál se negeneruje.
 | `deck/render/*.pdf`, `sheet-*.jpg` | render pro vizuální kontrolu | prez-opus |
 | `outline.md` | osnova s timingem | prez-opus |
 | `tech-review.md` | technická oponentura po slidech | prez-astra |
-| `sources.md` | zdroje S1–S24 a původ historických ukázek | prez-astra |
+| `sources.md` | zdroje S1–S26 a původ historických ukázek | prez-astra |
 | `coordination.md` | log spolupráce (append-only) | oba |
 | `zadani.md`, `prompt-*.md` | původní zadání, beze změn | — |
 
@@ -91,7 +101,7 @@ Animace nejsou použité; postupné odkrývání je řešené navazujícími sli
 
 ## Živá ukázka
 
-Po HTML slidu **6 · A teď hodíme kostkou**: [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) — posunout temperature slider. Max 1 min (bere z rezervy). Stránku otevřít a načíst předem; když nepojede Wi-Fi, stačí statické bary na slidu.
+Po slidu **A teď hodíme kostkou** (id `kostka`): [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) — posunout temperature slider. Max 1 min (bere z rezervy). Stránku otevřít a načíst předem; když nepojede Wi-Fi, stačí statické bary na slidu.
 
 ## Pravidla obsahu
 
