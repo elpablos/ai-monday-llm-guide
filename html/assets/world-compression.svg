@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 340" fill="none" stroke="#161616" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Svěrák stlačuje zeměkouli obklopenou stránkami textu: metafora učení pravidelností z dat">
+ <!-- Pages: the input is writing about the world. -->
+ <g transform="rotate(-16 78 116)"><path d="M40 59H92L109 77V156H40Z" fill="white"/><path d="M92 59V77H109M53 89H94M53 102H94M53 115H86M53 129H92" stroke-width="3"/></g>
+ <g transform="rotate(16 358 107)"><path d="M326 45H379L396 62V146H326Z" fill="white"/><path d="M379 45V62H396M339 80H381M339 94H381M339 108H367M339 122H379" stroke-width="3"/></g>
+ <!-- Globe with readable continent silhouettes. -->
+ <circle cx="224" cy="126" r="77" fill="white"/>
+ <path d="m173 72 22-13 19 6-4 18-17 5-4 17-21 2-14-12M158 119l24 3 14 15-4 18 14 16-6 24-15-8-8-29-14-12ZM243 54l-8 19 13 14 21-3 18 16-9 15-19-5-12 14-18-5-10 19 17 26 18 3 15-24 23-8M265 174l19-4 8 13-17 9-12-8" stroke-width="4"/>
+ <!-- Distinct clamp jaws above and below the globe. -->
+ <path d="M121 24H307V47H121ZM119 207H309V232H119Z" fill="white"/>
+ <!-- C frame and screw, familiar archive/compression metaphor. -->
+ <path d="M122 24H96Q78 24 78 43V267Q78 286 98 286H211V263H105V48H122" fill="white"/>
+ <path d="M205 232V307H228V232" fill="white"/>
+ <path d="m206 241 21-7m-21 19 21-7m-21 19 21-7m-21 19 21-7m-21 19 21-7" stroke-width="3"/>
+ <path d="M172 311H264"/><circle cx="166" cy="311" r="6" fill="white"/><circle cx="270" cy="311" r="6" fill="white"/>
+ <path d="m325 174 15-7m-12 26 21 2M129 167l-13-6" stroke-width="3"/>
+</svg>

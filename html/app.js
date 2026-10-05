@@ -44,7 +44,7 @@
     sec.setAttribute("aria-label", `Slide ${i + 1} z ${SLIDES.length}`);
     sec.innerHTML = `<div class="inner">${s.html}</div>`;
     const stopHeader = sec.querySelector(".stop");
-    if (stopHeader && window.ERA_DOODLES?.[s.era]) {
+    if (stopHeader && !s.hideEraDoodle && window.ERA_DOODLES?.[s.era]) {
       stopHeader.insertAdjacentHTML("beforeend", window.ERA_DOODLES[s.era]);
     }
     const printTrail = document.createElement("div");
@@ -87,6 +87,12 @@
     els.forEach((el, i) => el.classList.toggle("is-active", i === idx));
     setBuild(els[idx], idx, step);
     counter.textContent = `${idx + 1} / ${SLIDES.length}`;
+    const buildSteps = document.querySelector(".build-steps");
+    const buildLabel = `Stav ${step + 1} z ${maxStep[idx] + 1} · zbývá odkrýt: ${maxStep[idx] - step}`;
+    buildSteps.innerHTML = Array.from({length: maxStep[idx] + 1}, (_, n) =>
+      `<span class="build-dot${n < step ? ' done' : n === step ? ' current' : ''}" aria-hidden="true"></span>`).join("");
+    buildSteps.setAttribute("aria-label", buildLabel);
+    buildSteps.title = buildLabel;
     document.documentElement.style.setProperty("--progress", ((idx + (maxStep[idx] ? step / (maxStep[idx] + 1) : 0)) / (SLIDES.length - 1)) * 100 + "%");
     const h = `#/${idx + 1}` + (step ? `/${step}` : "");
     if (location.hash !== h) history.replaceState(null, "", h);

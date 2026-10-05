@@ -66,7 +66,7 @@ Cíl: 29:00 obsah + 1:00 rezerva = 30:00. Každá zastávka: problém → zlepš
 | gpt2 | GPT-2, 2019 | Rozvíjí zadanou fikci (shrnutí, tab. 13). | 1:00 |
 | kostka | Hodíme kostkou | Sampling, temperature (ilustrace dnešních modelů). | 1:00 |
 | smycka | A znovu. | Generování = smyčka. | 0:30 |
-| base-model | Base model není asistent | Žába před; limit éry GPT. | 1:15 |
+| base-model | Base model není asistent | Shakespeare jako ilustrace doplňování → skutečná žába před; limit éry GPT. | 1:15 |
 
 ## ChatGPT (era: chatgpt) — 3:15
 

@@ -4,7 +4,7 @@ Přednáška v češtině, cca 30 minut, AI Monday 5. 10. 2026.
 
 ## HTML deck (aktuální)
 
-31 slidů, 93 stavů odkrývání, 29 minut obsahu + minuta rezervy. Aktuální verze: černobílý archeologický průvodce. Praktik otevírá dnešní krabičku a sleduje její kořeny: Markov → Shannon → n-gramy → naučené reprezentace a kontext → Transformer → GPT → asistent → nástroje → přesná pravidla a model. Počet slidů a timing viz `outline.md`; ověřené build stavy viz `html/review/archaeology/report.json`.
+31 slidů, 95 stavů odkrývání, 29 minut obsahu + minuta rezervy. Aktuální verze: černobílý archeologický průvodce. Praktik otevírá dnešní krabičku a sleduje její kořeny: Markov → Shannon → n-gramy → naučené reprezentace a kontext → Transformer → GPT → asistent → nástroje → přesná pravidla a model. Počet slidů a timing viz `outline.md`; ověřené build stavy viz `html/review/archaeology/report.json`.
 
 Otevři `html/index.html` v prohlížeči — funguje offline ze souboru, bez serveru a CDN.
 

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 330" fill="none" stroke="#161616" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Ručně kreslená kalkulačka s přesným výsledkem 1392967">
+ <g transform="rotate(5 140 160)">
+ <path d="M53 27 222 31Q235 32 234 46L231 291Q231 306 215 306L50 301Q37 300 38 286L39 44Q39 26 53 27Z" fill="white"/>
+ <path d="m57 51 157 3-1 61-158-3Z"/>
+ <text x="202" y="94" text-anchor="end" font-family="monospace" font-size="30" fill="#161616" stroke="none">1392967</text>
+ <path d="M58 135H90V165H58ZM109 136H141V166H109ZM161 137H211V167H161ZM58 184H90V214H58ZM109 185H141V215H109ZM161 186H211V216H161ZM58 233H90V263H58ZM109 234H141V264H109Z"/>
+ <path d="M161 235H211V281H161Z" fill="#161616"/>
+ <path d="M175 252H198M175 263H198" stroke="white" stroke-width="4"/>
+ <path d="M179 145 192 158M192 145 179 158M177 201H195M186 192V209" stroke-width="3"/>
+ </g>
+ <path d="M16 58 5 47M14 82H3M255 29 266 17M260 57 276 54" stroke-width="4"/>
+</svg>

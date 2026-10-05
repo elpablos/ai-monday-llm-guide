@@ -214,4 +214,14 @@ body.overview .help { display:none; }
 .slide:has(.era-doodle) h2 { max-width:1100px; }
 .title-heading { margin-top:75px; font-size:104px; max-width:980px; }
 .title-subtitle { margin-top:48px; max-width:980px; font-size:44px; font-weight:500; }
-.title-robot { position:absolute; right:-10px; top:85px; object-fit:contain; transform:rotate(4deg); }
+/* Same illustration slot on opening slides and both closing states. */
+.story-art { position:absolute; right:0; top:205px; width:440px; height:440px; object-fit:contain; mix-blend-mode:multiply; }
+.story-copy { width:800px; flex:none; }
+
+/* Quiet build-state cue next to the slide number; includes the initial state. */
+.build-steps { display:flex; align-items:center; gap:5px; flex:none; padding:4px 3px; }
+.build-dot { width:5px; height:5px; box-sizing:border-box; border:1px solid #aaa; border-radius:50%; }
+.build-dot.done { background:#999; border-color:#999; }
+.build-dot.current { background:var(--ink); border-color:var(--ink); outline:1px solid var(--ink); outline-offset:2px; }
+body.overview .build-steps { display:none; }
+@media print { .build-steps { display:none !important; } }

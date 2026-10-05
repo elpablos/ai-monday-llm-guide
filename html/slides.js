@@ -34,22 +34,21 @@
 
   S.push({ id: "dont-panic", era: null, html: `
     <h1 class="huge title-heading">Stopařův průvodce<br>po LLMs</h1>
-    <p class="lead muted title-subtitle">aneb zničí nás<br>Terminátoři či transformátoři?</p>
-    <img class="title-robot" src="assets/robot-guide.svg" width="370" height="410" alt="Zvědavý kreslený robůtek s otazníkem">
+    <p class="lead muted title-subtitle">aneb zničí nás<br>Terminátoři či Transformátoři?</p>
+    <img class="story-art" src="assets/robot-explorer-simple.png" width="440" height="440" alt="Zvědavý robot se šroubovákem rozebírá krabičku LLM">
     <p class="lead push">Pavel Lorenz</p>
     <p class="say muted gap-s">AI Monday #17 - 5. 10. 2026</p>` });
 
   S.push({ id: "o-mne", era: null, html: `
     <h2>Kdo vám to dneska vypráví?</h2>
     <div class="row" style="gap:80px; align-items:flex-start">
-      <div class="col" style="gap:26px; flex:1">
-        <p class="lead">Pavel Lorenz</p>
-        <p class="say">Staff engineer. Spíš praktik než teoretik.</p>
+      <div class="col story-copy" style="gap:26px">
+        <p class="lead" style="font-size:38px">Pragmatic Staff Engineer<br><span class="muted">@ Heureka Group</span></p>
         <p class="say">AI řeším dnes a denně. Zajímá mě, co funguje v praxi.</p>
         <p class="say" ${st(1)}>A odmalička rozebírám věci, kterým nerozumím.</p>
         <p class="say muted" ${st(1)}><em>Většina z nich už pak nefungovala.</em></p>
       </div>
-      <img class="sticker" ${st(1)} src="assets/opened-llm.svg" width="560" height="400" alt="Rozebraná krabička se šroubovákem">
+      <img class="story-art" src="assets/pavel-portrait-simple.png" width="440" height="440" alt="Černobílý kreslený portrét Pavla Lorenze podle jeho GitHub avataru">
     </div>` });
 
   const LAYERS = [["dnešní asistenti", "GPT, ChatGPT"], ["modely a odbočky", "BERT, rerankery"], ["základy", "Shannon, Markov"]];
@@ -64,7 +63,7 @@
             <span class="say muted">${d}</span>
           </div>`).join("")}
       </div>
-      <img class="sticker" src="assets/archaeology.svg" width="420" height="310" alt="Archeologický průzkum: lupa nad odkrytou krabičkou LLM">
+      <img class="story-art" src="assets/pavel-archaeologist.png" width="440" height="440" alt="Jednoduše kreslený Pavel s lupou odkrývá krabičku LLM; pod ní jsou starší vrstvy s knihou">
     </div>
     <p class="lead push" ${st(3)}>Jsem praktik, který kopal. Ne archeolog.</p>` });
 
@@ -200,25 +199,19 @@
           <span class="mono muted" style="font-size:26px; width:130px; text-align:right">${lbl}</span>${html}
         </div>`).join("")}
     </div>
-    ${pil("RNN počítá krok za krokem", "attention: každý token se podívá na předchozí text; trénink paralelně", "kontext má strop a delší kontext je dražší", 3)}` });
+    ${pil("RNN počítá krok za krokem", "attention: každý token se podívá na předchozí text; trénink paralelně", "kontext má strop a delší kontext je dražší", 3)}
+    <p class="fine muted gap-s" style="font-size:20px; font-style:italic" ${st(3)}>Ukázka tokenizace: <a href="https://tiktokenizer.vercel.app/?model=o200k_base" target="_blank" rel="noopener noreferrer">Tiktokenizer · o200k_base</a></p>` });
 
-  const KNOBS = [20, 110, 200, 300, 45, 160, 250, 330, 80, 190, 280, 15];
-  S.push({ id: "pretraining", era: "gpt", html: `
-    ${stop("2018+", "GPT")}
-    <h2>Odkud to umí? Z textu. Hodně textu.</h2>
+  S.push({ id: "pretraining", era: "gpt", hideEraDoodle: true, html: `
+    ${stop("2018+", "GPT — Generative Pre-trained Transformer").replace('</p>', '<img class="era-doodle" src="assets/world-compression.svg" width="190" height="190" alt="Svěrák se zeměkoulí a texty — metafora komprese"></p>')}
+    <h2 style="font-size:58px; margin-bottom:36px">Odkud to umí? Z hromady textu.</h2>
     <div class="row" style="align-items:flex-start; gap:70px">
       <div class="col" style="gap:22px; width:780px">
         ${[["Kočka sedí na", "rohožce"], ["Hlavní město Austrálie je", "Canberra"], ["def is_even(n): return n % 2 ==", "0"]].map(([t, n], i) =>
           `<div class="row" ${i ? st(i) : ""} style="gap:18px"><span class="mono" style="font-size:30px">${t}</span><span class="box ai" style="font-size:28px; padding:8px 16px">${n}</span></div>`).join("")}
         <p class="mono" style="font-size:28px; line-height:1.6; margin-top:20px" ${st(3)}>zakryj další token → model hádá → porovnej<br>→ maličko uprav naučená čísla → znovu<br><span class="accent">× biliony tokenů</span></p>
       </div>
-      <svg class="diagram" viewBox="0 0 440 330" width="440" height="330" data-on="3">
-        ${KNOBS.map((a, i) => {
-          const cx = 50 + (i % 4) * 112, cy = 50 + Math.floor(i / 4) * 112, r = 40, rad = (a * Math.PI) / 180, hi = i === 5;
-          return `<circle cx="${cx}" cy="${cy}" r="${r}" class="${hi ? "acc" : "ink"}" fill="#fff"/>
-          <line class="knob-hand" style="transform-origin:${cx}px ${cy}px; --r:${(i % 3 - 1) * 14 + 9}deg" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(rad) * r * .8}" y2="${cy + Math.sin(rad) * r * .8}" stroke="${hi ? "#161616" : "#161616"}" stroke-width="4" stroke-linecap="round"/>`;
-        }).join("")}
-      </svg>
+
     </div>
     <p class="lead push" ${st(4)}>Aby dobře doplňoval text, učí se jazyk, fakta, kód, styl a vztahy.</p>
     <p class="fine gap-s"><span class="tag">ilustrace, slova místo tokenů</span></p>` });
@@ -278,15 +271,27 @@
 
   S.push({ id: "base-model", era: "gpt", html: `
     <h2>Base model není asistent</h2>
-    <div class="col" style="gap:30px">
+    <div class="col" style="gap:12px; padding-bottom:18px; border-bottom:2px dashed var(--line)">
+      <div class="row" style="gap:36px; align-items:baseline">
+        <p class="say" style="font-weight:600">Být, či nebýt?</p>
+        <p class="say" ${st(1)}>→ Toť otázka.</p>
+        <span class="tag">ilustrace principu</span>
+      </div>
+      <div class="row" style="gap:36px; align-items:baseline">
+        <p class="say" style="font-weight:600">Co děláš?</p>
+        <p class="say" ${st(1)}>→ Žes tak vesel stále.</p>
+      </div>
+      <p class="fine muted" ${st(1)}>Pejsku náš, co děláš…</p>
+    </div>
+    <div class="col gap-m" ${st(2)} style="gap:24px">
       ${FROG_PROMPT}
-      <div class="row" ${st(1)} style="gap:24px; align-items:baseline">
+      <div class="row" ${st(3)} style="gap:24px; align-items:baseline">
         <span class="mono accent" style="font-size:24px; width:200px; flex:none">GPT-3 (base)</span>
         <p class="say">Další zadání: příběh o dítěti a hrách bohů. Příběh o mladíkovi v jiné době. Příběh o dítěti s imaginárním přítelem…</p>
       </div>
+      <p class="fine"><span class="tag">české shrnutí skutečných výstupů: Ouyang et al. 2022, obr. 42</span></p>
     </div>
-    ${pil("jak se učit bez ručně označených dat?", "predikuj další token na obřím textu, škáluj", "umí pokračovat v textu; roli pomocníka nemá zaručenou", 2)}
-    <p class="fine gap-s"><span class="tag">české shrnutí skutečných výstupů: Ouyang et al. 2022, obr. 42</span></p>` });
+    <p class="lead push" ${st(4)}>Umí pokračovat v textu. Pomocníka z něj teprve uděláme.</p>` });
 
   S.push({ id: "instruction", era: "chatgpt", html: `
     ${stop("2022", "ChatGPT")}
@@ -355,7 +360,8 @@ Asistent: Klient posouvá schůzku na čtvrtek.</pre>
     <h2>Proč halucinuje?</h2>
     <p class="big" style="font-size:88px; margin-top:40px">Zní to jako odpověď.</p>
     <p class="big accent" style="font-size:88px; margin-top:16px" ${st(1)}>To nezaručuje pravdu.</p>
-    <p class="say muted push" ${st(2)}>Model může říct „nevím“. Generování ale nezaručuje, že správně pozná kdy.</p>` });
+    <p class="say muted push" ${st(2)}>Model může říct „nevím“. Generování ale nezaručuje, že správně pozná kdy.</p>
+    <p class="fine muted gap-s" style="font-size:20px; font-style:italic" ${st(2)}>Vyzkoušet v <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer">openrouter.ai</a>: „Ve kterém roce dostal profesor Novák cenu za výzkum modrých jednorožců?“</p>` });
 
   S.push({ id: "pocitani", era: "today", html: `
     <p class="big" style="margin-top:60px; font-size:150px">2837 × 491 = ?</p>
@@ -363,6 +369,7 @@ Asistent: Klient posouvá schůzku na čtvrtek.</pre>
     <div class="row gap-l" ${st(2)} style="gap:28px">
       ${box("LLM", "ai")}${arr}${box("calculator()")}${arr}<span class="mono" style="font-size:64px; font-weight:700">1 392 967</span>
     </div>
+    <img src="assets/calculator.svg" width="245" height="289" alt="Kreslená kalkulačka s výsledkem 1 392 967" style="position:absolute; right:70px; top:390px" ${st(2)}>
     <p class="lead push" ${st(2)}>Když mám kalkulačku, použiju kalkulačku.</p>` });
 
   S.push({ id: "aktualni", era: "today", html: `
@@ -458,16 +465,18 @@ Asistent: Klient posouvá schůzku na čtvrtek.</pre>
 
   S.push({ id: "terminatori", era: "today", html: `
     <div class="swap" data-until="3">
-      <p class="big" style="font-size:76px">Takže… zničí nás<br>Terminátoři či transformátoři?</p>
-      <p class="lead gap-l" ${st(1)}>Znalost mechanismu není důkaz bezpečnosti.</p>
-      <p class="say muted gap-s" ${st(1)}>Co můžeme řídit hned: oprávnění, ověřování a lidský dohled.</p>
+      <p class="big" style="font-size:76px">Takže… zničí nás<br>Terminátoři či Transformátoři?</p>
+      <img class="story-art" src="assets/robot-question-simple.png" width="440" height="440" alt="Jednoduchý Terminátor a Transformer v jednom krčí rameny">
+      <p class="lead gap-l" style="max-width:840px" ${st(1)}>Znalost mechanismu není důkaz bezpečnosti.</p>
+      <p class="say muted gap-s" style="max-width:840px" ${st(1)}>Co můžeme řídit hned: oprávnění, ověřování a lidský dohled.</p>
       <p class="lead accent push" ${st(2)}>DON'T PANIC ≠ don't care.</p>
     </div>
     <div class="swap" ${st(3)}>
       <h1 class="huge" style="margin-top:40px">DON'T PANIC</h1>
+      <img class="story-art" src="assets/robot-finale-simple.png" width="440" height="440" alt="Robůtek mává vedle zavřené krabičky LLM a odloženého šroubováku">
       <p class="lead gap-l" style="font-weight:500">It's just software.</p>
       <p class="lead accent">Very weird software.</p>
-      <p class="say muted push">Don't replace certainty with probability<br>unless probability solves a problem certainty can't.</p>
+      <p class="say muted push">Kde stačí přesné pravidlo, použijte ho.<br>Model přidejte tam, kde samotná pravidla nestačí.</p>
     </div>` });
 
   S.push({ id: "zdroje", era: "today", html: `

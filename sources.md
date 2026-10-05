@@ -23,7 +23,7 @@ Aktuální narativní verze: Transformer Explainer (QR), GPT-2 paper, InstructGP
 
 ## Vlastní pedagogické příklady
 
-Pravděpodobnosti na slidech jsou ilustrativní, nikoliv naměřené predikce. JPEG analogie byla v narativním refactoru z hlavního decku odstraněna. Příklad násobení a tokenizace ověřeny lokálním výpočtem; přesné vstupy a tokenizer jsou v tech-review.md. Doporučení pro rozdělení deterministické logiky, validace a oprávnění jsou návrhem systémového designu, nikoliv zárukou správnosti libovolné aplikace.
+Pravděpodobnosti na slidech jsou ilustrativní, nikoliv naměřené predikce. Samostatná JPEG analogie byla v narativním refactoru odstraněna. Na slidu o pretrainingu je nyní vlastní kresba svěráku, zeměkoule a textových stránek: výslovně označená metafora zachycení pravidelností v parametrech, nikoli technický popis komprese či halucinací. Příklad násobení a tokenizace ověřeny lokálním výpočtem; přesné vstupy a tokenizer jsou v tech-review.md. Doporučení pro rozdělení deterministické logiky, validace a oprávnění jsou návrhem systémového designu, nikoliv zárukou správnosti libovolné aplikace.
 
 ## Doplňující odkazy z poznámek ke kompresi
 
@@ -79,6 +79,7 @@ Ověřeno 4. 10. 2026. Historické zastávky ukazují změny metod a jejich limi
 
 - A. A. Markov, *An Example of Statistical Investigation of the Text Eugene Onegin Concerning the Connection of Samples in Chains*, překlad v Science in Context 19(4), 2006, 591–600: https://doi.org/10.1017/S0269889706001074
 - Vydavatelský výtah potvrzuje analýzu 20 000 písmen z Puškinova Oněgina a původní přednášku z roku 1913. Zkoumání samohlásek/souhlásek a sousedních závislostí doplňuje David Link, *Traces of the Mouth* (2006): https://www.its.caltech.edu/~matilde/TracesOfTheMouth.pdf
+- Doplnění presenter notes: Link, s. 335, uvádí P(samohláska | samohláska) ≈ 0,128 a P(samohláska | souhláska) ≈ 0,663. Jde o Markovův vzorek, nikoli obecné konstanty jazyka. Biografie (1856–1922, Petrohrad): https://mathshistory.st-andrews.ac.uk/Biographies/Markov/
 - Použití: jednovětý historický kořen práce se závislostí v sekvenci. Není to tvrzení o prvním language modelu, generování ruštiny ani vynálezu LLM.
 
 ### S18 — Shannon: statistická struktura a hádání znaku
@@ -91,6 +92,8 @@ Ověřeno 4. 10. 2026. Historické zastávky ukazují změny metod a jejich limi
 ### S19 — N-gramy, rozpoznávání řeči, smoothing a backoff
 
 - F. Jelinek, L. R. Bahl, R. L. Mercer, *Design of a Linguistic Statistical Decoder for the Recognition of Continuous Speech* (1975): https://research.ibm.com/publications/design-of-a-linguistic-statistical-decoder-for-the-recognition-of-continuous-speech
+- Biografické doplnění k Jelínkovi (český původ, IBM 1972–1993): https://engineering.jhu.edu/magazine-archive/2010/10/mourning-fred-jelinek/
+- Vysvětlení kombinace akustické shody a pravděpodobnosti slovní posloupnosti jeho kolegou Jasonem Eisnerem: https://gazette.jhu.edu/2010/09/20/frederick-jelineks-legacy-in-language-and-speech-processing-technology/ — příklad „mít/mýt“ v notes je naše ilustrace, ne historický výstup IBM.
 - F. Jelinek, *Continuous Speech Recognition by Statistical Methods* (1976): https://research.ibm.com/publications/continuous-speech-recognition-by-statistical-methods
 - S. F. Chen, J. Goodman, *An Empirical Study of Smoothing Techniques for Language Modeling* (1996), zejména úvod a oddíl 2: https://aclanthology.org/P96-1041/ (PDF: https://aclanthology.org/P96-1041.pdf).
 - Podpora pro dlouhodobé praktické použití statistických LM v řeči a odhady pro nepozorované kombinace. N-gramový model používá posledních N−1 slov; základní trigram tedy dvě předchozí slova. Backoff zkracuje historii, smoothing přerozděluje pravděpodobnostní hmotu i neviděným kombinacím. Nejde o jediný univerzální algoritmus.
@@ -142,3 +145,30 @@ Radford, Narasimhan, Salimans, Sutskever, *Improving Language Understanding by G
 Generativní pretraining Transformer language modelu, následovaný adaptací na konkrétní úlohy. Dokládá zastávku GPT 2018; tento fine-tuning nezaměňujeme s pozdějším učením chatovacího asistenta. GPT-2 ukázka zůstává samostatně doložená v S14.
 
 Spodní timeline je **mapa vybraných zastávek** v čase: rozestupy nejsou proporcionální rokům a spojnice netvrdí přímou technickou návaznost všech metod. Word2vec je související větev reprezentací. N-gramy označujeme obdobím širokého praktického využití, nikoli datem vynálezu. Současné temperature bary jsou didaktický přesah, ne historický screenshot.
+
+
+### S27 — Mikolov: osobní příběh RNNLM a word2vec
+
+- IEEE Signal Processing Society, rozhovor s Tomášem Mikolovem (2021): https://signalprocessingsociety.org/newsletter/2021/07/industry-leaders-signal-processing-and-machine-learning-tomas-mikolov — jeho vzpomínky na nedůvěru okolí, doktorát na VUT a nástup do Google Brain v roce 2012.
+- BN(V)KI / TU Delft, podrobný rozhovor: https://ii.tudelft.nl/bnvki/uncovering-the-pioneering-journey-of-word2vec-and-the-state-of-ai-science-an-in-depth-interview-with-dr-tomas-mikolov-2/ — zveřejnění RNNLM v roce 2010 kvůli reprodukovatelnosti; podle jeho vzpomínky prosazování open source word2vec a uvolnění kódu v roce 2013. Osobní svědectví, ne nezávislý popis postojů celé komunity či firmy.
+- Pascanu, Mikolov, Bengio, *On the difficulty of training Recurrent Neural Networks* (2013; preprint 2012): https://arxiv.org/abs/1211.5063 — dokládá jejich pozdější spolupráci na problémech trénování RNN.
+- Guardrail: nepřipisovat Mikolovovi doslovné „nečetl Bengia“, netvrdit nemožnost úspěchu v Česku ani tím vysvětlovat jeho odchod. RNNLM vzniklo před nástupem do Googlu; word2vec je jiný projekt. Volitelné příběhy v notes přidávají přibližně 40 sekund, pokud je řečník použije celé.
+
+- Doplnění S27 — stanovisko školitele k Mikolovově disertaci potvrzuje šest měsíců na JHU v roce 2010 pod vedením Freda Jelínka a Sanjeeva Khudanpura: https://www.vut.cz/www_base/zav_prace_soubor_verejne.php?file_id=136989&zp_id=99806 . Stáž popisuje i Mikolov v rozhovoru Forbes NEXT (2018), archiv VUT: https://www.fit.vut.cz/fit/press/2505/.cs . Callback v notes cca 10 sekund.
+
+
+### Portrét řečníka (slide O mně)
+
+- Vstupní fotografie: GitHub avatar dodaný Pavlem Lorenzem, https://avatars.githubusercontent.com/u/11454911 .
+- `html/assets/pavel-portrait.png`: černobílá ilustrace vytvořená nástrojem imagegen podle této fotografie; nejde o původní fotografii ani historickou ilustraci.
+
+- `html/assets/robot-explorer.png`: původní ilustrace vygenerovaná nástrojem imagegen pro titulní slide — robot se šroubovákem otevírá krabičku LLM, černobílá kresba bez externí předlohy.
+
+- `html/assets/robot-archaeologist.png`: companion ilustrace vytvořená imagegen podle `robot-explorer.png`; robot s lupou odkrývá vrstvy s krabičkou LLM, knihou a děrnou páskou. Vizuální metafora průzkumu, nikoli historický diagram.
+
+- `html/assets/pavel-archaeologist.png`: zjednodušená aktuální ilustrace slidu 3, imagegen podle Pavlova GitHub avataru a předchozí archeologické kompozice. Robot nahrazen lidskou postavou; bez šrafování.
+
+
+### Sjednocené ilustrace úvodu a závěru
+
+Aktuální slidy 1, 2, 3 a oba závěrečné stavy slidu 30 používají jednotný jednoduchý černobílý doodle styl podle `pavel-archaeologist.png`: silné obrysy, bílé plochy, bez šrafování. Nové soubory `robot-explorer-simple.png`, `pavel-portrait-simple.png`, `robot-question-simple.png` a `robot-finale-simple.png` vytvořil imagegen s touto stylovou předlohou (portrét také podle dodaného GitHub avataru). Všechny používají společnou CSS pozici `.story-art`; starší varianty zůstávají jako pracovní assets, nejsou v těchto slidech použité.
