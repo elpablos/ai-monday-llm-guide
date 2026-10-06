@@ -91,6 +91,10 @@ git tag -a v1.0 -m "AI Monday presentation v1.0"
 git push origin v1.0
 ```
 
-Výsledná adresa: https://elpablos.github.io/ai-monday-llm-guide/ . Prezentace včetně poznámek řečníka je veřejný web; samotný repozitář může zůstat privátní. Historie zadání, review reporty a ostatní dokumenty se nepublikují.
+Výsledná adresa: https://elpablos.github.io/ai-monday-llm-guide/ . Prezentace včetně poznámek řečníka i zdrojový repozitář jsou veřejné. Historie zadání, review reporty a ostatní dokumenty se nepublikují.
 
 Lokální kontrola balíčku: `python3 scripts/package-pages.py`. Výstup `_site/` je ignorovaný Gitem. Otevři `_site/index.html` nebo jej obsluž přes `python3 -m http.server --directory _site 8000`.
+
+## Licence
+
+Projekt je dostupný pod [MIT licencí](LICENSE). Copyright © 2026 Pavel Lorenz. Licence se nevztahuje na obsah externích odkazovaných zdrojů; jejich původ uvádí `sources.md`.
