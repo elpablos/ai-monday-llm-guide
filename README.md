@@ -79,3 +79,18 @@ Po slidu **A teď hodíme kostkou** (id `kostka`): [Transformer Explainer](https
 ## Pravidla obsahu
 
 Každé zjednodušení je v notes označené `ZJEDNODUŠENÍ PRO VYSVĚTLENÍ`. Ilustrativní čísla jsou označená přímo na slidu. Tokenizace (o200k_base) a výsledek 2837 × 491 = 1 392 967 jsou skutečně spočítané.
+
+## GitHub Pages — nasazení tagem
+
+Workflow `.github/workflows/pages.yml` publikuje verzi označenou novým tagem `v*`. Push do `main` sám nic nenasazuje. Každý nový tag aktualizuje jednu společnou adresu webu, nevytváří samostatný web pro každou verzi.
+
+Před prvním nasazením nastav v GitHub Settings → Pages zdroj **GitHub Actions**. Pro privátní osobní repozitář je potřeba tarif podporující Pages (např. Pro). V environmentu `github-pages` povol deployment tagů `v*`, pokud má nastavené omezení větví/tagů.
+
+```sh
+git tag -a v1.0 -m "AI Monday presentation v1.0"
+git push origin v1.0
+```
+
+Výsledná adresa: https://elpablos.github.io/ai-monday-llm-guide/ . Prezentace včetně poznámek řečníka je veřejný web; samotný repozitář může zůstat privátní. Historie zadání, review reporty a ostatní dokumenty se nepublikují.
+
+Lokální kontrola balíčku: `python3 scripts/package-pages.py`. Výstup `_site/` je ignorovaný Gitem. Otevři `_site/index.html` nebo jej obsluž přes `python3 -m http.server --directory _site 8000`.

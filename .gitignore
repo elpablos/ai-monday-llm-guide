@@ -12,3 +12,6 @@ html/review/**/*.jpg
 html/review/**/*.jpeg
 html/review/**/*.webp
 html/*.pdf
+
+# GitHub Pages deployment bundle
+/_site/
