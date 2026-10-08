@@ -1,0 +1,11 @@
+{
+  "issues": [],
+  "checks": [
+    "10 era buttons",
+    "range endpoints and middle",
+    "native keyboard range navigation",
+    "notes geometry",
+    "overview",
+    "mobile stop scrolling and stage"
+  ]
+}

@@ -166,3 +166,7 @@ Spodní timeline je **mapa vybraných zastávek** v čase: rozestupy nejsou prop
 - Historické piktogramy v `html/doodles.js` a diagramy v `html/slides.js` jsou vlastní SVG/HTML.
 
 Starší obrazové mezikroky (detailní portrét, robot průzkumník, robot archeolog, Skullpix pokusy a nahrazené SVG) byly při úklidu odstraněny; jejich původ a soubory jsou zachované v historii Gitu, např. `ee49094`.
+
+### English edition
+
+`html/en/` translates the same 31-slide talk and presenter notes; historical claims and primary references are unchanged. The Czech tokenization examples retain their verified `o200k_base` IDs and are explicitly labeled as Czech. The Shannon row is still a Czech illustration, not his original English experiment. English cat examples and counts are pedagogical illustrations. The Czech nursery rhyme is replaced by “Twinkle, Twinkle, Little Star”; it and the Hamlet completion are labeled illustrations, not recorded model outputs. GPT-2 and InstructGPT examples remain summaries of the cited historical outputs, not newly measured responses.

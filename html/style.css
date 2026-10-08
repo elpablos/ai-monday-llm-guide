@@ -225,3 +225,8 @@ body.overview .help { display:none; }
 .build-dot.current { background:var(--ink); border-color:var(--ink); outline:1px solid var(--ink); outline-offset:2px; }
 body.overview .build-steps { display:none; }
 @media print { .build-steps { display:none !important; } }
+
+/* Keep the same slide/build when switching languages. */
+.language-link { position:fixed; top:12px; right:16px; z-index:50; font:500 13px var(--mono); color:var(--muted); text-decoration:none; padding:6px; }
+.language-link:hover, .language-link:focus-visible { color:var(--ink); text-decoration:underline; }
+@media print { .language-link { display:none !important; } }
