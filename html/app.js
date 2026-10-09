@@ -1,6 +1,8 @@
 // Deck runtime: navigation, builds, notes, overview, print. No dependencies.
 (() => {
   const SLIDES = window.SLIDES, NOTES = window.NOTES || {};
+  const en = document.documentElement.lang === "en";
+  const of = en ? "of" : "z";
   const deck = document.querySelector(".deck");
   const notesEl = document.querySelector(".notes");
   const counter = document.querySelector(".counter");
@@ -8,10 +10,10 @@
 
   const eras = [
     ["markov", "1913", "Markov"], ["shannon", "1948 / 51", "Shannon"],
-    ["ngrams", "70.–90. léta", "n-gramy"], ["bengio", "2003", "Bengio"],
+    ["ngrams", en ? "1970s–90s" : "70.–90. léta", en ? "n-grams" : "n-gramy"], ["bengio", "2003", "Bengio"],
     ["mikolov", "2010", "Mikolov"], ["word2vec", "2013", "word2vec"],
     ["transformer", "2017", "Transformer"], ["gpt", "2018+", "GPT"],
-    ["chatgpt", "2022+", "ChatGPT"], ["today", "dnes", "Nástroje"]
+    ["chatgpt", "2022+", "ChatGPT"], ["today", en ? "today" : "dnes", en ? "Tools" : "Nástroje"]
   ];
   const navigation = document.querySelector(".expedition");
   const range = document.querySelector("#slide-position");
@@ -23,7 +25,7 @@
     button.className = "era-stop";
     button.dataset.era = id;
     button.innerHTML = `<span class="era-year">${year}</span><span class="era-dot" aria-hidden="true"></span><span class="era-name">${label}</span>`;
-    button.setAttribute("aria-label", `${year}: ${label}, přejít na zastávku`);
+    button.setAttribute("aria-label", `${year}: ${label}, ${en ? "go to stop" : "přejít na zastávku"}`);
     button.disabled = destinations[n] < 0;
     button.addEventListener("click", (event) => {
       if (body.classList.contains("overview")) toggleOverview(false);
@@ -41,7 +43,7 @@
     sec.className = "slide";
     sec.dataset.id = s.id;
     sec.dataset.era = s.era || "opening";
-    sec.setAttribute("aria-label", `Slide ${i + 1} z ${SLIDES.length}`);
+    sec.setAttribute("aria-label", `Slide ${i + 1} ${of} ${SLIDES.length}`);
     sec.innerHTML = `<div class="inner">${s.html}</div>`;
     const stopHeader = sec.querySelector(".stop");
     if (stopHeader && !s.hideEraDoodle && window.ERA_DOODLES?.[s.era]) {
@@ -88,7 +90,7 @@
     setBuild(els[idx], idx, step);
     counter.textContent = `${idx + 1} / ${SLIDES.length}`;
     const buildSteps = document.querySelector(".build-steps");
-    const buildLabel = `Stav ${step + 1} z ${maxStep[idx] + 1} · zbývá odkrýt: ${maxStep[idx] - step}`;
+    const buildLabel = `${en ? "Step" : "Stav"} ${step + 1} ${of} ${maxStep[idx] + 1} · ${en ? "remaining" : "zbývá odkrýt"}: ${maxStep[idx] - step}`;
     buildSteps.innerHTML = Array.from({length: maxStep[idx] + 1}, (_, n) =>
       `<span class="build-dot${n < step ? ' done' : n === step ? ' current' : ''}" aria-hidden="true"></span>`).join("");
     buildSteps.setAttribute("aria-label", buildLabel);
@@ -96,8 +98,10 @@
     document.documentElement.style.setProperty("--progress", ((idx + (maxStep[idx] ? step / (maxStep[idx] + 1) : 0)) / (SLIDES.length - 1)) * 100 + "%");
     const h = `#/${idx + 1}` + (step ? `/${step}` : "");
     if (location.hash !== h) history.replaceState(null, "", h);
+    const languageLink = document.querySelector(".language-link");
+    if (languageLink) languageLink.href = (en ? "../index.html" : "en/index.html") + h;
     range.value = idx + 1;
-    range.setAttribute("aria-valuetext", `Slide ${idx + 1} z ${SLIDES.length}: ${els[idx].querySelector("h1,h2")?.textContent || SLIDES[idx].id}`);
+    range.setAttribute("aria-valuetext", `Slide ${idx + 1} ${of} ${SLIDES.length}: ${els[idx].querySelector("h1,h2")?.textContent || SLIDES[idx].id}`);
     const eraIndex = eras.findIndex(([id]) => id === SLIDES[idx].era);
     navigation.classList.toggle("intro", eraIndex < 0);
     navigation.classList.toggle("historical", eraIndex >= 0 && eraIndex < 7);
@@ -107,7 +111,7 @@
       if (n === eraIndex) button.setAttribute("aria-current", "step");
       else button.removeAttribute("aria-current");
     });
-    document.querySelector(".era-caption").textContent = eraIndex < 0 ? "Začínáme výpravu" : `${eras[eraIndex][1]} · ${eras[eraIndex][2]}`;
+    document.querySelector(".era-caption").textContent = eraIndex < 0 ? (en ? "The journey begins" : "Začínáme výpravu") : `${eras[eraIndex][1]} · ${eras[eraIndex][2]}`;
     if (eraIndex >= 0) eraButtons[eraIndex].scrollIntoView({block:"nearest", inline:"nearest"});
     renderNotes();
   }
@@ -131,10 +135,10 @@
   function renderNotes() {
     if (!body.classList.contains("notes-open")) return;
     const s = SLIDES[idx];
-    const txt = esc(NOTES[s.id] || "Bez poznámek.")
+    const txt = esc(NOTES[s.id] || (en ? "No speaker notes." : "Bez poznámek."))
       .replace(/^([A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ][A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ /()]+:|⏱[^\n]*)/gm, '<span class="k">$1</span>');
     const el = Math.floor((t0 ? Date.now() - t0 : 0) / 1000);
-    notesEl.innerHTML = `<header><span>Slide ${idx + 1} z ${SLIDES.length}, krok ${step} z ${maxStep[idx]}</span><span class="timer">${String(Math.floor(el / 60)).padStart(2, "0")}:${String(el % 60).padStart(2, "0")}</span></header>${txt}`;
+    notesEl.innerHTML = `<header><span>Slide ${idx + 1} ${of} ${SLIDES.length}, ${en ? "step" : "krok"} ${step} ${of} ${maxStep[idx]}</span><span class="timer">${String(Math.floor(el / 60)).padStart(2, "0")}:${String(el % 60).padStart(2, "0")}</span></header>${txt}`;
   }
   setInterval(() => { if (body.classList.contains("notes-open")) { const t = notesEl.querySelector(".timer"); if (t) { const e = Math.floor((t0 ? Date.now() - t0 : 0) / 1000); t.textContent = `${String(Math.floor(e / 60)).padStart(2, "0")}:${String(e % 60).padStart(2, "0")}`; } } }, 1000);
 
