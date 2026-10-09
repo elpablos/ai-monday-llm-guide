@@ -131,7 +131,7 @@ Yes, two key publications:
 1951 — Prediction and Entropy of Printed English: people guess the next letter; from that Shannon estimates the entropy and redundancy of English.
 Are these already language models? We can see the 1948 statistical generators as simple language models. You don't need a neural network for that. On this slide, though, we show the principle of the 1951 human experiment.
 
-TECHNICAL NOTE: The row with the number of attempts is our Czech illustration of the principle (the slide keeps the Czech sentence and labels it), not Shannon's data (the experiment was in English, 1951, Prediction and Entropy of Printed English; 1948 A Mathematical Theory of Communication: approximations of language of various orders). Markov 1913 = an analysis of the sequential dependence of vowels/consonants, not "the invention of a language model". The idea was not "on ice": it was gradually used and improved. Claude callback: according to WIRED (Levy 2025) the name expresses familiarity and warmth and, depending on whom you ask, also a nod to Shannon — it is not a definitive origin of the name, say it only as a joke.
+TECHNICAL NOTE: The row with the number of attempts is our English illustration of the principle (THE CAT SITS and invented guess counts), not Shannon's data (the experiment was in English, 1951, Prediction and Entropy of Printed English; 1948 A Mathematical Theory of Communication: approximations of language of various orders). Markov 1913 = an analysis of the sequential dependence of vowels/consonants, not "the invention of a language model". The idea was not "on ice": it was gradually used and improved. Claude callback: according to WIRED (Levy 2025) the name expresses familiarity and warmth and, depending on whom you ask, also a nod to Shannon — it is not a definitive origin of the name, say it only as a joke.
 
 SOURCE: Markov 1913 (S17); Shannon 1948, 1951 (S18); WIRED 2025 (S24).
 
@@ -270,7 +270,7 @@ SAY:
 
 — next step —
 
-It gets chopped into tokens, pieces of text. In our Czech example, the word "Kočka" (cat) becomes two tokens.
+It gets chopped into tokens, pieces of text. Here, “The cat sits on the” becomes five tokens. Spaces belong to the following pieces. A token is not always a word: “unbelievable” splits into “un”, “bel”, and “ievable” with this tokenizer.
 
 — next step —
 
@@ -288,10 +288,10 @@ POINT: Text → tokens → numbers → network → scores. No database of answer
 
 EXTRA / IF ASKED:
 Two different mappings: the tokenizer's vocabulary assigns a token ID to a piece of text; the model's embedding table assigns that ID a learned vector with N dimensions.
-Schematically: token → ID 33185 → row E[33185] → [0.12, −0.47, …]. The numbers in the vector are illustrative. The ID is an index, not the embedding itself nor the numeric meaning of the token. Neighbouring IDs don't mean similar words.
+Schematically: token → ID 976 (“The”) → row E[976] → [0.12, −0.47, …]. The numbers in the vector are illustrative. The ID is an index, not the embedding itself nor the numeric meaning of the token. Neighbouring IDs don't mean similar words.
 This is the input embedding. The same token starts with the same vector from the table; as it is processed in the network, its representation changes with context. Position information is incorporated in a way that depends on the specific architecture.
 
-TECHNICAL NOTE: SIMPLIFIED FOR EXPLANATION. Attention existed before 2017; the Transformer removed recurrence. We show today's autoregressive LM, not the original encoder–decoder Transformer: o200k and billions of parameters are not 2017. Parallelization applies to training; generation still proceeds token by token. Tokenization per o200k_base (tiktoken), shown on the Czech sentence; other models have other tokenizers, and English text splits differently. Token ID → embedding (vector) + position information. Network = transformer: layers of attention + MLP, repeated N×; normalization and residual connections omitted. Attention is causal (it sees the current and previous positions, not future ones) and is not the same as reasoning. The model can memorize some training passages, so "not a database" ≠ "remembers nothing verbatim".
+TECHNICAL NOTE: SIMPLIFIED FOR EXPLANATION. Attention existed before 2017; the Transformer removed recurrence. We show today's autoregressive LM, not the original encoder–decoder Transformer: o200k and billions of parameters are not 2017. Parallelization applies to training; generation still proceeds token by token. Tokenization per o200k_base (tiktoken), verified with tiktoken 0.14.0 on “The cat sits on the roof all day.”: The=976, ·cat=9059, ·sits=38174, ·on=402, ·the=290, ·roof=16367, ·all=722, ·day=2163, .=13. The middle dot represents a space. Other tokenizers may split it differently. Token ID → embedding (vector) + position information. Network = transformer: layers of attention + MLP, repeated N×; normalization and residual connections omitted. Attention is causal (it sees the current and previous positions, not future ones) and is not the same as reasoning. The model can memorize some training passages, so "not a database" ≠ "remembers nothing verbatim".
 
 SOURCE: tiktoken (S3); Vaswani et al. 2017 (S2); Transformer Explainer (S1).
 
@@ -385,7 +385,7 @@ TRANSITION: And this repeats.`,
 
 SAY:
 The network gives us a menu of next tokens along with their probabilities. We pick one from that menu, stick it onto the text and run the whole thing again. That's how an answer gradually appears.
-(Click quickly through the 3 steps on the right.) In our Czech example, "střeše" (roof) is built from three tokens.
+(Click quickly through the 3 steps on the right.) We append “ roof”, then “ all”, then “ day”, then a full stop. Each is one verified token; the spaces are part of the tokens. These choices illustrate the loop, not a recorded model response.
 
 POINT: Generation = a loop. Nothing more.
 

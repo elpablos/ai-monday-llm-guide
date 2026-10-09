@@ -19,7 +19,7 @@
   };
 
   // o200k_base (tiktoken), verified in tech-review.md.
-  const CZ = [["Ko", 33185], ["čka", 51851], [" sed", 10412], ["í", 556], [" na", 898], [" st", 420], ["ře", 38132], ["še", 13136], [".", 13]];
+  const EN = [["The", 976], [" cat", 9059], [" sits", 38174], [" on", 402], [" the", 290], [" roof", 16367], [" all", 722], [" day", 2163], [".", 13]];
   // Synthetic logits for the temperature slide: softmax(logits / T).
   const LOGITS = [["A", 3], ["B", 2], ["C", 1], ["D", 0]];
   const temper = (T) => {
@@ -100,15 +100,15 @@
     </div>` });
 
   const MOTOR = [
-    ["Czech text", `<span class="mono" style="font-size:44px">Kočka sedí na</span>`],
-    ["tokens", `<div class="tokens">${CZ.slice(0, 5).map(([t]) => tok(t)).join("")}</div>`],
-    ["numbers", `<div class="row mono" style="gap:30px; font-size:34px">${CZ.slice(0, 5).map(([, id]) => `<span>${id}</span>`).join("")}<span class="muted">→ vectors of numbers</span></div>`],
+    ["text", `<span class="mono" style="font-size:44px">The cat sits on the</span>`],
+    ["tokens", `<div class="tokens">${EN.slice(0, 5).map(([t]) => tok(t)).join("")}</div>`],
+    ["numbers", `<div class="row mono" style="gap:30px; font-size:34px">${EN.slice(0, 5).map(([, id]) => `<span>${id}</span>`).join("")}<span class="muted">→ vectors of numbers</span></div>`],
     ["network", `<span class="box solid" style="font-size:30px; padding:18px 40px">neural network: billions of learned numbers</span>`],
     ["output", `<span class="mono accent" style="font-size:34px">a score for every possible next token</span>`],
   ];
 
-  // Shannon 1951 guessed letters; Czech row + guess counts are an illustration.
-  const GUESS = [["K", 5], ["O", 2], ["Č", 3], ["K", 1], ["A", 1], ["␣", 1], ["S", 4], ["E", 2], ["D", 1], ["Í", 1], ["␣", 1], ["N", 2], ["A", 1]];
+  // Shannon 1951 guessed letters; this English row and guess counts are illustrative.
+  const GUESS = [["T", 5], ["H", 2], ["E", 1], ["␣", 1], ["C", 3], ["A", 2], ["T", 1], ["␣", 1], ["S", 4], ["I", 2], ["T", 1], ["S", 1]];
   S.push({ id: "shannon", era: "shannon", html: `
     <h2>We’ve played this game since 1951</h2>
     <p class="say">Claude Shannon asked people to guess the next letter.</p>
@@ -119,7 +119,7 @@
     </div>
     <p class="fine gap-s" ${st(1)}>Number = guesses needed to get it right. Often just one.</p>
     ${pil("how much information does text carry?", "measure how well people guess the next character", "people guess; machines still use frequency tables", 2)}
-    <p class="fine gap-s"><span class="tag">illustrative Czech example; Shannon tested English in 1951</span></p>` });
+    <p class="fine gap-s"><span class="tag">illustrative example; not Shannon’s original data</span></p>` });
 
   const NGRAM = [["roof", 50], ["couch", 20], ["floor", 10]];
   S.push({ id: "ngramy", era: "ngrams", html: `
@@ -200,7 +200,7 @@
         </div>`).join("")}
     </div>
     ${pil("RNNs compute one step at a time", "attention looks back through the text; parallel training", "context is limited; longer context costs more", 3)}
-    <p class="fine muted gap-s" style="font-size:20px; font-style:italic" ${st(3)}>Czech tokenization example: <a href="https://tiktokenizer.vercel.app/?model=o200k_base" target="_blank" rel="noopener noreferrer">Tiktokenizer · o200k_base</a></p>` });
+    <p class="fine muted gap-s" style="font-size:20px; font-style:italic" ${st(3)}>Try tokenization: <a href="https://tiktokenizer.vercel.app/?model=o200k_base" target="_blank" rel="noopener noreferrer">Tiktokenizer · o200k_base</a></p>` });
 
   S.push({ id: "pretraining", era: "gpt", hideEraDoodle: true, html: `
     ${stop("2018+", "GPT — Generative Pre-trained Transformer").replace('</p>', '<img class="era-doodle" src="../assets/world-compression.svg" width="190" height="190" alt="A vise holding a globe and text — a compression metaphor"></p>')}
@@ -263,9 +263,9 @@
         <path d="M380,${4 * 92 + 30} H440 V30 H386" class="acc"/>${ah(440, 30, 382, 30, "#161616")}
       </svg>
       <div class="col" style="gap:30px; margin-top:20px">
-        ${[["Kočka sedí na", "·st"], ["Kočka sedí na st", "ře"], ["Kočka sedí na stře", "še"], ["Kočka sedí na střeše", "."]].map(([c, t], i) =>
-          `<div class="row" ${i ? st(i) : ""} style="gap:24px"><span class="mono" style="font-size:34px; width:440px">${c}</span>${arr}${box(t, "ai")}</div>`).join("")}
-        <p class="fine gap-s">Czech example: o200k_base tokens; illustrative choices.</p>
+        ${[["The cat sits on the", "·roof"], ["The cat sits on the roof", "·all"], ["The cat sits on the roof all", "·day"], ["The cat sits on the roof all day", "."]].map(([c, t], i) =>
+          `<div class="row" ${i ? st(i) : ""} style="gap:24px"><span class="mono" style="font-size:26px; width:490px">${c}</span>${arr}${box(t, "ai")}</div>`).join("")}
+        <p class="fine gap-s">Verified o200k_base tokens; illustrative choices.</p>
       </div>
     </div>` });
 
@@ -296,8 +296,8 @@
   S.push({ id: "instruction", era: "chatgpt", html: `
     ${stop("2022", "ChatGPT")}
     <h2>Teach it the conversation format</h2>
-    <pre class="code" style="font-size:28px; white-space:pre-wrap; max-width:1150px">User: Translate the Czech greeting “dobrý den” into English.
-Assistant: Good morning / Good afternoon.
+    <pre class="code" style="font-size:28px; white-space:pre-wrap; max-width:1150px">User: Rewrite “Send me the file” more politely.
+Assistant: Could you please send me the file?
 
 User: Summarize this email in one sentence.
 Assistant: The client is moving the meeting to Thursday.</pre>

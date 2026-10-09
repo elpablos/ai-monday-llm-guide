@@ -8,7 +8,7 @@ Přednáška v češtině a angličtině, cca 30 minut, AI Monday 5. 10. 2026.
 
 Otevři `html/index.html` (česky) nebo `html/en/index.html` (anglicky) — obě verze fungují offline, bez serveru a CDN. Přepínač EN / CZ vpravo nahoře zachová aktuální slide i krok.
 
-Anglická verze má vlastní `html/en/slides.js` a `html/en/notes.js`. Sdílí runtime, styl, QR a ilustrace s českou verzí. Přeložené jsou i ovládací prvky, nápověda a popisky pro čtečky. Ověřená česká tokenizace zůstává označeným českým příkladem se skutečnými ID; dětskou říkanku nahrazuje anglické „Twinkle, twinkle…“. Historické ukázky jsou nadále označené jako citace, překlady nebo naše ilustrace.
+Anglická verze má vlastní `html/en/slides.js` a `html/en/notes.js`. Sdílí runtime, styl, QR a ilustrace s českou verzí. Přeložené jsou i ovládací prvky, nápověda a popisky pro čtečky. Anglické příklady včetně tokenizace používají anglický text a skutečná ověřená ID `o200k_base`; dětskou říkanku nahrazuje anglické „Twinkle, twinkle…“. Historické ukázky jsou nadále označené jako citace, překlady nebo naše ilustrace.
 
 Před commitem spusť `node scripts/check-translations.js` — ověří shodu ID, historických zastávek, buildů a timingů, úplnost notes a existenci obrázků. Na Pages se obě verze nasadí až novým tagem; samotný PR nasazení nespouští.
 

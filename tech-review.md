@@ -238,3 +238,9 @@ Kontrola navigace prošla bez problémů: 10 historických zastávek, posuvník,
 - Shared runtime localizes timeline, help, notes headers and accessibility labels using the document language. The EN / CZ link retains slide and build. Pages packaging includes both editions and shared assets, excluding review/history files.
 - Validation: language parity script checks IDs, eras, build attributes, note sections, timing and image paths; JavaScript/Python syntax and Actionlint passed. Chrome DevTools checked all 95 English states with no reported overflow/build/timeline errors and no console errors. English and Czech navigation, notes geometry, overview and mobile checks passed. Visual inspection prompted shorter English title wrapping and diagram text.
 - Screenshots are local temporary artifacts; machine-readable English reports are in `html/review/english/`. This PR does not deploy: publishing still requires a new `v*` tag after merge.
+
+## English examples — 9 October 2026
+
+All teaching examples in the English edition now use English text. The tokenization and autoregressive loop use “The cat sits on the roof all day.”, verified with tiktoken 0.14.0 / o200k_base (IDs documented in sources.md). Notes distinguish real token boundaries from illustrative generation choices. Shannon's THE CAT SITS row and guess counts are explicitly illustrative. The instruction-tuning example rewrites an English request politely. Czech slides and notes are unchanged.
+
+Validation: verified all shown token IDs and the subword example with tiktoken; language parity and JavaScript syntax passed. Chrome DevTools checked all 15 build states on affected slides 7, 13, 17 and 19; visual inspection found no overflow or overlapping content.
