@@ -166,3 +166,7 @@ Spodní timeline je **mapa vybraných zastávek** v čase: rozestupy nejsou prop
 - Historické piktogramy v `html/doodles.js` a diagramy v `html/slides.js` jsou vlastní SVG/HTML.
 
 Starší obrazové mezikroky (detailní portrét, robot průzkumník, robot archeolog, Skullpix pokusy a nahrazené SVG) byly při úklidu odstraněny; jejich původ a soubory jsou zachované v historii Gitu, např. `ee49094`.
+
+### English edition
+
+`html/en/` translates the same 31-slide talk and presenter notes; historical claims and primary references are unchanged. English tokenization uses “The cat sits on the roof all day.”, verified with tiktoken 0.14.0 / `o200k_base`: 976, 9059, 38174, 402, 290, 16367, 722, 2163, 13. The spoken subword example “unbelievable” is verified as un / bel / ievable (373, 9880, 45794). The Shannon row THE CAT SITS and its guess counts are our illustration, not his original experiment. English cat examples and counts are pedagogical illustrations. The Czech nursery rhyme is replaced by “Twinkle, Twinkle, Little Star”; it and the Hamlet completion are labeled illustrations, not recorded model outputs. GPT-2 and InstructGPT examples remain summaries of the cited historical outputs, not newly measured responses.

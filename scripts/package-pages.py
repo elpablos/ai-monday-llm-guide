@@ -13,7 +13,10 @@ if output.exists():
 output.mkdir()
 for name in ("index.html", "app.js", "slides.js", "notes.js", "style.css", "doodles.js", "qr.js"):
     shutil.copy2(source / name, output / name)
-assets = sorted(set(re.findall(r'assets/([^"\s<>]+)', (source / "slides.js").read_text())))
+for name in ("index.html", "slides.js", "notes.js"):
+    (output / "en").mkdir(exist_ok=True)
+    shutil.copy2(source / "en" / name, output / "en" / name)
+assets = sorted(set(re.findall(r'assets/([^"\s<>]+)', (source / "slides.js").read_text() + (source / "en/slides.js").read_text())))
 (output / "assets").mkdir()
 for name in assets:
     if pathlib.Path(name).name != name:

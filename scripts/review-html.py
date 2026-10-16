@@ -18,10 +18,11 @@ def js(code):
 run('emulate',a.page,'--viewport','1600x900')
 run('navigate_page',a.page,'--type','reload')
 meta=js('''() => {let st=document.createElement('style');st.textContent='*,*::before,*::after{transition:none!important;animation:none!important}';document.head.append(st);return SLIDES.map((s,i)=>{let el=document.querySelectorAll('.slide')[i];return {id:s.id,index:i+1,max:Math.max(0,...[...el.querySelectorAll('[data-step],[data-until],[data-on]')].map(n=>Math.max(+(n.dataset.step||0),+(n.dataset.until||0),+(n.dataset.on||0)))),notes:NOTES[s.id]||''}});}''')
-report={'slides':len(meta),'states':0,'issues':[],'timingSeconds':0}
+lang=js('() => document.documentElement.lang')
+report={'language':lang,'slides':len(meta),'states':0,'issues':[],'timingSeconds':0}
 for s in meta:
  times=re.findall(r'⏱\s*(\d+):(\d+)',s['notes']);report['timingSeconds']+=sum(int(m)*60+int(sec) for m,sec in times)
- for label in ['ŘÍCT:','POINTA:','PŘECHOD:']:
+ for label in (['SAY:','POINT:','TRANSITION:'] if lang=='en' else ['ŘÍCT:','POINTA:','PŘECHOD:']):
   if label not in s['notes']:report['issues'].append({'slide':s['id'],'missingNote':label})
  for step in range(s['max']+1):
   result=js('''async () => {location.hash='#/%d/%d';await new Promise(r=>setTimeout(r,25));let el=document.querySelector('.slide.is-active'),b=el.getBoundingClientRect();let issues=[];for(let n of el.querySelectorAll('[data-step],[data-until]')){let hide=(n.dataset.step && %d<+n.dataset.step)||(n.dataset.until && %d>=+n.dataset.until);if(n.classList.contains('is-hidden')!==!!hide)issues.push('build:'+n.textContent.slice(0,50));}for(let n of el.querySelectorAll('h1,h2,p,pre,text,.box,.tok,figure,img')){let r=n.getBoundingClientRect();if(getComputedStyle(n).visibility!=='hidden'&&r.width&&(r.left<b.left-2||r.top<b.top-2||r.right>b.right+2||r.bottom>b.bottom+2))issues.push('overflow:'+n.textContent.slice(0,80));}let nav=document.querySelector('.expedition');if(nav){let expected=SLIDES[%d-1].era;let current=nav.querySelector('[aria-current=step]');if((current?.dataset.era||null)!==(expected||null))issues.push('wrong timeline stop');if(b.bottom>nav.getBoundingClientRect().top+2)issues.push('timeline overlaps stage');if(+document.querySelector('#slide-position').value!==%d)issues.push('wrong slider position');}return {id:el.dataset.id,issues};}'''%(s['index'],step,step,step,s['index'],s['index']))
